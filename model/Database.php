@@ -6,10 +6,17 @@ class Database {
 		
 	function __construct() {
 		
-	 	$dbHost = "localhost";
+		//If someone could get this to work, we would have something interesting going on
+	 	//$dbHost = "sql100.byetcluster.com";
+		//$dbUser = "b17_10179522";
+ 		//$dbPass = "csci410";
+ 		//$dbName = "b17_10179522_pagoda";
+		$dbHost = "localhost";
 		$dbUser = "root";
  		$dbPass = "";
  		$dbName = "pagoda";
+		
+		
 		
 		$this->connect($dbHost,$dbUser,$dbPass,$dbName);
 	}
@@ -58,7 +65,7 @@ class Database {
 			else 
 			{	
 				$UserID = $pwCheck["UserID"];
-				$rolesid = mysql_query("SELECT RolesID FROM users_has_roles WHERE UsersID = $UserID");
+				$rolesid = mysql_query("SELECT RolesID FROM user_has_roles WHERE UserID = $UserID");
 				$rolesid = mysql_fetch_array($rolesid);
 				$rolesid = $rolesid["RolesID"];
 				
