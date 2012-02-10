@@ -6,17 +6,10 @@ class Database {
 		
 	function __construct() {
 		
-<<<<<<< HEAD
-	 	$dbHost = "localhost";
-		$dbUser = "root";
- 		$dbPass = "godmode";
- 		$dbName = "pagoda";
-=======
 	 	$dbHost = "pagodanlt2.db.8810539.hostedresource.com";
 		$dbUser = "pagodanlt2";
  		$dbPass = "Csci410";
  		$dbName = "pagodanlt2";
->>>>>>> origin_admin/master
 		
 		$this->connect($dbHost,$dbUser,$dbPass,$dbName);
 	}
