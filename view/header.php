@@ -13,10 +13,12 @@
 	if ($session->isLoggedIn())
 	{
 ?>
-	<form method="POST" action=<?php echo $_SERVER['PHP_SELF']; ?>>
-	Welcome, <?php echo $session->getName()." (".$session->getRole().")"?>!
-	<input name="logout" type="submit" value="Log Out"/>
-	</form>
+	<div id="nametag">
+		<form method="POST" name="logout" action=<?php echo $_SERVER['PHP_SELF']; ?>>
+		Welcome, <?php echo $session->getName()." (".$session->getRole().")"?>
+		<input name="logout" type="hidden" value="Log Out"/>
+		</form>
+	</div>	
 <?php
 	}
 else 
