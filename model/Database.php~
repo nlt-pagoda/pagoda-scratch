@@ -8,7 +8,7 @@ class Database {
 		
 	 	$dbHost = "localhost";
 		$dbUser = "root";
- 		$dbPass = "godmode";
+ 		$dbPass = "";
  		$dbName = "pagoda";
 		
 		$this->connect($dbHost,$dbUser,$dbPass,$dbName);
