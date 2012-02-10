@@ -1,0 +1,7 @@
+*.swp
+~*
+.buildpath
+.project
+.settings
+*.tmp
+
