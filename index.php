@@ -1,12 +1,16 @@
 <?php
 	
-	session_start();
+	
 	require ("/model/Database.php");
-	require ("/model/View.php");
+	require ("/view/View.php");
+	require ("/controller/Session.php");
+	$session = new Session();
 	$db = new Database();
 	$view = new View();
 
 	$view->RenderHeader();
-	require("/controller/login.php");
-	
+	$view->RenderNavBar();
+	require '/controller/login.php';
+	require("/controller/main.php");
+	$view->RenderFooter();
 ?>
