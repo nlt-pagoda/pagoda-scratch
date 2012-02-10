@@ -10,7 +10,9 @@
 		
 		public function RenderMsg($msg)
 		{
+			echo("<div id=\"messages\">");
 			echo $msg;
+			echo("</div>");
 			//echo "<p><a href=\"$_SERVER[PHP_SELF]\">Go back</a></p>";
 			
 		}
@@ -21,30 +23,43 @@
 			require ('view/header.php');
 		}
 		
+		public function RenderNavBar()
+		{
+			require ('view/navigation.php');
+		}
+		
 		public function success($rolesid)
 		{
+		echo("<div id=\"messages\">");
 		echo("You logged in<br/>");
 				
 				
 				if ($rolesid == 1)
 				{
-					echo("welcome Administrator!");
+					echo("Welcome Administrator!");
 				}
 				
 				else if ($rolesid == 2)
 				{ 
-					echo("welcome Student of MSU!");
+					echo("Welcome Student of MSU!");
 				}
 				
-				else 
-				{
-					echo("welcome creature of another planet!");
+				else if ($rolesid == 3)
+				{ 
+					echo("Welcome Instructor of MSU!");
 				}
+				
+				else if ($rolesid == 4)
+				{ 
+					echo("Welcome Accreditor of MSU!");
+				}
+								
+		echo("</div>");	
 		}
 		
 		public function RenderFooter()
 		{
-			
+			require ('view/footer.php');
 			
 		}
 		

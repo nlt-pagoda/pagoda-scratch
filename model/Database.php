@@ -6,17 +6,10 @@ class Database {
 		
 	function __construct() {
 		
-		//If someone could get this to work, we would have something interesting going on
-	 	//$dbHost = "sql100.byetcluster.com";
-		//$dbUser = "b17_10179522";
- 		//$dbPass = "csci410";
- 		//$dbName = "b17_10179522_pagoda";
-		$dbHost = "localhost";
-		$dbUser = "root";
- 		$dbPass = "";
- 		$dbName = "pagoda";
-		
-		
+	 	$dbHost = "pagodanlt2.db.8810539.hostedresource.com";
+		$dbUser = "pagodanlt2";
+ 		$dbPass = "Csci410";
+ 		$dbName = "pagodanlt2";
 		
 		$this->connect($dbHost,$dbUser,$dbPass,$dbName);
 	}
@@ -42,7 +35,7 @@ class Database {
 				return;
 			}	
 			
-		$uNameCheck = mysql_query("SELECT * FROM user WHERE username = '$uname'")
+		$uNameCheck = mysql_query("SELECT * FROM User WHERE username = '$uname'")
 						or die(mysql_error());
 		$uNameCheckResult = mysql_num_rows($uNameCheck);
 		
@@ -65,7 +58,7 @@ class Database {
 			else 
 			{	
 				$UserID = $pwCheck["UserID"];
-				$rolesid = mysql_query("SELECT RolesID FROM user_has_roles WHERE UserID = $UserID");
+				$rolesid = mysql_query("SELECT RolesID FROM Users_has_Roles WHERE UsersID = $UserID");
 				$rolesid = mysql_fetch_array($rolesid);
 				$rolesid = $rolesid["RolesID"];
 				
@@ -76,6 +69,19 @@ class Database {
 		mysql_free_result($uNameCheck);
 	}
 	
+	
+	public function query($query)
+	{
+		$result = mysql_query($query) or die(mysql_error());
+		
+		//start making an associative array containing returned results
+		$fetch = array();
+		$i = 0;
+		while($fetch[$i] = mysql_fetch_assoc($result)) $i++;
+		
+		return $fetch;
+	
+	}
 }
 
 ?>
