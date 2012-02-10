@@ -23,6 +23,11 @@
 			require ('view/header.php');
 		}
 		
+		public function RenderNavBar()
+		{
+			require ('view/navigation.php');
+		}
+		
 		public function success($rolesid)
 		{
 		echo("<div id=\"messages\">");
@@ -31,22 +36,22 @@
 				
 				if ($rolesid == 1)
 				{
-					echo("welcome Administrator!");
+					echo("Welcome Administrator!");
 				}
 				
 				else if ($rolesid == 2)
 				{ 
-					echo("welcome Student of MSU!");
+					echo("Welcome Student of MSU!");
 				}
 				
 				else if ($rolesid == 3)
 				{ 
-					echo("welcome Instructor of MSU!");
+					echo("Welcome Instructor of MSU!");
 				}
 				
 				else if ($rolesid == 4)
 				{ 
-					echo("welcome Accreditor of MSU!");
+					echo("Welcome Accreditor of MSU!");
 				}
 								
 		echo("</div>");	
@@ -54,7 +59,7 @@
 		
 		public function RenderFooter()
 		{
-			
+			require ('view/footer.php');
 			
 		}
 		

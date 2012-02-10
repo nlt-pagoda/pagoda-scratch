@@ -69,6 +69,19 @@ class Database {
 		mysql_free_result($uNameCheck);
 	}
 	
+	
+	public function query($query)
+	{
+		$result = mysql_query($query) or die(mysql_error());
+		
+		//start making an associative array containing returned results
+		$fetch = array();
+		$i = 0;
+		while($fetch[$i] = mysql_fetch_assoc($result)) $i++;
+		
+		return $fetch;
+	
+	}
 }
 
 ?>
