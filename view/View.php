@@ -3,9 +3,30 @@
 	class View {
 		
 		function __construct() 
+		{			
+		}
+		
+		public function render($url)
 		{
+		
+			$controller = $url[0];
+			if (isset($url[1]))
+				$action = $url[1];
+			else 
+				$action = "";
+			if (isset($url[2]))
+				$query = array_slice($url,2,count($url));
+			else 
+				$query = array("");
 			
-			
+			if (file_exists("./controller/$controller.php"))
+			{
+				require "controller/$controller.php";
+			}
+			else
+			{
+				require('view/html/404.html');
+			}
 		}
 		
 		public function RenderMsg($msg)
@@ -16,7 +37,6 @@
 			//echo "<p><a href=\"$_SERVER[PHP_SELF]\">Go back</a></p>";
 			
 		}
-		
 		
 		public function RenderHeader()
 		{

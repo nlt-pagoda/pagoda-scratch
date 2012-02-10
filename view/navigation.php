@@ -1,30 +1,14 @@
-<div id="navigationBar">
-	<div id="navigationItems">
+<div id="navigation">
+	<span id="navigationItems">
+	<ul><li><a href="<?php echo BASEPATH; ?>">Home</a></li> <li><a href="<?php echo BASEPATH."about"; ?>">About Us</a></li>
 	
-<!-- show menu items if user is logged in	 -->
-<?php 
-	global $session;
-	if ($session->isLoggedIn())
+	<?php global $session;
+	if($session->isLoggedIn() && $session->getRole() == "Administrator")
 	{
-?>
-	<ul>
-		<li><a href="javascript:alert('Link goes nowhere for now')">Menu Item</a></li>
-		<li><a href="javascript:alert('Link goes nowhere for now')">Menu Item</a></li>
-		<li><a href="javascript:document.forms['logout'].submit();">Log Out</a></li>
-	</ul>
-	
-<!-- show blank menu items if user is NOT logged in	 -->	
-<?php 
-	}
-
-	else {
-?>
-	<ul><li></li></ul>
-	
-<?php
-	 }
-?>	
-			
-	</div>
+	?>
+	<li><a href="<?php echo BASEPATH."admin"; ?>">Admin CP</a></li>
+	<?php } ?>
+	</ul>	
+	</span>
 </div>
 <div id="wrapper">

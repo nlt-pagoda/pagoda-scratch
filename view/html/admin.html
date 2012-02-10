@@ -1,0 +1,24 @@
+<div id="content">
+	<h1>Admin Control Panel</h1>
+	
+Let's do this. 
+<?php
+	if (($query[0]!=""))
+	{
+		if ($action = "view")
+		{
+			if ($query[0] == "user")
+			{
+				global $db;
+				$users = $db->query("SELECT * FROM User");
+				echo "<hr/>Listing all current users:<br/><br/>";
+				foreach ($users as $user)
+					echo($user["username"]."<br/>");
+			}
+		}
+	}
+	else
+		echo "Want to <a href=\"".BASEPATH."admin/view/user\">view the users?</a>";
+?>
+
+</div>
