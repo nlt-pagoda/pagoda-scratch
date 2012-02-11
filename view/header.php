@@ -1,4 +1,7 @@
-
+<?php
+//to prevent can not modify header error, use this to write html to buffer
+ob_start();
+?>
 <head>
 <link rel="stylesheet" type="text/css" href="<?php echo BASEPATH; ?>/view/css/homepageStyle.css" />
 </head>
@@ -19,7 +22,7 @@
 	<div id="nametag">
 		<form method="POST" name="logout" action="">
 		Welcome, <?php echo $session->getName()." (".$session->getRole().")"?>
-		<input name="logout" type="submit" value="Log Out"/>
+		<input name="logout" type="hidden" value="Log Out"/>
 		</form>
 	</div>	
 <?php
