@@ -10,7 +10,8 @@
 	
 	if ($action == "view")
 		echo "I AM VIEW";
-	require ("/view/html/admin.html");
+	//remove leading slash to make directoy relative for web hosting
+	require ("view/html/admin.html");
 	}
 	else
 	{
