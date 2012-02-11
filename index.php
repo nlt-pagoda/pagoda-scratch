@@ -7,10 +7,11 @@
 	//This allows for dynamic path finding
 	define('BASEPATH', dirname($_SERVER['PHP_SELF']).'/');
 	
+	/*remove leading slash to make path relative for webhosting */
 	//require and load objects
-	require ("/model/Database.php");
-	require ("/view/View.php");
-	require ("/controller/Session.php");
+	require ("model/Database.php");
+	require ("view/View.php");
+	require ("controller/Session.php");
 	$session = new Session();
 	$db = new Database();
 	$view = new View();
@@ -28,7 +29,8 @@
 	//Since we are rendering messages in the login controller,
 	//in order to keep the view in order we must require it here
 	//(probably can fix this)
-	require ("/controller/login.php");
+	/*remove leading slash to make path relative for webhosting */
+	require ("controller/login.php");
 	
 	//renders controller content based on url
 	$view->render($url);
