@@ -3,7 +3,12 @@
 ob_start();
 ?>
 <head>
-<link rel="stylesheet" type="text/css" href="<?php echo BASEPATH; ?>/view/css/homepageStyle.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo BASEPATH; ?>/view/css/basicStyle.css" />
+<?php
+	global $view;
+	$view->SetCSS();
+?>
+
 </head>
 <div id="header">
 	<div id="banner">

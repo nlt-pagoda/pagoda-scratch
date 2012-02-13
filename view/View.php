@@ -48,7 +48,7 @@
 			require ('view/navigation.php');
 		}
 		
-		public function success($rolesid)
+		/*public function success($rolesid)
 		{
 		echo("<div id=\"messages\">");
 		echo("You logged in<br/>");
@@ -76,6 +76,7 @@
 								
 		echo("</div>");	
 		}
+		*/
 		
 		public function RenderFooter()
 		{
@@ -83,6 +84,49 @@
 			
 		}
 		
-	}
-
+		public function SetCSS()
+		{
+			global $session;
+		
+			$CSSLink = '<link rel="stylesheet" type="text/css" href="';
+			$neutralColors = "/view/css/neutralColors.css\" />";
+			$adminColors = "/view/css/adminColors.css\" />";
+			$studentColors = "/view/css/studentColors.css\" />";
+			$instructorColors = "/view/css/instructorColors.css\" />";
+			$accreditorColors = "/view/css/accreditorColors.css\" />";
+	
+			if(!$session->isLoggedIn())
+			{
+				echo($CSSLink.BASEPATH.$neutralColors);	
+			}
+			
+			else
+			{
+				$role = $session->getRole();
+			
+				if($role=='Administrator')
+				{
+					echo($CSSLink.BASEPATH.$adminColors);	
+				}
+				
+				if($role=='Student')
+				{
+					echo($CSSLink.BASEPATH.$studentColors);	
+				}
+				
+			
+				if($role=='Instructor')
+				{
+					echo($CSSLink.BASEPATH.$instructorColors);	
+				}
+				
+				if($role=='Accreditor')
+				{
+					echo($CSSLink.BASEPATH.$accreditorColors);	
+				}
+			}
+		}
+	}//end of class			
+		
+	
 ?>

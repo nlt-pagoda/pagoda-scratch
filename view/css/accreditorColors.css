@@ -1,0 +1,130 @@
+body 
+{	
+	color: black;
+}
+
+h1 
+{
+	border-bottom: 1px solid #FFDD9E;
+}
+
+#header
+{
+	/* chrome */
+	background: -webkit-gradient(linear, left top, left bottom, from(#F6DAA7), to(#FFDD9E));
+	/* firefox */
+	background: -moz-linear-gradient(19% 75% 90deg,#FFDD9E, #F6DAA7);
+}
+
+#navigationBar
+{
+	background: #FFFFFF;
+	border: solid 1px #FFDD9E;
+}
+
+#navigationItems li a
+{
+	color: black;
+}
+	
+#navigationItems li a:hover
+{
+	color: white;
+	background: #FFAA00;
+}
+
+#content
+{
+	border: 1px #FFDD9E solid;
+}
+
+#messages
+{
+	border: #C7C7C7 dotted 1px;
+	background: #fee;
+}
+
+#banner
+{
+	color: #EFB14D;
+}
+
+#login
+{
+	color: black;
+	text-shadow: #FFF 1px 1px;
+}
+
+input
+{
+	color: black;
+	background: white;
+    border-top: 1px solid black;
+
+	/*** Adding a small shadow ***/
+    -moz-box-shadow: 0px 0px 2px #000;
+    -webkit-box-shadow: 0px 0px 2px #000;
+}
+
+input:hover
+{
+ -webkit-box-shadow: 0px 0px 4px black;
+    background: #FFFFF1;
+}
+
+input:focus
+{
+	outline: 0px white;
+	-webkit-box-shadow: 0px 0px 4px black;
+    background: #FFFFF1;
+}
+
+input[type=submit]
+{
+    color: black;
+    border-top: 1px solid black;
+    text-shadow: #FFF 1px 1px;
+	
+	/*** Adding CSS3 Gradients ***/    
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#EEEEEE));
+    background:  -moz-linear-gradient(19% 75% 90deg,#EEEEEE, #FFFFFF);
+	
+	/*ie */	
+	filter: progid:DXImageTransform.Microsoft.gradient	(startColorstr='#FFFFFF', endColorstr='#EEEEEE');
+}
+
+input[type=submit]:hover
+{	
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#EEEEEE), to(#CDCDCD));
+    background:  -moz-linear-gradient(19% 75% 90deg,#CDCDCD, #EEEEEE);
+	/* setting shadow to not expand on hover like on input text boxes */
+	-webkit-box-shadow: 0px 0px 2px black;
+}
+
+input[type=submit]:active
+{
+	-webkit-box-shadow: 0px 0px 2px black;
+	border-top: 1px solid black;
+	background: #CDCDCD;
+}
+
+/** Animation properties **/
+@-webkit-keyframes resetFade
+{
+	from { opacity: 0; }
+	to {  opacity: 0; }
+} 
+
+@-webkit-keyframes fade-in
+{	
+	from { opacity: 0; }
+	to { opacity: 1;   }
+}
+
+li, #nametag
+{    
+	-webkit-animation-name: resetFade, fade-in;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: 1;
+}
