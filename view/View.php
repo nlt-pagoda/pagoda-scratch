@@ -48,36 +48,7 @@
 			require ('view/navigation.php');
 		}
 		
-		/*public function success($rolesid)
-		{
-		echo("<div id=\"messages\">");
-		echo("You logged in<br/>");
-				
-				
-				if ($rolesid == 1)
-				{
-					echo("Welcome Administrator!");
-				}
-				
-				else if ($rolesid == 2)
-				{ 
-					echo("Welcome Student of MSU!");
-				}
-				
-				else if ($rolesid == 3)
-				{ 
-					echo("Welcome Instructor of MSU!");
-				}
-				
-				else if ($rolesid == 4)
-				{ 
-					echo("Welcome Accreditor of MSU!");
-				}
-								
-		echo("</div>");	
-		}
-		*/
-		
+			
 		public function RenderFooter()
 		{
 			require ('view/footer.php');
@@ -89,11 +60,11 @@
 			global $session;
 		
 			$CSSLink = '<link rel="stylesheet" type="text/css" href="';
-			$neutralColors = "/view/css/neutralColors.css\" />";
-			$adminColors = "/view/css/adminColors.css\" />";
-			$studentColors = "/view/css/studentColors.css\" />";
-			$instructorColors = "/view/css/instructorColors.css\" />";
-			$accreditorColors = "/view/css/accreditorColors.css\" />";
+			$neutralColors = "view/css/neutralColors.css\" />";
+			$adminColors = "view/css/adminColors.css\" />";
+			$studentColors = "view/css/studentColors.css\" />";
+			$instructorColors = "view/css/instructorColors.css\" />";
+			$accreditorColors = "view/css/accreditorColors.css\" />";
 	
 			if(!$session->isLoggedIn())
 			{

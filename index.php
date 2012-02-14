@@ -7,6 +7,9 @@
 	//This allows for dynamic path finding
 	define('BASEPATH', dirname($_SERVER['PHP_SELF']).'/');
 	
+	//to prevent can not modify header error, use this to write html to buffer
+	ob_start();
+	
 	/*remove leading slash to make path relative for webhosting */
 	//require and load objects
 	require ("model/Database.php");
