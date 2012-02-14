@@ -1,7 +1,3 @@
-<?php
-//to prevent can not modify header error, use this to write html to buffer
-ob_start();
-?>
 <head>
 <link rel="stylesheet" type="text/css" href="<?php echo BASEPATH; ?>/view/css/basicStyle.css" />
 <?php
