@@ -1,11 +1,11 @@
 <div id="content">
 	<h1>Admin Control Panel</h1>
 	
-Let's do this. 
+Let's do this.
 <?php
 	if (($query[0]!=""))
 	{
-		if ($action = "view")
+		if ($action == "view")
 		{
 			if ($query[0] == "user")
 			{
@@ -16,9 +16,65 @@ Let's do this.
 					echo($user["username"]."<br/>");
 			}
 		}
+
+	if ($action == "add")
+		{
+			if ($query[0] == "user")
+			{
+				if(isset($_POST['submit']))
+					addUser();
+				else
+					makeForm();
+				
+			}
+		}
 	}
+
 	else
-		echo "Want to <a href=\"".BASEPATH."admin/view/user\">view the users?</a>";
+		echo "Want to <a href=\"".BASEPATH."admin/view/user\">view the users?</a><br />";
+	echo "Want to <a href=\"".BASEPATH."admin/add/user\">Add Users</a>";
+
+function makeForm()
+{
+	?>
+	
+	<form action="" method="POST">
+		<label for="username">Username:</label><input type="text" name="username" value="Username"/>
+		<label for="username">Password:</label><input type="password" name="password" value=""/>
+		
+		<select name="role">
+		<option value="0">Roles</option>
+		<?php
+			global $db;
+			$roles = $db->query("SELECT * FROM Roles");
+			foreach($roles as $role)
+			{
+				echo "<option value=\"$role[RolesID]\">$role[role]</option>";
+			}
+		?>
+		</select>
+		<input type="submit" name="submit" value="submit"/>
+	</form>
+	
+	
+	<?php
+	
+}
+
+function addUser()
+
+{
+	global $db;
+	$u = mysql_real_escape_string($_POST['username']);
+	$p = mysql_real_escape_string($_POST['password']);
+	$r = mysql_real_escape_string($_POST['role']);
+	mysql_query("INSERT INTO User (username,password) VALUES (\"$u\",\"$p\")") or die(mysql_error());
+	$userID = mysql_insert_id();
+	mysql_query("INSERT INTO Users_has_Roles (UsersID,RolesID) VALUES ($userID,$r)") or die(mysql_error());
+
+}
+
+
 ?>
 
 </div>
