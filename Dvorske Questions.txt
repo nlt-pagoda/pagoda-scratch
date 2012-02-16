@@ -1,0 +1,4 @@
+1. How many times should a student be able to submit an assignment? Should it be configuarable by the instructor? eg: Instructor allows many submission unti a certain date or instructor can declare only one submission
+
+2.Rubrics? How do they work? Guide for grading?  Requirements for grading? Who should be allowed to create rubrics? Admin? Instructors? Accreditors?
+

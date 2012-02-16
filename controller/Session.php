@@ -18,7 +18,7 @@ class Session
 		
 		$cred = $db->query("SELECT * FROM User 
 		INNER JOIN Users_has_Roles ON User.UserID = Users_has_Roles.UsersID
-		INNER JOIN Roles ON Users_has_Roles.UsersID = Roles.RolesID
+		INNER JOIN Roles ON Users_has_Roles.RolesID = Roles.RolesID
 		WHERE username = '$user' AND password = '$pass'");
 		if (!empty($cred[0]))
 		{
@@ -42,6 +42,7 @@ class Session
 		session_destroy();
 	}
 	
+
 	function isLoggedIn()
 	{
 		if (isset($_SESSION['loggedIn']) && !empty($_SESSION['loggedIn']))
