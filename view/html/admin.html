@@ -1,7 +1,6 @@
 <div id="content">
 	<h1>Admin Control Panel</h1>
 	
-Let's do this.
 <?php
 	if (($query[0]!=""))
 	{
@@ -11,7 +10,7 @@ Let's do this.
 			{
 				global $db;
 				$users = $db->query("SELECT * FROM User");
-				echo "<hr/>Listing all current users:<br/><br/>";
+				echo "<hr/><h1>Listing all current users:</h1><br/><br/>";
 				foreach ($users as $user)
 					echo($user["username"]."<br/>");
 			}
@@ -24,26 +23,41 @@ Let's do this.
 				if(isset($_POST['submit']))
 					addUser();
 				else
-					makeForm();
+					makeAddForm();
+				
+			}
+		}
+
+	if ($action == "remove")
+		{
+			if ($query[0] == "user")
+			{
+				if(isset($_POST['submit']))
+					removeUser();
+				else
+					makeRemoveForm();
 				
 			}
 		}
 	}
 
 	else
-		echo "Want to <a href=\"".BASEPATH."admin/view/user\">view the users?</a><br />";
-	echo "Want to <a href=\"".BASEPATH."admin/add/user\">Add Users</a>";
+		echo "<ul>";
+		echo "<li><a href=\"".BASEPATH."admin/view/user\">View Users</a></li>";
+		echo "<li><a href=\"".BASEPATH."admin/add/user\">Add Users</a></li>";
+		echo "<li><a href=\"".BASEPATH."admin/remove/user\">Remove Users</a></li>";
+		echo "</ul>";
 
-function makeForm()
+function makeAddForm()
 {
 	?>
 	
+	<h1>Add User</h1>
 	<form action="" method="POST">
-		<label for="username">Username:</label><input type="text" name="username" value="Username"/>
+		<label for="username">Username:</label><input type="text" name="username" />
 		<label for="username">Password:</label><input type="password" name="password" value=""/>
 		
 		<select name="role">
-		<option value="0">Roles</option>
 		<?php
 			global $db;
 			$roles = $db->query("SELECT * FROM Roles");
@@ -53,7 +67,11 @@ function makeForm()
 			}
 		?>
 		</select>
-		<input type="submit" name="submit" value="submit"/>
+		<h3>Optional profile options:</h3>
+		<label for="fullname">Full Name:</label><input type="text" name="fullname" /><br />
+		<label for="email">Email:</label><input type="text" name="email" /><br />
+		<label for="address">Address:</label><input type="text" name="address" size="60"/>
+		<br /><input type="submit" name="submit" value="submit"/>
 	</form>
 	
 	
@@ -64,13 +82,77 @@ function makeForm()
 function addUser()
 
 {
-	global $db;
 	$u = mysql_real_escape_string($_POST['username']);
 	$p = mysql_real_escape_string($_POST['password']);
 	$r = mysql_real_escape_string($_POST['role']);
-	mysql_query("INSERT INTO User (username,password) VALUES (\"$u\",\"$p\")") or die(mysql_error());
-	$userID = mysql_insert_id();
-	mysql_query("INSERT INTO Users_has_Roles (UsersID,RolesID) VALUES ($userID,$r)") or die(mysql_error());
+	$fullName = mysql_real_escape_string($_POST['fullname']);
+	$email = mysql_real_escape_string($_POST['email']);
+	$address = mysql_real_escape_string($_POST['address']);
+
+	if($u == "" || $p == "" || $r == "")
+	{
+		global $view;
+		$view->RenderMsg("You did not complete the required credentials");
+		makeAddForm();
+	}
+	else
+	{
+		global $db;
+		mysql_query("INSERT INTO User (username,password) VALUES (\"$u\",\"$p\")") or die(mysql_error());
+		$userID = mysql_insert_id();
+		mysql_query("INSERT INTO Users_has_Roles (UsersID,RolesID) VALUES ($userID,$r)") or die(mysql_error());
+		mysql_query("INSERT INTO Profile (fullName,emailAddress,address,UserID) VALUES (\"$fullName\",\"$email\",\"$address\",$userID)") or die(mysql_error());
+		echo "<br /><h1>User added</h1>";
+	}
+
+}
+
+function makeRemoveForm()
+{
+	?>
+	
+	<h1>Remove User</h1>
+	<form action="" method="POST">
+		<label for="username">Username:</label>
+			
+		<select name="userID">
+		<?php
+			global $db;
+			$usernames = $db->query("SELECT * FROM User ORDER BY username");
+			foreach($usernames as $username)
+			{
+				echo "<option value=\"$username[UserID]\">$username[username]</option>";
+			}
+		?>
+		</select>
+		<input type="submit" onclick="if(confirm('Are you sure you want to delete this user?\nThere is no undo.')) return true; return false;" name="submit" value="submit"/>
+	</form>
+	
+	
+	<?php
+	
+}
+
+function removeUser()
+
+{
+
+	if($_POST['userID'] == "")
+	{
+		global $view;
+		$view->RenderMsg("You did not complete the required credentials");
+		makeRemoveForm();
+	}
+	else
+	{
+		global $db;
+		$uID = mysql_real_escape_string($_POST['userID']);
+		mysql_query("DELETE FROM Users_has_Roles WHERE UsersID = $uID" ) or die(mysql_error());
+		mysql_query("DELETE FROM Profile WHERE UserID = $uID" ) or die(mysql_error());
+		mysql_query("DELETE FROM User WHERE UserID = $uID" ) or die(mysql_error());
+		echo "<br /><h1>User removed</h1>";
+	}
+	
 
 }
 
