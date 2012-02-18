@@ -47,7 +47,7 @@ class UploadController
 		foreach($data as $display)
 		{
 			echo "<div id='msgBox'>";
-			echo $display;
+			$display;
 			echo "</div>";
 
 		}
