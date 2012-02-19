@@ -39,6 +39,18 @@
 				
 			}
 		}
+
+	if ($action == "edit")
+		{
+			if ($query[0] == "profile")
+			{
+				if(isset($_POST['submit']))
+					editUser();
+				else
+					makeEditForm();
+				
+			}
+		}
 	}
 
 	else
@@ -46,6 +58,7 @@
 		echo "<li><a href=\"".BASEPATH."admin/view/user\">View Users</a></li>";
 		echo "<li><a href=\"".BASEPATH."admin/add/user\">Add Users</a></li>";
 		echo "<li><a href=\"".BASEPATH."admin/remove/user\">Remove Users</a></li>";
+		echo "<li><a href=\"".BASEPATH."admin/edit/profile\">Edit User Profile</a></li>";
 		echo "</ul>";
 
 function makeAddForm()
@@ -151,6 +164,60 @@ function removeUser()
 		mysql_query("DELETE FROM Profile WHERE UserID = $uID" ) or die(mysql_error());
 		mysql_query("DELETE FROM User WHERE UserID = $uID" ) or die(mysql_error());
 		echo "<br /><h1>User removed</h1>";
+	}
+	
+
+}
+
+function makeEditForm()
+{
+	?>
+	
+	<h1>Edit User Profile</h1>
+	<form action="" method="POST">
+		<label for="username">Username:</label>
+			
+		<select name="userID">
+		<?php
+			global $db;
+			$usernames = $db->query("SELECT * FROM User ORDER BY username");
+			foreach($usernames as $username)
+			{
+				echo "<option value=\"$username[UserID]\">$username[username]</option>";
+			}
+		?>
+		</select>
+				<h3>Profile:</h3>
+		<label for="fullname">Full Name:</label><input type="text" name="fullname" /><br />
+		<label for="email">Email:</label><input type="text" name="email" /><br />
+		<label for="address">Address:</label><input type="text" name="address" size="60"/>
+		<br /><input type="submit" name="submit" value="submit"/>
+		</form>
+	
+	
+	<?php
+	
+}
+
+function editUser()
+
+{
+	$fullName = mysql_real_escape_string($_POST['fullname']);
+	$email = mysql_real_escape_string($_POST['email']);
+	$address = mysql_real_escape_string($_POST['address']);
+	$uID = mysql_real_escape_string($_POST['userID']);
+	
+	if($_POST['userID'] == "")
+	{
+		global $view;
+		$view->RenderMsg("You did not complete the required credentials");
+		makeEditForm();
+	}
+	else
+	{
+		global $db;
+		mysql_query("UPDATE Profile SET fullName = \"$fullName\", emailAddress = \"$email\", address = \"$address\" WHERE userID = $uID") or die(mysql_error());
+		echo "<br /><h1>Profile updated</h1>";
 	}
 	
 
