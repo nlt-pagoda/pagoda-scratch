@@ -1,12 +1,19 @@
 <?php
-session_start();
 class Upload
 {
 	public static $existingFiles = array();
 	public static $errors = array();
 	public static $successFiles = array();
-	const rootDir = "../../uploads/"; //Currently chosen uploads as a directory name, can change in future
-	const subDir = "../../uploads/username/";
+	private static $rootDir;
+	private static $subDir;
+	public function __construct()
+	{
+		session_start();
+		self::$rootDir = "../../uploads/";
+		$hi = $_SESSION['username'];
+		self::$subDir = "../../uploads/$hi/";
+		
+	}
 	public function makeDir($dir)
 	{
 		if(mkdir($dir))
@@ -16,16 +23,16 @@ class Upload
 	}
 	public function setDirs()
 	{
-		if(!is_dir(self::rootDir))	
+		if(!is_dir(self::$rootDir))	
 		{
-			if(Upload::makeDir(self::rootDir)&&Upload::makeDir(self::subDir))
+			if(Upload::makeDir(self::$rootDir)&&Upload::makeDir(self::$subDir))
 				return true;
 			else
 				return false;
 		}
-		else if(!is_dir(self::subDir))
+		else if(!is_dir(self::$subDir))
 		{
-			if(Upload::makeDir(self::subDir))
+			if(Upload::makeDir(self::$subDir))
 				return true;
 			else
 				return false;
@@ -39,7 +46,7 @@ class Upload
 		$existingFiles = array();
 		while($continuousCounter<count($files))
 		{
-			if(file_exists(self::subDir.$files[$continuousCounter]))
+			if(file_exists(self::$subDir.$files[$continuousCounter]))
 				Upload::setExistingFileInfo($continuousCounter);
 			$continuousCounter++;
 		}
@@ -47,22 +54,23 @@ class Upload
 	}
 	public function pushUpload()
 	{
-		
 		echo "<pre>";
 		$copy = $_FILES;
 		print_r($copy);
 		echo "</pre>";
+		//echo self::$rootDir."<br/>";
+		//echo self::$subDir."<br/>";
 		if (Upload::setDirs())
 		{
-			$fileCheck = Upload::checkFiles($copy["docs"]["name"]); //Stores the already existing filename.
-			foreach($_FILES["docs"]["error"] as $key =>$error)
+			Upload::checkFiles($copy["docs"]["name"]); //Stores the already existing filename.
+			foreach($_FILES["docs"]["error"] as $key=>$error)
 			{
 				switch($_FILES["docs"]["error"][$key])
 				{
 				case 0:
-					if(!array_key_exists($_FILES["docs"]["name"][$key],$fileCheck)) //If the hash key is not found in fileCheck perform upload
+					if(!in_array($_FILES["docs"]["name"][$key],self::$existingFiles["name"])) //If the hash key is not found in fileCheck perform upload
 					{
-						move_uploaded_file($_FILES["docs"]["tmp_name"][$key], self::subDir.$_FILES["docs"]["name"][$key]);
+						move_uploaded_file($_FILES["docs"]["tmp_name"][$key], self::$subDir.$_FILES["docs"]["name"][$key]);
 						Upload::setUploadedFileInfo($key);
 					}
 					break;
@@ -83,7 +91,7 @@ class Upload
 		//Populates the class array $existingFiles with their old file size and the size of file that's being replaced
 		self::$existingFiles["name"][$fileId]=$_FILES["docs"]["name"][$fileId];
 		//Old file size
-		self::$existingFiles["oldFileSize"][$fileId]=fileSize(self::subDir.$_FILES["docs"]["name"][$fileId]);
+		self::$existingFiles["oldFileSize"][$fileId]=fileSize(self::$subDir.$_FILES["docs"]["name"][$fileId]);
 		//New file size
 		self::$existingFiles["newFileSize"][$fileId]=$_FILES["docs"]["size"][$fileId];
 	}

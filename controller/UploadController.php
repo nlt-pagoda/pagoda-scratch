@@ -4,33 +4,34 @@ class UploadController
 {
 	public function submitUpload()
 	{
-		Upload::pushUpload();
-		if(count(Upload::$errors)>0)
+		$test = new Upload();
+		$test->pushUpload();
+		if(count($test::$errors)>0)
 		{	
 			echo "<div id='errorBox'>
 			<div id='errorTitle'>
 			Errors:
 			</div>";
 		}
-		UploadController::getInfo(Upload::$errors);
+		UploadController::getInfo($test::$errors);
 		echo "</div>";
-		/*
-		echo "<div id='replaceBox'>
-			<div id='replaceTitle'>
-			Overwrite? :
-			</div>
-			";
-		UploadController::getInfo(Upload::$existingFiles);
+		if(count($test::$existingFiles>0))
+		{
+			echo "<div id='replaceBox'>
+				<div id='replaceTitle'>
+				Overwrite? :
+				</div>";
+		}
+		UploadController::getInfo(Upload::$existingFiles['name']);
 		echo "</div>";
-		 */
-		if(count(Upload::$successFiles)>0)
+		if(count($test::$successFiles)>0)
 		{
 			echo "<div id='successBox'>
 			<div id='successTitle'>
 			Successfully Uploaded :
 			</div>";
 		}
-		UploadController::getInfo(Upload::$successFiles);
+		UploadController::getInfo($test::$successFiles);
 		echo "</div>";
 
 
