@@ -12,17 +12,17 @@ class UploadController
 			<div id='errorTitle'>
 			Errors:
 			</div>";
+			UploadController::getInfo($test::$errors);
 		}
-		UploadController::getInfo($test::$errors);
 		echo "</div>";
 		if(count($test::$existingFiles>0))
 		{
 			echo "<div id='replaceBox'>
 				<div id='replaceTitle'>
-				Overwrite? :
+				Do you want to overwrite these files? :
 				</div>";
+			UploadController::displayInfo(Upload::$existingFiles);
 		}
-		UploadController::getInfo(Upload::$existingFiles);
 		echo "</div>";
 		if(count($test::$successFiles)>0)
 		{
@@ -30,8 +30,8 @@ class UploadController
 			<div id='successTitle'>
 			Successfully Uploaded :
 			</div>";
+			UploadController::getInfo($test::$successFiles);
 		}
-		UploadController::getInfo($test::$successFiles);
 		echo "</div>";
 
 
@@ -42,6 +42,18 @@ class UploadController
 			return true;
 		else
 			return false;
+	}
+	public function displayInfo($data)
+	{
+		$counter = 0;
+		echo "<form name='replaceBox' action='' method ='POST'>";
+		while($counter<count($data['name']))
+		{
+			echo "{$data['name'][$counter]} of ".floor($data['oldFileSize'][$counter]/2000)." KB with ".floor($data['newFileSize'][$counter]/2000)." KB <input type='checkbox' name='setReplace[]' value='yes'/><br/>";
+		       $counter++;	
+		}
+		echo "<input type='submit' value='Replace' name='replace'/>";
+
 	}
 	public function getInfo($data)
 	{

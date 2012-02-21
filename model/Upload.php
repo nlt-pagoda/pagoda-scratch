@@ -1,17 +1,17 @@
 <?php
 class Upload
 {
-	public static $existingFiles = array();
-	public static $errors = array();
-	public static $successFiles = array();
+	public static $existingFiles=array();
+	public static $errors=array();
+	public static $successFiles=array();
 	private static $rootDir;
 	private static $subDir;
 	public function __construct()
 	{
 		session_start();
 		self::$rootDir = "../../uploads/";
-		$hi = $_SESSION['username'];
-		self::$subDir = "../../uploads/$hi/";
+		$username = $_SESSION['username'];
+		self::$subDir = "../../uploads/$username/";
 		
 	}
 	public function makeDir($dir)
@@ -52,17 +52,10 @@ class Upload
 		}
 		return $existingFiles;
 	}
-	public function pushUpload()
+	public function uploadConfirm()
 	{
-		echo "<pre>";
-		$copy = $_FILES;
-		print_r($copy);
-		echo "</pre>";
-		//echo self::$rootDir."<br/>";
-		//echo self::$subDir."<br/>";
-		if (Upload::setDirs())
+		if (array_key_exists("name",self::$existingFiles))
 		{
-			Upload::checkFiles($copy["docs"]["name"]); //Stores the already existing filename.
 			foreach($_FILES["docs"]["error"] as $key=>$error)
 			{
 				switch($_FILES["docs"]["error"][$key])
@@ -82,6 +75,48 @@ class Upload
 					break;
 				}
 			}
+		}
+		else
+		{
+
+			foreach($_FILES["docs"]["error"] as $key=>$error)
+			{
+				switch($_FILES["docs"]["error"][$key])
+				{
+				case 0:
+				{
+					move_uploaded_file($_FILES["docs"]["tmp_name"][$key], self::$subDir.$_FILES["docs"]["name"][$key]);
+					Upload::setUploadedFileInfo($key);
+				}
+					break;
+				case 1:
+					array_push(self::$errors,$_FILES["docs"]["name"][$key]);
+					break;
+				case 2:
+					array_push(self::$errors,$_FILES["docs"]["name"][$key]);
+					break;
+				}
+			}
+		}
+	}
+	public function pushUpload()
+	{
+		if (Upload::setDirs())
+		{
+			if(!isset($_POST['setReplace']))
+			{
+				Upload::checkFiles($_FILES["docs"]["name"]); //Stores the already existing filename.
+			}
+			else
+			{
+				print_r($_POST['setReplace']);
+				foreach($_POST['setReplace'] as $upload)
+				{
+					
+					echo $upload;
+				}
+			}
+			Upload::uploadConfirm();
 		}
 		else
 			return false;
