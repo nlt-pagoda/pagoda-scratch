@@ -15,7 +15,7 @@ class UploadController
 			UploadController::getInfo($test::$errors);
 		}
 		echo "</div>";
-		if(count($test::$existingFiles>0))
+		if(array_key_exists("name",$test::$existingFiles))
 		{
 			echo "<div id='replaceBox'>
 				<div id='replaceTitle'>
@@ -46,15 +46,18 @@ class UploadController
 	public function displayInfo($data)
 	{
 		$counter = 0;
-		echo "<form name='replaceBox' action='' method ='POST'>";
+		//print_r($data);
+		echo "<form name='replaceBox' enctype ='multipart/form-data' action='' method ='POST'>";
 		while($counter<count($data['name']))
 		{
-			echo "{$data['name'][$counter]} of ".floor($data['oldFileSize'][$counter]/2000)." KB with ".floor($data['newFileSize'][$counter]/2000)." KB <input type='checkbox' name='setReplace[]' value='yes'/><br/>";
+		//	echo $counter;
+			echo "{$data['name'][$counter]} of ".floor($data['oldFileSize'][$counter]/2048)." KB with ".floor($data['newFileSize'][$counter]/2048)." KB <input type='checkbox' name='setReplace[]' value='{$data['name'][$counter]}'/><br/>";
 		       $counter++;	
 		}
+	//	echo "<a href='' onClick='".$riskyArray=."getChkboxValidation({$counter})'>Replace</a>";
 		echo "<input type='submit' value='Replace' name='replace'/>";
 
-	}
+	} 
 	public function getInfo($data)
 	{
 		foreach($data as $display)

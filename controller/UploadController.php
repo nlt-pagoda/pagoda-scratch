@@ -46,15 +46,18 @@ class UploadController
 	public function displayInfo($data)
 	{
 		$counter = 0;
+		//print_r($data);
 		echo "<form name='replaceBox' action='' method ='POST'>";
 		while($counter<count($data['name']))
 		{
-			echo "{$data['name'][$counter]} of ".floor($data['oldFileSize'][$counter]/2000)." KB with ".floor($data['newFileSize'][$counter]/2000)." KB <input type='checkbox' name='setReplace[]' value='yes'/><br/>";
+		//	echo $counter;
+			echo "{$data['name'][$counter]} of ".floor($data['oldFileSize'][$counter]/2048)." KB with ".floor($data['newFileSize'][$counter]/2048)." KB <input type='checkbox' name='setReplace[]' value='{$data['name'][$counter]}'/><br/>";
 		       $counter++;	
 		}
+	//	echo "<a href='' onClick='".$riskyArray=."getChkboxValidation({$counter})'>Replace</a>";
 		echo "<input type='submit' value='Replace' name='replace'/>";
 
-	}
+	} 
 	public function getInfo($data)
 	{
 		foreach($data as $display)

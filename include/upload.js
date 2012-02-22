@@ -4,6 +4,18 @@ function removeFileList(fileId)
 	var fileObj = document.getElementById(fileId);
 	fileObj.parentNode.removeChild(fileObj);
 }
+//JUST SETTING UP A TEST FOR UPLOAD FILE..FAILED MISERABLY
+/*function getChkboxValidation(totalItems)
+{
+	var replaceConfirm = new Array();
+	for(var i =0;i<totalItems;i++)
+	{
+		if($('#setReplace'+i).is(':checked'))
+			replaceConfirm[i]= $('#setReplace'+i).val();
+	}
+	return replaceConfirm;
+}
+*/
 $(document).ready(function(){
 	var attacher= new Array();
 	var fileCounter = 0;
