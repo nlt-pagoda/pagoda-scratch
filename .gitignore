@@ -4,4 +4,6 @@
 .project
 .settings
 *.tmp
-
+*.swo
+*~
+uploads/
