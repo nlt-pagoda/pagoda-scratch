@@ -1,8 +1,7 @@
 <head>
 <link rel="stylesheet" type="text/css" href="<?php echo BASEPATH; ?>/view/css/basicStyle.css" />
 <?php
-	global $view;
-	$view->SetCSS();
+	$this->SetCSS();
 ?>
 
 </head>

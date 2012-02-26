@@ -9,7 +9,7 @@ class Upload
 	private static $tmpSubDir;
 	public function __construct()
 	{
-		session_start();
+		//session_start();
 		self::$rootDir = "../../uploads/";
 		$username = $_SESSION['username'];
 		self::$subDir = "../../uploads/$username/";

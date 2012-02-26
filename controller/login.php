@@ -1,8 +1,7 @@
 <?php
 	
 	global $session;
-	global $view;
-	
+
 	if (isset($_POST['login']))
 	{
 		if ($session->logIn($_POST["uname"],$_POST["password"]))
@@ -11,7 +10,7 @@
 			ob_end_flush(); //ending ob_start();
 		}
 		else
-			$view->RenderMsg("Your username and/or password was incorrect.");
+			$this->RenderMsg("Your username and/or password was incorrect.");
 	}
 	if (isset($_POST['logout']))
 	{
