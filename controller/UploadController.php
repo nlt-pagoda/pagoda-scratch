@@ -1,6 +1,6 @@
 <?php
-require_once("../../model/Upload.php");
-class UploadController 
+//require_once("../../model/Upload.php");
+class UploadController extends Controller
 {
 	public function submitUpload()
 	{
