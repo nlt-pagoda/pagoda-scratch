@@ -1,9 +1,12 @@
 <?php
-class Session 
+class Session
 {
 
-	function __construct()
+	private $_model;
+	function __construct($model)
 	{	
+		$this->_model = $model;
+		
 		//disable on local
 		//enable on web server
 		//session_save_path('/tmp');
@@ -14,9 +17,7 @@ class Session
 	//return 0 if successfully logged in, nonzero will throw error
 	function logIn($user,$pass)
 	{
-		global $db;
-		
-		$cred = $db->query("SELECT * FROM User 
+		$cred = $this->_model->query_old("SELECT * FROM User 
 		INNER JOIN Users_has_Roles ON User.UserID = Users_has_Roles.UsersID
 		INNER JOIN Roles ON Users_has_Roles.RolesID = Roles.RolesID
 		WHERE username = '$user' AND password = '$pass'");
