@@ -1,7 +1,9 @@
 <?php
 	//ROOT will refer the directory above the root site directory.
 	//This may be useful for security reasons.
-	define('ROOT', dirname(__FILE__)."\\");
+	
+	//define('ROOT', dirname(__FILE__)."\\"); - does not work onglobal site
+	define('ROOT', dirname(__FILE__)."/"); // Works on global and wamp server
 	
 	//BASEPATH must be used to reference css, js, and images.
 	//This allows for dynamic path finding
