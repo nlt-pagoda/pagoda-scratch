@@ -1,5 +1,6 @@
 <head>
-<link rel="stylesheet" type="text/css" href="<?php echo BASEPATH; ?>/view/css/basicStyle.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo BASEPATH; ?>/include/css/basicStyle.css" />
+<script type="text/javascript" src="<?php echo BASEPATH; ?>/include/js/jq.js"></script>
 <?php
 	$this->SetCSS();
 ?>

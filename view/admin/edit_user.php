@@ -1,3 +1,23 @@
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$("select[name=userID]").change(function(){
+		var user = $(this).val();
+
+		$.getJSON("<?php echo BASEPATH; ?>/include/ajax/getprofile.php?id=" + user ,
+			function(data) {
+			//Should be renamed in future
+			$('input[name=fullname]').val(data.fullName); 
+			$('input[name=email]').val(data.emailAddress);
+			$('input[name=address]').val(data.address);
+			});
+	
+	});
+	
+});
+
+</script>
+
 <div id="content">
 <?php if ($accessible): ?>
 
@@ -15,6 +35,7 @@ endif ?>
 		<label for="username">Username:</label>
 			
 		<select name="userID">
+		<option value="" selected="selected" disabled="disabled">Select</option>
 		<?php
 
 		foreach($roles as $role)
