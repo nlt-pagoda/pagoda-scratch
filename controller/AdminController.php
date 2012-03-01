@@ -16,6 +16,8 @@ class AdminController extends Controller
 	{
 		if (!empty($num))
 		{
+			$this->set("profile",$this->Admin->query("SELECT * FROM Profile WHERE UserID = $num"));
+			$this->set("role",$this->Admin->query("SELECT * FROM Users_has_Roles INNER JOIN Roles ON Roles.RolesID = Users_has_Roles.RolesID WHERE Users_has_Roles.UsersID = $num"));
 			$this->set("user",$this->Admin->query("SELECT * FROM User WHERE UserID = $num"));
 			$this->set("singleton",true);
 		}
