@@ -75,11 +75,11 @@
 			global $session;
 		
 			$CSSLink = '<link rel="stylesheet" type="text/css" href="';
-			$neutralColors = "view/css/neutralColors.css\" />";
-			$adminColors = "view/css/adminColors.css\" />";
-			$studentColors = "view/css/studentColors.css\" />";
-			$instructorColors = "view/css/instructorColors.css\" />";
-			$accreditorColors = "view/css/accreditorColors.css\" />";
+			$neutralColors = "include/css/neutralColors.css\" />";
+			$adminColors = "include/css/adminColors.css\" />";
+			$studentColors = "include/css/studentColors.css\" />";
+			$instructorColors = "include/css/instructorColors.css\" />";
+			$accreditorColors = "include/css/accreditorColors.css\" />";
 	
 			if(!$session->isLoggedIn())
 			{

@@ -9,6 +9,12 @@
 echo $user[0]["User"]["username"];
 ?></h2>
 
+<?php
+	echo "Full Name:  ".$profile[0]["Profile"]["fullName"]."<br/>";
+	echo "Email:  ".$profile[0]["Profile"]["emailAddress"]."<br/>";
+	echo "Address:  ".$profile[0]["Profile"]["address"]."<br/>";
+	echo "Role:  ".$role[0]["Role"]["role"]."<br/>";
+?>
 
 <?php else: ?>
 <h2>Listing all current users:</h2>
