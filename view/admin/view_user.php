@@ -10,10 +10,20 @@ echo $user[0]["User"]["username"];
 ?></h2>
 
 <?php
-	echo "Full Name:  ".$profile[0]["Profile"]["fullName"]."<br/>";
-	echo "Email:  ".$profile[0]["Profile"]["emailAddress"]."<br/>";
-	echo "Address:  ".$profile[0]["Profile"]["address"]."<br/>";
-	echo "Role:  ".$role[0]["Role"]["role"]."<br/>";
+	echo "<table>";
+	echo "<tr>";
+	echo "<td><strong>Full Name:  </strong></td><td>".$profile[0]["Profile"]["fullName"]."</td><br/>";
+	echo "</tr>";
+	echo "<tr>";
+	echo "<td><strong>Email:  </strong></td><td>".$profile[0]["Profile"]["emailAddress"]."</td><br/>";
+	echo "</tr>";
+	echo "<tr>";
+	echo "<td><strong>Address:  </strong></td><td>".$profile[0]["Profile"]["address"]."</td><br/>";
+	echo "</tr>";
+	echo "<tr>";
+	echo "<td><strong>Role:  </strong></td><td>".$role[0]["Role"]["role"]."</td><br/>";
+	echo "</tr>";
+	echo "</table>";
 ?>
 
 <?php else: ?>

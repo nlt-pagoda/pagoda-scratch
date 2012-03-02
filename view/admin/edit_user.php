@@ -32,7 +32,7 @@ endif ?>
 
 <h2>Edit User Profile</h2>
 	<form action="" method="POST">
-		<label for="username">Username:</label>
+		<label for="username">Username:  </label>
 			
 		<select name="userID">
 		<option value="" selected="selected" disabled="disabled">Select</option>
@@ -48,12 +48,24 @@ endif ?>
 			}
 		?>
 		</select>
-				<h3>Profile:</h3>
-		<label for="fullname">Full Name:</label><input type="text" name="fullname" /><br />
-		<label for="email">Email:</label><input type="text" name="email" /><br />
-		<label for="address">Address:</label><input type="text" name="address" size="60"/>
-		<br /><input type="submit" name="submit" value="submit"/>
+		
+		<h3>Profile:</h3>
+		<table>
+		<tr>		
+		<td><label for="fullname">Full Name:  </label></td><td><input type="text" name="fullname" /></td>
+		</tr>
+		<tr>
+		<td><label for="email">Email:  </label></td><td><input type="text" name="email" /></td>
+		</tr>
+		<tr>
+		<td><label for="address">Address:  </label></td><td><input type="text" name="address" size="60"/></td>
+		</tr>
+		<tr><td></td>
+		<td><input type="submit" name="submit" value="submit"/></td>
+		</tr>
+		</table>
 		</form>
+		
 	
 	
 	
