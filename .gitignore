@@ -1,0 +1,7 @@
+*.buildpath
+*.project
+*.swp
+~*
+.*~
+.settings
+uploads/

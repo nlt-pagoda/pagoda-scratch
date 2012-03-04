@@ -5,7 +5,7 @@ if(isset($_POST['submit'])||isset($_POST['replace']))
 	UploadController::submitUpload();
 }
 ?>
-<script type="text/javascript" src="<?php echo BASEPATH; ?>include/upload.js"></script>
+<script type="text/javascript" src="<?php echo BASEPATH; ?>include/js/upload.js"></script>
 <body>
 <div id="shout">
 <form method='POST' enctype='multipart/form-data' action="">

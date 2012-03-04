@@ -28,7 +28,7 @@ class UploadController extends Controller
 				<div id='replacetitle'>
 				do you want to overwrite these files? :
 				</div>";
-			UploadController::displayinfo(upload::$existingfiles);
+			UploadController::displayinfo(Upload::$existingFiles);
 			//$this->re
 		}
 		echo "</div>";
@@ -38,7 +38,7 @@ class UploadController extends Controller
 			<div id='successtitle'>
 			successfully uploaded :
 			</div>";
-			UploadController::getinfo($test::$successFiles);
+			UploadController::getinfo(Upload::$successFiles);
 		}
 		echo "</div>";
 	}
@@ -57,6 +57,9 @@ class UploadController extends Controller
 		if(!isset($_SESSION['username']))
 		{
 			echo "Login please";
+		}
+		else
+		{
 		}
 	}
 	public function countArray($array)
