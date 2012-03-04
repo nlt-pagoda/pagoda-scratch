@@ -1,40 +1,63 @@
 <?php
-require_once("../../model/Upload.php");
-class UploadController 
+//require_once("../../model/Upload.php");
+class UploadController extends Controller
 {
+
+	public function uploadError()
+	{
+		if(count(Upload::$errors)>0)
+		{	
+			echo "<div id='errorbox'>
+			<div id='errortitle'>
+			errors:
+			</div>";
+		}
+		if(UploadController::getinfo(Upload::$errors))
+		{
+			return true;
+		}
+		else
+			return false;
+		echo "</div>";
+	}
+	public function uploadSuccess()
+	{
+		if(array_key_exists("name",Upload::$existingFiles))
+		{
+		echo "<div id='replacebox'>
+				<div id='replacetitle'>
+				do you want to overwrite these files? :
+				</div>";
+			UploadController::displayinfo(upload::$existingfiles);
+			//$this->re
+		}
+		echo "</div>";
+		if(count(Upload::$successFiles)>0)
+		{
+			echo "<div id='successbox'>
+			<div id='successtitle'>
+			successfully uploaded :
+			</div>";
+			UploadController::getinfo($test::$successFiles);
+		}
+		echo "</div>";
+	}
 	public function submitUpload()
 	{
+		global $session;
 		$test = new Upload();
-		$test->pushUpload();
-		if(count($test::$errors)>0)
-		{	
-			echo "<div id='errorBox'>
-			<div id='errorTitle'>
-			Errors:
-			</div>";
-			UploadController::getInfo($test::$errors);
-		}
-		echo "</div>";
-		if(array_key_exists("name",$test::$existingFiles))
+		$test->defineDir($session->getName());
+		$test->pushupload();
+		self::uploadError();
+		self::uploadSuccess();
+	}
+	public function index()
+	{
+		global $session;
+		if(!isset($_SESSION['username']))
 		{
-			echo "<div id='replaceBox'>
-				<div id='replaceTitle'>
-				Do you want to overwrite these files? :
-				</div>";
-			UploadController::displayInfo(Upload::$existingFiles);
+			echo "Login please";
 		}
-		echo "</div>";
-		if(count($test::$successFiles)>0)
-		{
-			echo "<div id='successBox'>
-			<div id='successTitle'>
-			Successfully Uploaded :
-			</div>";
-			UploadController::getInfo($test::$successFiles);
-		}
-		echo "</div>";
-
-
 	}
 	public function countArray($array)
 	{

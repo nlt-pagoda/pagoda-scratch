@@ -1,5 +1,5 @@
 <?php
-class Upload
+class Upload extends Model
 {
 	public static $existingFiles=array();
 	public static $errors=array();
@@ -7,14 +7,11 @@ class Upload
 	private static $rootDir;
 	private static $subDir;
 	private static $tmpSubDir;
-	public function __construct()
+	public function defineDir($dirName)
 	{
-		session_start();
-		self::$rootDir = "../../uploads/";
-		$username = $_SESSION['username'];
-		self::$subDir = "../../uploads/$username/";
-		self::$tmpSubDir = "../../uploads/$username/tmp/";
-		
+		self::$rootDir = "uploads/"; //This path needs to be changed, temp path chosen for now
+		self::$subDir = "uploads/$dirName/";
+		self::$tmpSubDir = "uploads/$dirName/tmp/";
 	}
 	public function makeDir($dir)
 	{
@@ -27,6 +24,9 @@ class Upload
 	{
 		if(!is_dir(self::$rootDir))	
 		{
+			/*echo self::$rootDir."<br/>";
+			echo self::$subDir."<br/>";
+			echo self::$tmpSubDir;*/
 			if(Upload::makeDir(self::$rootDir)&&Upload::makeDir(self::$subDir))
 				return true;
 			else
@@ -63,7 +63,7 @@ class Upload
 	{
 		if (array_key_exists("name",self::$existingFiles))
 		{
-			foreach($_FILES["docs"]["error"] as $key=>$error)
+		foreach($_FILES["docs"]["error"] as $key=>$error)
 			{
 				switch($_FILES["docs"]["error"][$key])
 				{
@@ -146,7 +146,7 @@ class Upload
 		else
 			return false;
 	}
-	public function setExistingFileInfo($fileId)
+	public static function setExistingFileInfo($fileId)
 	{
 		static $smartCounter = 0;
 		//Populates the class array $existingFiles with their old file size and the size of file that's being replaced
