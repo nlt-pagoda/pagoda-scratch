@@ -124,9 +124,63 @@ class AdminController extends Controller
 				$this->Admin->query("INSERT INTO Course (CRN,name,section,number,InstructorID) VALUES (\"$crn\",\"$name\",\"$section\",\"$number\",$instructorID)");
 				$this->set('added',true);
 			}
-		
-		
+
 		}
 	
+	}
+	
+	function view_courses($num)
+	{
+		if (!empty($num))
+		{		
+			$this->set("instructor",$this->Admin->query("SELECT fullName FROM Profile INNER JOIN Course ON Profile.UserID = Course.InstructorID WHERE Course.CourseID = $num"));
+			$this->set("course",$this->Admin->query("SELECT CRN,name,section,number FROM Course WHERE CourseID = $num"));
+			$this->set("singleton",true);
+		}
+		else
+			$this->set("courses",$this->Admin->query("SELECT name,CourseID FROM Course"));
+	}
+	
+	function remove_course()
+	{	
+		if(isset($_POST['submit']))
+		{
+			if($_POST['courseID'] == "")
+			{
+				$this->set('missing',true);
+			}
+			else
+			{
+				$courseID = mysql_real_escape_string($_POST['courseID']);
+				$this->Admin->query("DELETE FROM Course WHERE CourseID = $courseID" );
+				$this->set('removed',true);
+			}
+		}
+		
+		$this->set("courses",$this->Admin->query("SELECT CourseID,name FROM Course"));
+	}
+	
+	function edit_course()
+	{
+		if(isset($_POST['submit']))
+		{
+			if($_POST['courseID'] == "")
+			{
+				$this->set('missing',true);
+			}
+			else
+			{
+				$courseID = mysql_real_escape_string($_POST['courseID']);
+				$name = mysql_real_escape_string($_POST['name']);
+				$number = mysql_real_escape_string($_POST['number']);
+				$section = mysql_real_escape_string($_POST['section']);
+				$crn = mysql_real_escape_string($_POST['crn']);
+				$this->Admin->query("UPDATE Course SET name = \"$name\", number = \"$number\", section = \"$section\", CRN = \"$crn\" WHERE CourseID = $courseID");
+
+				$this->set('edited',true);
+			}
+		}
+		
+		$this->set("courses",$this->Admin->query("SELECT CourseID,name FROM Course ORDER BY name"));
 	}
 }

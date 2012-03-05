@@ -2,12 +2,21 @@
 <?php if ($accessible): ?>
 
 <h1>Admin Control Panel</h1>
+
+<h2>Users</h2>
 <ul>
 <li><a href="<?php echo BASEPATH; ?>admin/view/user/">View Users</a></li>
 <li><a href="<?php echo BASEPATH; ?>admin/add/user/">Add Users</a></li>
-<li><a href="<?php echo BASEPATH; ?>admin/remove/user/">Remove Users</a></li>
 <li><a href="<?php echo BASEPATH; ?>admin/edit/user/">Edit User Profile</a></li>
-<li><a href="<?php echo BASEPATH; ?>admin/add/course/">Add Course</a></li>
+<li><a href="<?php echo BASEPATH; ?>admin/remove/user/">Remove Users</a></li>
+</ul>
+
+<h2>Courses</h2>
+<ul>
+<li><a href="<?php echo BASEPATH; ?>admin/view/courses/">View Courses</a></li>
+<li><a href="<?php echo BASEPATH; ?>admin/add/course/">Add Courses</a></li>
+<li><a href="<?php echo BASEPATH; ?>admin/edit/course/">Edit Course Info</a></li>
+<li><a href="<?php echo BASEPATH; ?>admin/remove/course/">Remove Courses</a></li>
 </ul>
 	
 <?php else: 
