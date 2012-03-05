@@ -38,9 +38,10 @@ endif ?>
 		<option value="" selected="selected" disabled="disabled">Select</option>
 		<?php
 
-		foreach($roles as $role)
+		//is this necessary?
+		/*foreach($roles as $role)
 		echo "<option value=\"".$role["Role"]["RolesID"]."\">".$role["Role"]["role"]."</option>";
-	
+	*/
 		
 			foreach($users as $user)
 			{
