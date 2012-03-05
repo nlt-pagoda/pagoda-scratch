@@ -7,6 +7,7 @@
 <li><a href="<?php echo BASEPATH; ?>admin/add/user/">Add Users</a></li>
 <li><a href="<?php echo BASEPATH; ?>admin/remove/user/">Remove Users</a></li>
 <li><a href="<?php echo BASEPATH; ?>admin/edit/user/">Edit User Profile</a></li>
+<li><a href="<?php echo BASEPATH; ?>admin/add/course/">Add Course</a></li>
 </ul>
 	
 <?php else: 
