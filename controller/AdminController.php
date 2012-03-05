@@ -138,7 +138,7 @@ class AdminController extends Controller
 			$this->set("singleton",true);
 		}
 		else
-			$this->set("courses",$this->Admin->query("SELECT name,CourseID FROM Course"));
+			$this->set("courses",$this->Admin->query("SELECT name,section,number,CourseID FROM Course ORDER BY name"));
 	}
 	
 	function remove_course()
@@ -157,7 +157,7 @@ class AdminController extends Controller
 			}
 		}
 		
-		$this->set("courses",$this->Admin->query("SELECT CourseID,name FROM Course"));
+		$this->set("courses",$this->Admin->query("SELECT CourseID,name,number,section FROM Course ORDER BY name"));
 	}
 	
 	function edit_course()
@@ -181,6 +181,6 @@ class AdminController extends Controller
 			}
 		}
 		
-		$this->set("courses",$this->Admin->query("SELECT CourseID,name FROM Course ORDER BY name"));
+		$this->set("courses",$this->Admin->query("SELECT CourseID,name,number,section FROM Course ORDER BY name"));
 	}
 }
