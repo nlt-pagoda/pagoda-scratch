@@ -30,7 +30,7 @@ echo $course[0]["Course"]["name"];
 <h2>Listing all courses:</h2>
 <?php
 foreach ($courses as $course)
-	echo("<a href=\"".$course["Course"]["CourseID"]."\">".$course["Course"]["name"]."</a><br/>");
+	echo("<a href=\"".$course["Course"]["CourseID"]."\">".$course["Course"]["name"]."-".$course["Course"]["number"]."-".$course["Course"]["section"]."</a><br/>");
 ?>
 	
 <?php endif; ?>
