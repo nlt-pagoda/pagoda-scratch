@@ -18,7 +18,7 @@ endif ?>
 		<?php
 			foreach($courses as $course)
 			{
-				echo "<option value=\"".$course["Course"]["CourseID"]."\">".$course["Course"]["name"]."</option>";
+				echo "<option value=\"".$course["Course"]["CourseID"]."\">".$course["Course"]["name"]."-".$course["Course"]["number"]."-".$course["Course"]["section"]."</option>";
 			}
 		?>
 		</select>
