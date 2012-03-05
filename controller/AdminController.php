@@ -100,4 +100,33 @@ class AdminController extends Controller
 		
 		$this->set("users",$this->Admin->query("SELECT * FROM User ORDER BY username"));
 	}
+	
+	function add_course()
+	{
+		//Need to add error checking for fields. eg: check Number field contains only numbers		
+		$this->set("instructors",$this->Admin->query("SELECT fullName, Users_has_Roles.UsersID FROM Profile INNER JOIN Users_has_Roles ON Profile.UserID = Users_has_Roles.UsersID WHERE Users_has_Roles.RolesID = 3"));
+	
+		if(isset($_POST['submit']))
+		{
+			$crn = mysql_real_escape_string($_POST['CRN']);
+			$name = mysql_real_escape_string($_POST['name']);
+			$number = mysql_real_escape_string($_POST['number']);
+			$section = mysql_real_escape_string($_POST['section']);
+			$instructorID = mysql_real_escape_string($_POST['instructor']);
+					
+			
+			if($crn == "" || $name == "" || $number == "" || $section == "")
+			{
+				$this->set('missing',true);
+			}
+			else
+			{
+				$this->Admin->query("INSERT INTO Course (CRN,name,section,number,InstructorID) VALUES (\"$crn\",\"$name\",\"$section\",\"$number\",$instructorID)");
+				$this->set('added',true);
+			}
+		
+		
+		}
+	
+	}
 }
