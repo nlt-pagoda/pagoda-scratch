@@ -2,6 +2,12 @@
 //require_once("../../model/Upload.php");
 class UploadController extends Controller
 {
+	public function __construct($model, $controller, $action)
+	{
+		parent::__construct($model, $controller, $action);
+		
+		
+	}
 
 	public function uploadError()
 	{
@@ -56,7 +62,8 @@ class UploadController extends Controller
 		global $session;
 		if(!isset($_SESSION['username']))
 		{
-			echo "Login please";
+			$this->set('notLoggedIn',true);
+			//echo "Login please";
 		}
 		else
 		{

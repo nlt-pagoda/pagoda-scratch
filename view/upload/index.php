@@ -1,9 +1,11 @@
 <html>
 <?php
 if(isset($_POST['submit'])||isset($_POST['replace']))
-{
-	UploadController::submitUpload();
-}
+		{
+			UploadController::submitUpload();
+		}
+if (isset($notLoggedIn))
+	$this->RenderMsg("Please login to continue.");
 ?>
 <script type="text/javascript" src="<?php echo BASEPATH; ?>include/js/upload.js"></script>
 <body>
