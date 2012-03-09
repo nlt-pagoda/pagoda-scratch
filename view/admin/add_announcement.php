@@ -1,4 +1,4 @@
-<div id="content">
+
 <?php if ($accessible): ?>
 
 <?php if (isset($missing)):
@@ -15,7 +15,7 @@ endif ?>
 
 
 
-<form action="" method="POST">
+<form action="<?php echo BASEPATH; ?>/admin/add/announcement/" method="POST">
 	<table>
 	<tr>
 	<td>
@@ -49,4 +49,3 @@ endif ?>
 $this->RenderMsg("You do not have sufficient privileges to view this page!"); ?>
 <?php endif ?>
 
-</div>

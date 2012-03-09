@@ -1,3 +1,4 @@
+<html>
 <head>
 <link rel="stylesheet" type="text/css" href="<?php echo BASEPATH; ?>/include/css/basicStyle.css" />
 <script type="text/javascript" src="<?php echo BASEPATH; ?>/include/js/jq.js"></script>
@@ -8,6 +9,7 @@
 ?>
 
 </head>
+<body>
 <div id="header">
 	<div id="banner">
 		Pagoda
@@ -43,3 +45,4 @@ else
 
 	</div>	
 </div>	
+
