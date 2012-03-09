@@ -1,4 +1,19 @@
 <div id="content">
+
+<div id="headlines">
+<h1>Headlines</h1>
+
+<?php
+
+foreach ($headlines as $headline)
+{
+	echo("<h2>".$headline["Announcement"]["title"]."</h2>");
+	echo("<h6>".$headline["Announcement"]["date"]."</h6>");
+	echo("<h3>".$headline["Announcement"]["text"]."</h3>");
+}
+	
+?>
+</div>
 	<h1>test header</h1>
 	
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in nisl sed risus semper tristique id vel nisl. In mi diam, fermentum eget bibendum quis, commodo ut ante. Vivamus sit amet felis massa. Quisque ultrices laoreet nulla et rutrum. Aliquam lorem felis, vestibulum sed condimentum et, feugiat et mauris. Donec tellus erat, gravida vitae pulvinar et, cursus vel est. Duis ut neque non risus placerat convallis quis at odio. Praesent eleifend augue non metus ultricies sit amet facilisis ipsum ullamcorper. Praesent ut orci a est pretium hendrerit eget ac massa. Duis id est orci.</p>
