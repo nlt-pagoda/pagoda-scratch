@@ -18,8 +18,8 @@ class Session
 	function logIn($user,$pass)
 	{
 		$cred = $this->_model->query_old("SELECT * FROM User 
-		INNER JOIN Users_has_Roles ON User.UserID = Users_has_Roles.UsersID
-		INNER JOIN Roles ON Users_has_Roles.RolesID = Roles.RolesID
+		INNER JOIN User_has_Roles ON User.UserID = User_has_Roles.UserID
+		INNER JOIN Roles ON User_has_Roles.RolesID = Roles.RolesID
 		WHERE username = '$user' AND password = '$pass'");
 		if (!empty($cred[0]))
 		{
