@@ -15,3 +15,5 @@
 	</div>
 </div>
 <div id="wrapper">
+
+<div id="content">

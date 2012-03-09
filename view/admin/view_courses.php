@@ -1,4 +1,3 @@
-<div id="content">
 <?php if ($accessible): ?>
 
 <h1>Admin Control Panel</h1>
@@ -40,5 +39,3 @@ foreach ($courses as $course)
 <?php else: 
 $this->RenderMsg("You do not have sufficient privileges to view this page!"); ?>
 <?php endif; ?>
-
-</div>

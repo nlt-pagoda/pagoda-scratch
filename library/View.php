@@ -25,37 +25,51 @@
 		//and converts it to a format like $key = value.
 		//also, you can specifiy custom headers & footers
 		//if /view/CONTROLLERNAME/header.php (or footer.php) exists!
+		//this function will not render headers/footers if AJAX is detected.
 		public function render()
 		{
 			extract($this->variables);
-			//header
-			if(file_exists(ROOT."view/".$this->_controller."/header.php"))
-				include(ROOT."view/".$this->_controller."/header.php");
-			else
-				include(ROOT."view/header.php");
 			
-			//navbar
-			if(file_exists(ROOT."view/".$this->_controller."/navigation.php"))
-				include(ROOT."view/".$this->_controller."/navigation.php");
+			if( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && strtolower( $_SERVER['HTTP_X_REQUESTED_WITH'] ) == 'xmlhttprequest') {
+				//view
+				if(file_exists(ROOT."view/".$this->_controller."/".$this->_action.".php"))
+					include(ROOT."view/".$this->_controller."/".$this->_action.".php");
+				else if(file_exists(ROOT."view/".$this->_controller."/"."index.php") && empty($this->_action))
+					include(ROOT."view/".$this->_controller."/"."index.php");
+				else
+					require(ROOT."/view/error/404.php");
+			}
 			else
-				include(ROOT."view/navigation.php");
-			//login (do we need this here?)
-			require (ROOT."controller/login.php");
-			
-			
-			//view
-			if(file_exists(ROOT."view/".$this->_controller."/".$this->_action.".php"))
-				include(ROOT."view/".$this->_controller."/".$this->_action.".php");
-			else if(file_exists(ROOT."view/".$this->_controller."/"."index.php") && empty($this->_action))
-				include(ROOT."view/".$this->_controller."/"."index.php");
-			else
-				require(ROOT."/view/error/404.php");
-			
-			//footer
-			if(file_exists(ROOT."/view/".$this->_controller."/footer.php"))
-				include(ROOT."/view/".$this->_controller."/footer.php");
-			else
-				include(ROOT."/view/footer.php");
+			{
+				//header
+				if(file_exists(ROOT."view/".$this->_controller."/header.php"))
+					include(ROOT."view/".$this->_controller."/header.php");
+				else
+					include(ROOT."view/header.php");
+				
+				//navbar
+				if(file_exists(ROOT."view/".$this->_controller."/navigation.php"))
+					include(ROOT."view/".$this->_controller."/navigation.php");
+				else
+					include(ROOT."view/navigation.php");
+				//login (do we need this here?)
+				require (ROOT."controller/login.php");
+				
+				
+				//view
+				if(file_exists(ROOT."view/".$this->_controller."/".$this->_action.".php"))
+					include(ROOT."view/".$this->_controller."/".$this->_action.".php");
+				else if(file_exists(ROOT."view/".$this->_controller."/"."index.php") && empty($this->_action))
+					include(ROOT."view/".$this->_controller."/"."index.php");
+				else
+					require(ROOT."/view/error/404.php");
+				
+				//footer
+				if(file_exists(ROOT."/view/".$this->_controller."/footer.php"))
+					include(ROOT."/view/".$this->_controller."/footer.php");
+				else
+					include(ROOT."/view/footer.php");
+			}
 				
 		}
 		
