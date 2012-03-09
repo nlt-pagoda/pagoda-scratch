@@ -3,6 +3,20 @@
 class UploadController extends Controller
 {
 
+	public function __construct($model,$controller,$action)
+	{
+		parent::__construct($model,$controller,$action);
+		if(isset($_POST['submit']) || isset($_POST['replace']))
+		{
+			$test = new Upload();
+			$test->defineDir($session->getName()); //Make directory based on the username
+			$test->pushUpload(); //Call function pushupload inside Upload Model
+			self::uploadError();
+			self::uploadSuccess();
+		}
+		else(isset($notLoggedIn))
+			$this->RenderMsg("Please login to continue");
+	}
 	public function uploadError()
 	{
 		if(count(Upload::$errors)>0)
@@ -29,7 +43,6 @@ class UploadController extends Controller
 				do you want to overwrite these files? :
 				</div>";
 			UploadController::displayinfo(Upload::$existingFiles);
-			//$this->re
 		}
 		echo "</div>";
 		if(count(Upload::$successFiles)>0)
@@ -41,26 +54,6 @@ class UploadController extends Controller
 			UploadController::getinfo(Upload::$successFiles);
 		}
 		echo "</div>";
-	}
-	public function submitUpload()
-	{
-		global $session;
-		$test = new Upload();
-		$test->defineDir($session->getName());
-		$test->pushupload();
-		self::uploadError();
-		self::uploadSuccess();
-	}
-	public function index()
-	{
-		global $session;
-		if(!isset($_SESSION['username']))
-		{
-			echo "Login please";
-		}
-		else
-		{
-		}
 	}
 	public function countArray($array)
 	{
