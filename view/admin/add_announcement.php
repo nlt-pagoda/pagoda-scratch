@@ -1,7 +1,4 @@
 <div id="content">
-<script src="<?php echo BASEPATH; ?>include/js/nicedit.js" type="text/javascript"></script>
-<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
-						
 <?php if ($accessible): ?>
 
 <?php if (isset($missing)):
