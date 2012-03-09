@@ -2,20 +2,23 @@
 //require_once("../../model/Upload.php");
 class UploadController extends Controller
 {
-
 	public function __construct($model,$controller,$action)
 	{
 		parent::__construct($model,$controller,$action);
-		if(isset($_POST['submit']) || isset($_POST['replace']))
-		{
+		global $session;
+		if($session->isLoggedIn())
+			$this->set("display",true);
+		else
+			$this->set("display",false);
+	}
+
+	public function uploadShow()
+	{
 			$test = new Upload();
 			$test->defineDir($session->getName()); //Make directory based on the username
 			$test->pushUpload(); //Call function pushupload inside Upload Model
 			self::uploadError();
 			self::uploadSuccess();
-		}
-		else(isset($notLoggedIn))
-			$this->RenderMsg("Please login to continue");
 	}
 	public function uploadError()
 	{
