@@ -24,7 +24,7 @@ endif ?>
 	<select name="instructor">
 	<?php
 	foreach($instructors as $instructor)
-		echo "<option value=\"".$instructor["Users_has_Role"]["UsersID"]."\">".$instructor["Profile"]["fullName"]."</option>";
+		echo "<option value=\"".$instructor["User_has_Role"]["UserID"]."\">".$instructor["Profile"]["fullName"]."</option>";
 		echo $instructor;
 		?>
 	</select>

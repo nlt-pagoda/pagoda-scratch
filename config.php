@@ -13,10 +13,10 @@
 	ob_start();
 
 	//SET DATABASE SETTINGS HERE
-	define('DB_HOST',"pagodanlt2.db.8810539.hostedresource.com");
-	define('DB_USER',"pagodanlt2");
+	define('DB_HOST',"pagodanlt.db.8810539.hostedresource.com");
+	define('DB_USER',"pagodanlt");
 	define('DB_PASS',"Csci410");
-	define('DB_NAME',"pagodanlt2");
+	define('DB_NAME',"pagodanlt");
 	
 	//SET SPECIAL ROUTING URLS HERE
 	$routing = array(
