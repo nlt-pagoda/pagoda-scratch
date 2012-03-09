@@ -17,7 +17,7 @@ class AdminController extends Controller
 		if (!empty($num))
 		{
 			$this->set("profile",$this->Admin->query("SELECT * FROM Profile WHERE UserID = $num"));
-			$this->set("role",$this->Admin->query("SELECT * FROM Users_has_Roles INNER JOIN Roles ON Roles.RolesID = Users_has_Roles.RolesID WHERE Users_has_Roles.UsersID = $num"));
+			$this->set("role",$this->Admin->query("SELECT * FROM User_has_Roles INNER JOIN Roles ON Roles.RolesID = User_has_Roles.RolesID WHERE User_has_Roles.UserID = $num"));
 			$this->set("user",$this->Admin->query("SELECT * FROM User WHERE UserID = $num"));
 			$this->set("singleton",true);
 		}
@@ -47,7 +47,7 @@ class AdminController extends Controller
 			{
 				$this->Admin->query("INSERT INTO User (username,password) VALUES (\"$u\",\"$p\")");
 				$userID = $this->Admin->getInsertId();
-				$this->Admin->query("INSERT INTO Users_has_Roles (UsersID,RolesID) VALUES ($userID,$r)");
+				$this->Admin->query("INSERT INTO User_has_Roles (UserID,RolesID) VALUES ($userID,$r)");
 				$this->Admin->query("INSERT INTO Profile (fullName,emailAddress,address,UserID) VALUES (\"$fullName\",\"$email\",\"$address\",$userID)");
 				$this->set('added',true);
 			}
@@ -68,7 +68,7 @@ class AdminController extends Controller
 			else
 			{
 				$uID = mysql_real_escape_string($_POST['userID']);
-				$this->Admin->query("DELETE FROM Users_has_Roles WHERE UsersID = $uID" );
+				$this->Admin->query("DELETE FROM User_has_Roles WHERE UserID = $uID" );
 				$this->Admin->query("DELETE FROM Profile WHERE UserID = $uID" );
 				$this->Admin->query("DELETE FROM User WHERE UserID = $uID" );
 				$this->set('removed',true);
@@ -104,7 +104,7 @@ class AdminController extends Controller
 	function add_course()
 	{
 		//Need to add error checking for fields. eg: check Number field contains only numbers		
-		$this->set("instructors",$this->Admin->query("SELECT fullName, Users_has_Roles.UsersID FROM Profile INNER JOIN Users_has_Roles ON Profile.UserID = Users_has_Roles.UsersID WHERE Users_has_Roles.RolesID = 3"));
+		$this->set("instructors",$this->Admin->query("SELECT fullName, User_has_Roles.UserID FROM Profile INNER JOIN User_has_Roles ON Profile.UserID = User_has_Roles.UserID WHERE User_has_Roles.RolesID = 3"));
 	
 		if(isset($_POST['submit']))
 		{
