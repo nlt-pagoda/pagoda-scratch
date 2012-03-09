@@ -2,12 +2,6 @@
 //require_once("../../model/Upload.php");
 class UploadController extends Controller
 {
-	public function __construct($model, $controller, $action)
-	{
-		parent::__construct($model, $controller, $action);
-		
-		
-	}
 
 	public function __construct($model,$controller,$action)
 	{
