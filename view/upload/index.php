@@ -1,5 +1,5 @@
 <script type="text/javascript" src="<?php echo BASEPATH; ?>include/js/upload.js"></script>
-<div id="shout">
+<div id="content">
 <?php if($display):?>
 <form method='POST' enctype='multipart/form-data' action="">
 		<ul id='parentFilelist'></ul>
@@ -8,7 +8,7 @@
 	</form>
 </div>
 <div id="formBox">
-<?php else: ?>
-<b>Please login to continue</b>
-<?php endif ?>
+<?php else:
+$this->RenderMsg("Please login to continue");
+endif ?>
 </div>

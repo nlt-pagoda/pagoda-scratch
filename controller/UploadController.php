@@ -1,71 +1,56 @@
 <?php
-//require_once("../../model/Upload.php");
 class UploadController extends Controller
 {
-	public function __construct($model,$controller,$action)
-	{
+	protected static $test;
+	public function __construct($model,$controller,$action){
 		parent::__construct($model,$controller,$action);
 		global $session;
-		if($session->isLoggedIn())
+		echo "constructor";
+		if($session->isLoggedIn()){
+			if(isset($_POST['submit']) || isset($_POST['replace']))
+			{
+				$test = new Upload();
+				$test->defineDir($session->getName()); //Make directory based on the username
+				$test->pushUpload(); //Call function pushupload inside Upload Model
+				if(count(Upload::$errors)>0)
+					self::uploadError();
+				else{
+				//print_r(Upload::$successFiles);
+					self::$test = Upload::$successFiles;
+					//self::uploadSuccess();
+					header("Location:".BASEPATH."upload/uploadSuccess/");
+				}
+			}
 			$this->set("display",true);
+		}
 		else
 			$this->set("display",false);
 	}
 
-	public function uploadShow()
-	{
-			$test = new Upload();
-			$test->defineDir($session->getName()); //Make directory based on the username
-			$test->pushUpload(); //Call function pushupload inside Upload Model
-			self::uploadError();
-			self::uploadSuccess();
+
+
+	public function uploadError(){
+		print_r(self::$test);
+		$this->set("errors",Upload::$errors);
 	}
-	public function uploadError()
-	{
-		if(count(Upload::$errors)>0)
-		{	
-			echo "<div id='errorbox'>
-			<div id='errortitle'>
-			errors:
-			</div>";
-		}
-		if(UploadController::getinfo(Upload::$errors))
-		{
-			return true;
-		}
-		else
-			return false;
-		echo "</div>";
+
+
+	public function uploadSuccess(){
+		//$test = array("hello","world");
+		print_r(self::$test);
+		$this->set("uploadedFiles",Upload::$successFiles);
+		$this->set("existingFiles",Upload::$existingFiles);
 	}
-	public function uploadSuccess()
-	{
-		if(array_key_exists("name",Upload::$existingFiles))
-		{
-		echo "<div id='replacebox'>
-				<div id='replacetitle'>
-				do you want to overwrite these files? :
-				</div>";
-			UploadController::displayinfo(Upload::$existingFiles);
-		}
-		echo "</div>";
-		if(count(Upload::$successFiles)>0)
-		{
-			echo "<div id='successbox'>
-			<div id='successtitle'>
-			successfully uploaded :
-			</div>";
-			UploadController::getinfo(Upload::$successFiles);
-		}
-		echo "</div>";
-	}
-	public function countArray($array)
+	//Don't think I will be needing this function
+/*	public function countArray($array)
 	{
 		if(count($array)>0)
 			return true;
 		else
 			return false;
 	}
-	public function displayInfo($data)
+	*/
+	/*public function displayInfo($data)
 	{
 		$counter = 0;
 		//print_r($data);
@@ -90,4 +75,5 @@ class UploadController extends Controller
 
 		}
 	}
+	*/
 }
