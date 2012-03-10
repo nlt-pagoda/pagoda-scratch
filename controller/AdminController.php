@@ -1,5 +1,4 @@
 <?php 
-
 class AdminController extends Controller
 {
 	function __construct($model,$controller,$action)
@@ -206,6 +205,5 @@ class AdminController extends Controller
 				$this->set('added',true);
 			}
 		}	
-		
 	}
 }
