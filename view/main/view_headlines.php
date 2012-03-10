@@ -3,7 +3,8 @@
 
 <div id="headlinesList">
 <?php
-for($i=0;$i<=4;$i++)
+//displays 20 headlines
+for($i=0;$i<=19;$i++)
 {
 	if($i==0)
 	{
@@ -16,25 +17,6 @@ for($i=0;$i<=4;$i++)
 		echo("<div id=\"headlineText\">".$headlines[$i]["Announcement"]["text"]."</div></div>");
 	}
 }
+	
 ?>
-<a href="<?php echo BASEPATH; ?>main/view/headlines/">View more announcements</a>
 </div>
-<script type="text/javascript">
-	$(document).ready(function(){
-	
-		$("#click").click(function(){
-			$(".result").hide();
-			$.ajax({
-				url: <?php echo BASEPATH; ?>+"admin/edit/user/1",
-				success: function(data) {
-					$(".result").html(data);
-					$(".result").slideDown();
-				}
-			});
-		});
-
-	
-	});
-</script>
-
-	<div class="result"><a id="click" href="javascript:void(0);">CLICK HERE TO START YOUR JOURNEY</a></div>
