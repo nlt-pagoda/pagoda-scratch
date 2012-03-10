@@ -48,7 +48,8 @@ class Session
 	{
 		if (isset($_SESSION['loggedIn']) && !empty($_SESSION['loggedIn']))
 			return true;
-		else return false;
+		else 
+			return false;
 	}
 	
 	function getName()
