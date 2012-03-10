@@ -61,5 +61,10 @@ class Session
 	{
 		return $_SESSION['role'];
 	}
+	
+	function getID()
+	{
+		return $_SESSION['id'];
+	}
 }
 ?>

@@ -1,5 +1,4 @@
 <?php 
-
 class AdminController extends Controller
 {
 	function __construct($model,$controller,$action)
@@ -182,5 +181,29 @@ class AdminController extends Controller
 		}
 		
 		$this->set("courses",$this->Admin->query("SELECT CourseID,name,number,section FROM Course ORDER BY name"));
+	}
+	
+	function add_announcement()
+	{
+		global $session;
+		if(isset($_POST['submit']))
+		{
+			$title = mysql_real_escape_string($_POST['title']);
+			$text = mysql_real_escape_string($_POST['text']);
+			$typeID = 1; //Headline type = 1 
+			$userID = $session->getID();
+			
+			if($title == "" || $text == "")
+			{
+				$this->set('missing',true);
+			}
+			else
+			{
+				$this->Admin->query("INSERT INTO Announcement (title,text,date,AnnouncementTypeID) VALUES (\"$title\",\"$text\",localtime(),\"$typeID\")");
+				$AnnouncementID = mysql_insert_id();
+				$this->Admin->query("INSERT INTO User_has_Announcement (UserID,AnnouncementID) VALUES (\"$userID\",\"$AnnouncementID\")");
+				$this->set('added',true);
+			}
+		}	
 	}
 }

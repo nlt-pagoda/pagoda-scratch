@@ -1,4 +1,3 @@
-<div id="content">
 <?php if ($accessible): ?>
 
 <h1>Admin Control Panel</h1>
@@ -18,9 +17,13 @@
 <li><a href="<?php echo BASEPATH; ?>admin/edit/course/">Edit Course Info</a></li>
 <li><a href="<?php echo BASEPATH; ?>admin/remove/course/">Remove Courses</a></li>
 </ul>
+
+<h2>Headlines/Announcements</h2>
+<ul>
+<li><a href="<?php echo BASEPATH; ?>view/headlines/">View Headlines</a></li>
+<li><a href="<?php echo BASEPATH; ?>admin/add/announcement/">Add Headline To Main Page</a></li>
+</ul>
 	
 <?php else: 
 $this->RenderMsg("You do not have sufficient privileges to view this page!"); ?>
 <?php endif ?>
-
-</div>

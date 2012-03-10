@@ -1,11 +1,15 @@
+<html>
 <head>
 <link rel="stylesheet" type="text/css" href="<?php echo BASEPATH; ?>/include/css/basicStyle.css" />
 <script type="text/javascript" src="<?php echo BASEPATH; ?>/include/js/jq.js"></script>
+<script src="<?php echo BASEPATH; ?>include/js/nicedit.js" type="text/javascript"></script>
+<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
 <?php
 	$this->SetCSS();
 ?>
 
 </head>
+<body>
 <div id="header">
 	<div id="banner">
 		Pagoda
@@ -41,3 +45,4 @@ else
 
 	</div>	
 </div>	
+

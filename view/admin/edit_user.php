@@ -18,7 +18,6 @@ $(document).ready(function(){
 
 </script>
 
-<div id="content">
 <?php if ($accessible): ?>
 
 <?php if (isset($missing)):
@@ -73,5 +72,3 @@ endif ?>
 <?php else: 
 $this->RenderMsg("You do not have sufficient privileges to view this page!"); ?>
 <?php endif ?>
-
-</div>
