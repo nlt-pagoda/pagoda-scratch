@@ -1,4 +1,3 @@
-
 <?php if ($accessible): ?>
 
 <h1>Admin Control Panel</h1>
