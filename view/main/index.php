@@ -9,11 +9,13 @@ for($i=0;$i<=4;$i++)
 	{
 		echo("<div id=\"latestHeadline\">&bull; <span id=\"latestHeadlineTitle\">".$headlines[$i]["Announcement"]["title"]."</span>"."<span id=\"latestHeadlineDate\"> ".$headlines[$i]["Announcement"]["date"]."</span>");
 		echo("<div id=\"latestHeadlineText\">".$headlines[$i]["Announcement"]["text"]."</div></div>");
+		echo("<h1></h1>");
 	}
 	else 
 	{
 		echo("<div id=\"headline\">&bull; <span id=\"headlineTitle\">".$headlines[$i]["Announcement"]["title"]."</span>"."<span id=\"headlineDate\"> ".$headlines[$i]["Announcement"]["date"]."</span>");
 		echo("<div id=\"headlineText\">".$headlines[$i]["Announcement"]["text"]."</div></div>");
+		echo("<h1></h1>");
 	}
 }
 ?>
