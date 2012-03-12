@@ -4,3 +4,5 @@
 uploads/
 .project
 .settings/
+*.vim
+env.vim
