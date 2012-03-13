@@ -31,11 +31,11 @@ endif ?>
 	<label for="announcement">Announcement:  </label>
 	</td>
 	<td>
-	<textarea rows="15" cols="50" name="text"></textarea>
+	<textarea rows="25" cols="85" name="text"></textarea>
 	<tr>
 	<td>
 	<td>
-	<input type="submit" name="submit" value="submit"/>
+	<input type="submit" name="submit" value="Submit"/>
 	</td>
 	</td>
 	</tr>
