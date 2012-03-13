@@ -12,7 +12,12 @@
 <body>
 <div id="header">
 	<div id="banner">
+		
+		<a href="<?php echo BASEPATH ?>">
+		<span id="headerLogo">
 		<img src="<?php echo BASEPATH ?>include/img/logoproto1.png" style="height: inherit;" />
+		</span>
+		</a>
 	</div>
 	<div id="login">
 	
