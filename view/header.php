@@ -12,7 +12,7 @@
 <body>
 <div id="header">
 	<div id="banner">
-		Pagoda
+		<img src="<?php echo BASEPATH ?>include/img/logoproto1.png" style="height: inherit;" />
 	</div>
 	<div id="login">
 	
