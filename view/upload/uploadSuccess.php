@@ -1,6 +1,6 @@
 <div id="content">
-
-	<?php if(isset($existingFiles) && isset($uploadedFiles)):
+<?php if(isset($display)):
+		if(isset($existingFiles) && isset($uploadedFiles)):
 			if(count($existingFiles)>0):?>
 				<form name='replaceBox' action='' method ='POST'>"
 				<?php
@@ -38,9 +38,9 @@
 						?>
 				</div>
 			<?php
-				endif;
+			endif;
+		endif;
 		else:
-			$this->RenderMsg("No files selected to perform upload.");
-			?>
-		<?php endif ?>
+		$this->RenderMsg("No files selected to perform upload.");
+	endif; ?>
 </div>

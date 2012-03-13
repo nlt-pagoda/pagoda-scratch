@@ -5,7 +5,7 @@ class UploadController extends Controller
 	public function __construct($model,$controller,$action){
 		parent::__construct($model,$controller,$action);
 		global $session;
-		echo "constructor";
+		//echo "constructor";
 		if($session->isLoggedIn()){
 			if(isset($_POST['submit']) || isset($_POST['replace']))
 			{
@@ -17,8 +17,8 @@ class UploadController extends Controller
 				else{
 				//print_r(Upload::$successFiles);
 					self::$test = Upload::$successFiles;
-					//self::uploadSuccess();
-					header("Location:".BASEPATH."upload/uploadSuccess/");
+					self::uploadSuccess();
+					//header("Location:".BASEPATH."upload/uploadSuccess/");
 				}
 			}
 			$this->set("display",true);
@@ -30,16 +30,19 @@ class UploadController extends Controller
 
 
 	public function uploadError(){
-		print_r(self::$test);
+		//print_r(self::$test);
 		$this->set("errors",Upload::$errors);
 	}
 
 
-	public function uploadSuccess(){
+	public function uploadSuccess($tmp){
 		//$test = array("hello","world");
-		print_r(self::$test);
-		$this->set("uploadedFiles",Upload::$successFiles);
-		$this->set("existingFiles",Upload::$existingFiles);
+		//print_r(self::$test);
+		if(!isset($tmp)){
+			$this->set("uploadedFiles",Upload::$successFiles);
+			$this->set("existingFiles",Upload::$existingFiles);
+			header("Location:".BASEPATH."upload/uploadSuccess/true");
+		}
 	}
 	//Don't think I will be needing this function
 /*	public function countArray($array)
