@@ -20,7 +20,7 @@ for($i=0;$i<=4;$i++)
 }
 ?>
 </div>
-<a href="<?php echo BASEPATH."main/view_headlines"; ?>">View more announcements</a></br></br>
+<a href="<?php echo BASEPATH."main/view/headlines/"; ?>">View more announcements</a></br></br>
 </div>
 <script type="text/javascript">
 	$(document).ready(function(){
