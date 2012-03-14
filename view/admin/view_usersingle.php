@@ -2,11 +2,8 @@
 
 <h1>Admin Control Panel</h1>
 
-<?php if(isset($roleSet)):
-	foreach ($users as $user)
-	echo("<a href=\"../usersingle/".$user["User"]["UserID"]."\">".$user["User"]["username"]."</a><br/>");
-	
-elseif (isset($singleton)): ?>
+
+<?php if (isset($singleton)): ?>
 <h2><?php 
 echo $user[0]["User"]["username"];
 ?></h2>
@@ -28,16 +25,8 @@ echo $user[0]["User"]["username"];
 	echo "</table>";
 ?>
 
-<?php else: ?>
-<h2>Listing all current users:</h2>
-<?php
-foreach ($roles as $role)
-	echo("<a href=\"".$role["Role"]["RolesID"]."\">".$role["Role"]["role"]."s</a><br/>");
-?>
-	
+
 <?php endif; ?>
-
-
 
 <?php else: 
 $this->RenderMsg("You do not have sufficient privileges to view this page!"); ?>
