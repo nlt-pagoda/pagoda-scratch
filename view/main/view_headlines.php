@@ -1,6 +1,5 @@
 <?php if (isset($removed)):
 header('Location:removed');
-$this->RenderMsg("Headline removed.");
 endif ?>
 
 <div id="headlines">
