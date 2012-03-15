@@ -1,4 +1,3 @@
-
 <?php if ($accessible): ?>
 
 <?php if (isset($missing)):
@@ -31,7 +30,7 @@ endif ?>
 	<label for="announcement">Announcement:  </label>
 	</td>
 	<td>
-	<textarea rows="25" cols="85" name="text"></textarea>
+	<textarea id="nicEdittextarea" rows="25" cols="90" name="text"></textarea>
 	<tr>
 	<td>
 	<td>
