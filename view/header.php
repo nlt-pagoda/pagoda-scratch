@@ -3,7 +3,12 @@
 <link rel="stylesheet" type="text/css" href="<?php echo BASEPATH; ?>/include/css/basicStyle.css" />
 <script type="text/javascript" src="<?php echo BASEPATH; ?>/include/js/jq.js"></script>
 <script src="<?php echo BASEPATH; ?>include/js/nicedit.js" type="text/javascript"></script>
-<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+<!-- <script>bkLib.onDomLoaded(nicEditors.allTextAreas)</script> -->
+<script>
+bkLib.onDomLoaded(function(){
+  var myInstance = new nicEditor({fullPanel : true}).panelInstance('nicEdittextarea');
+});
+</script>
 <?php
 	$this->SetCSS();
 ?>
