@@ -24,6 +24,16 @@ class AdminController extends Controller
 	
 	function view_usersingle($num)
 	{
+			
+		if(isset($_POST['remove']))
+		{
+			$id = $_POST['UserID'];
+			$this->Admin->query("DELETE FROM User_has_Roles WHERE UserID = $id" );
+			$this->Admin->query("DELETE FROM Profile WHERE UserID = $id" );
+			$this->Admin->query("DELETE FROM User WHERE UserID = $id" );
+			$this->set('removed',true);
+		}
+			
 			$this->set("profile",$this->Admin->query("SELECT * FROM Profile WHERE UserID = $num"));
 			$this->set("role",$this->Admin->query("SELECT * FROM User_has_Roles INNER JOIN Roles ON Roles.RolesID = User_has_Roles.RolesID WHERE User_has_Roles.UserID = $num"));
 			$this->set("user",$this->Admin->query("SELECT * FROM User WHERE UserID = $num"));
