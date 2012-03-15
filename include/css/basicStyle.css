@@ -18,6 +18,11 @@ h1
 	overflow: auto;
 }
 
+#headerLogo
+{
+	height: 65px;
+}
+
 #latestHeadlineTitle
 {
 	font-size: 22;

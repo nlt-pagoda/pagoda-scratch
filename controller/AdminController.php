@@ -15,13 +15,29 @@ class AdminController extends Controller
 	{
 		if (!empty($num))
 		{
+			$this->set("users", $this->Admin->query("SELECT username,User.UserID FROM User INNER JOIN User_has_Roles ON User.UserID= User_has_Roles.UserID WHERE RolesID = $num"));
+			$this->set("roleSet",true);
+		}
+		else
+			$this->set("roles",$this->Admin->query("SELECT * FROM Roles"));
+	}
+	
+	function view_usersingle($num)
+	{
+			
+		if(isset($_POST['remove']))
+		{
+			$id = $_POST['UserID'];
+			$this->Admin->query("DELETE FROM User_has_Roles WHERE UserID = $id" );
+			$this->Admin->query("DELETE FROM Profile WHERE UserID = $id" );
+			$this->Admin->query("DELETE FROM User WHERE UserID = $id" );
+			$this->set('removed',true);
+		}
+			
 			$this->set("profile",$this->Admin->query("SELECT * FROM Profile WHERE UserID = $num"));
 			$this->set("role",$this->Admin->query("SELECT * FROM User_has_Roles INNER JOIN Roles ON Roles.RolesID = User_has_Roles.RolesID WHERE User_has_Roles.UserID = $num"));
 			$this->set("user",$this->Admin->query("SELECT * FROM User WHERE UserID = $num"));
 			$this->set("singleton",true);
-		}
-		else
-			$this->set("users",$this->Admin->query("SELECT * FROM User"));
 	}
 	
 	function add_user()
