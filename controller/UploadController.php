@@ -8,15 +8,21 @@ class UploadController extends Controller
 			$this->set("display",true);
 			if(isset($_POST['submit']) || isset($_POST['replace']))
 			{
+				if(isset($_POST['replace']))
+					print_r($_POST['setReplace']);
 				$test = new Upload();
 				$test->defineDir($session->getName()); //Make directory based on the username
 				$test->pushUpload(); //Call function pushupload inside Upload Model
-				if(count(Upload::$errors)>0)
+				if(count(Upload::$errors)>0){
+					//Need to add error redirection
 					print_r(self::uploadError());
+				}
 				else{
-					$url = BASEPATH."upload/success/";
-					//$data = implode('%',Upload::$existingFiles);
-					$he2 = serialize(Upload::$existingFiles);
+					if(isset($_POST['replace']))
+						$url = BASEPATH."upload/";
+					else
+						$url = BASEPATH."upload/success/";
+
 					//Attaches the successfully files to the url
 					if(isset(Upload::$successFiles))
 						$url .= implode(';', array_map(function($key,$val){
@@ -26,6 +32,7 @@ class UploadController extends Controller
 								);
 					//Attaches the duplicate files to the url
 					if(isset(Upload::$existingFiles)&& count(Upload::$existingFiles)>0){
+						$he2 = serialize(Upload::$existingFiles);
 						$url .= ";replace;";
 						$url .= $he2;
 					}

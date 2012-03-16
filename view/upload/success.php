@@ -1,7 +1,8 @@
 <div id="content">
 <?php if(isset($display)):
-		if(isset($existingFiles)):
-			if(count($existingFiles)>0):?>
+		if(isset($existingFiles) || isset($uploadedFiles)):
+			if(count($existingFiles)>1): //NO IDEA why php counts empty string as 1
+			?> 
 				<form name='replaceBox' action='' method ='POST'>
 				<?php
 				$counter = 0;
@@ -11,8 +12,8 @@
 				}
 				?>
 				<input type='submit' value='Overwrite' name='replace'/>
-			<?php endif;
-		elseif(isset($uploadedFiles)):?>
+			<?php
+			elseif(count($uploadedFiles)>0):?>
 			<div id='successBox'>
 					<div id='successTitle'>
 						Successfully Uploaded :
@@ -26,6 +27,7 @@
 					<a href="<?php echo BASEPATH; ?>upload/">Upload more</a>
 			</div>
 		<?php
+			endif;
 		endif;
 		else:
 		$this->RenderMsg("No files selected to perform upload.");
