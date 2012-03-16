@@ -8,15 +8,21 @@ class UploadController extends Controller
 			$this->set("display",true);
 			if(isset($_POST['submit']) || isset($_POST['replace']))
 			{
+				if(isset($_POST['replace']))
+					print_r($_POST['setReplace']);
 				$test = new Upload();
 				$test->defineDir($session->getName()); //Make directory based on the username
 				$test->pushUpload(); //Call function pushupload inside Upload Model
-				if(count(Upload::$errors)>0)
+				if(count(Upload::$errors)>0){
+					//Need to add error redirection
 					print_r(self::uploadError());
+				}
 				else{
-					$url = BASEPATH."upload/uploadSuccess/";
-					//$data = implode('%',Upload::$existingFiles);
-					//$he2 = serialize(Upload::$existingFiles);
+					if(isset($_POST['replace']))
+						$url = BASEPATH."upload/";
+					else
+						$url = BASEPATH."upload/success/";
+
 					//Attaches the successfully files to the url
 					if(isset(Upload::$successFiles))
 						$url .= implode(';', array_map(function($key,$val){
@@ -25,9 +31,12 @@ class UploadController extends Controller
 									array_keys(Upload::$successFiles),Upload::$successFiles)
 								);
 					//Attaches the duplicate files to the url
-	/*				if(isset(Upload::$existingFiles))
+					if(isset(Upload::$existingFiles)&& count(Upload::$existingFiles)>0){
+						$he2 = serialize(Upload::$existingFiles);
+						$url .= ";replace;";
 						$url .= $he2;
-						*/
+					}
+						
 					header("Location:".$url);
 				}
 			}
@@ -38,13 +47,25 @@ class UploadController extends Controller
 
 
 
-	public function uploadError(){
+	public function error(){
 		$this->set("errors",Upload::$errors);
 	}
 
 
-	public function uploadSuccess($x){
-		$data = explode(';',$x);
+	public function success($x){
+		$totalFiles = array();
+		$totalDuplicate = '';
+		$totalSuccess = $x;
+		$test = preg_match("/;replace;/",$x);
+		$test2 = trim($x,";replace;");
+		if(preg_match('/;replace;/',$x)){
+			$totalFiles = explode(';replace;',$x);
+			$totalSuccess = $totalFiles[0];
+			$totalDuplicate = $totalFiles[1];
+		}
+		if(!empty($totalSuccess))
+			$data = explode(';',$totalSuccess);
+		$data2 = unserialize($totalDuplicate);
 		$holder = array();
 		if(isset($data)){
 			$count=0;
@@ -56,5 +77,6 @@ class UploadController extends Controller
 			}
 		}
 		$this->set("uploadedFiles",$holder);
+		$this->set("existingFiles",$data2);
 	}
 }
