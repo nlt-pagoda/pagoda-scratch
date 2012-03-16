@@ -22,9 +22,7 @@ class StudentController extends Controller
 	{
 		if (!empty($num))
 		{	
-			$instructorNameResult = mysql_query("SELECT fullname FROM Profile INNER JOIN Course ON Profile.UserID = Course.InstructorID WHERE Course.CourseID = $num") or die(mysql_error());
-			$instructorName = mysql_fetch_array($instructorNameResult);
-			$this->set('instructorName',$instructorName['fullname']); 
+			$this->set('instructorName',$this->Student->query("SELECT fullname FROM Profile INNER JOIN Course ON Profile.UserID = Course.InstructorID WHERE Course.CourseID = $num")); 
 			$this->set("course",$this->Student->query("SELECT CRN,name,section,number FROM Course WHERE CourseID = $num"));
 		}
 }
