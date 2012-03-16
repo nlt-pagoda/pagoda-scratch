@@ -16,7 +16,7 @@ echo $course[0]["Course"]["name"];
 	echo "<td><strong>CRN:  </strong></td><td>".$course[0]["Course"]["CRN"]."</td><br/>";
 	echo "</tr>";
 	echo "<tr>";
-	echo "<td><strong>Instructor:  </strong></td><td>".$instructorName."</td><br/>";
+	echo "<td><strong>Instructor:  </strong></td><td>".$instructorName[0]["Profile"]["fullname"]."</td><br/>";
 	echo "</tr>";
 	echo "</table>";
 ?>
