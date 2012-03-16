@@ -71,6 +71,21 @@ class AdminController extends Controller
 		}
 	
 	}
+	
+	function add_student()
+	{
+		$this->set('students',$this->Admin->query("SELECT * FROM User INNER JOIN User_has_Roles ON User.UserID = User_has_Roles.UserID WHERE User_has_Roles.RolesID = 2"));
+		$this->set('courses',$this->Admin->query("SELECT * FROM Course"));
+
+		if(isset($_POST['submit']))
+		{
+			$studentID = $_POST['userID'];
+			$courseID = $_POST['courseID'];
+			$this->Admin->query("INSERT INTO Course_has_Students (CourseID,StudentID) VALUES (\"$courseID\",\"$studentID\")");
+			$this->set('added',true);
+		}
+	}
+	
 
 	function remove_user()
 	{	
