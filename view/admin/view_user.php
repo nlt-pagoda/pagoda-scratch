@@ -6,12 +6,13 @@
 	foreach ($users as $user)
 	echo("<a href=\"../usersingle/".$user["User"]["UserID"]."\">".$user["User"]["username"]."</a><br/>");
 	
-elseif (isset($singleton)): ?>
+/*elseif (isset($singleton)): ?>
 <h2><?php 
 echo $user[0]["User"]["username"];
 ?></h2>
 
 <?php
+
 	echo "<table>";
 	echo "<tr>";
 	echo "<td><strong>Full Name:  </strong></td><td>".$profile[0]["Profile"]["fullName"]."</td><br/>";
@@ -25,11 +26,11 @@ echo $user[0]["User"]["username"];
 	echo "<tr>";
 	echo "<td><strong>Role:  </strong></td><td>".$role[0]["Role"]["role"]."</td><br/>";
 	echo "</tr>";
-	echo "</table>";
+	echo "</table>";*/
 ?>
 
 <?php else: ?>
-<h2>Listing all current users:</h2>
+<h2>Listing all user categories:</h2>
 <?php
 foreach ($roles as $role)
 	echo("<a href=\"".$role["Role"]["RolesID"]."\">".$role["Role"]["role"]."s</a><br/>");
