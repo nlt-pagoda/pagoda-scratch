@@ -10,6 +10,11 @@
 <li><a href="<?php echo BASEPATH; ?>admin/remove/user/">Remove Users</a></li>
 </ul>
 
+<h2>Students</h2>
+<ul>
+<li><a href="<?php echo BASEPATH; ?>admin/add/student/">Enroll Students in courses</a></li>
+</ul>
+
 <h2>Courses</h2>
 <ul>
 <li><a href="<?php echo BASEPATH; ?>admin/view/courses/">View Courses</a></li>
