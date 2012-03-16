@@ -130,7 +130,9 @@ class Upload extends Model
 	public function pushUpload(){
 		if (Upload::setDirs()){ //Check the necessary directories needed to be created
 			//Do not create tmp directory if setReplace variable is not set
-			if(!isset($_POST['setReplace'])){
+			if(!isset($_POST['replace'])){
+				if(chdir($tmpSubDir))
+					Upload::destroyAll(self::$tmpSubDir); //Remove the previously created temporary directory if exists 
 				Upload::checkFiles($_FILES["docs"]["name"]); //Stores the already existing filename.
 				Upload::uploadConfirm();
 			}
