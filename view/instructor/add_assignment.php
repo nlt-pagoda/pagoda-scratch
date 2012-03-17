@@ -9,7 +9,7 @@ endif ?>
 
 <h1>Instructor Control Panel</h1>
 
-<h2>Add Announcement</h2>
+<h2>Add Assignment</h2>
 
 <form action="" method="POST">
 	<table>
