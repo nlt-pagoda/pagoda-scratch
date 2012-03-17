@@ -12,6 +12,13 @@ h1
 	border-bottom: 1px solid #ddd;
 }
 
+#pageTitle
+{
+	text-decoration: underline;
+	line-height: 2;
+}	
+
+
 #header
 {
 	width:100%;
