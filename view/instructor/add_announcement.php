@@ -7,12 +7,9 @@ endif ?>
 $this->RenderMsg("Announcement added!");
 endif ?>
 
-<h1>Admin Control Panel</h1>
+<h1>Instructor Control Panel</h1>
 
 <h2>Add Announcement</h2>
-
-
-
 
 <form action="" method="POST">
 	<table>
