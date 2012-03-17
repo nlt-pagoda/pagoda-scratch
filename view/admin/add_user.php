@@ -23,6 +23,9 @@ endif ?>
 	<td><label for="username">Password:  </label></td><td><input type="password" name="password" value=""/></td>
 	</tr>
 	<tr>
+	<td><label for="fullname">Full Name:  </label></td><td><input type="text" name="fullname" /></td>
+	</tr>
+	<tr>
 	<td>
 	<label for="role">Role:  </label>
 	<td>
@@ -33,15 +36,6 @@ endif ?>
 	?>
 	</select>
 	</td>
-	</tr>
-	</table>
-	
-	<br />
-	
-	<table>
-	<h3>Profile info (not required):</h3><br />
-	<tr>
-	<td><label for="fullname">Full Name:  </label></td><td><input type="text" name="fullname" /></td>
 	</tr>
 	<tr>
 	<td><label for="email">Email:  </label></td><td><input type="text" name="email" /></td>
@@ -54,6 +48,8 @@ endif ?>
 	<td><input type="submit" name="submit" value="submit"/></td>
 	</tr>
 	</table>
+	
+	<br />
 </form>
 	
 	

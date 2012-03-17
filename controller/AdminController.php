@@ -54,7 +54,7 @@ class AdminController extends Controller
 			$email = mysql_real_escape_string($_POST['email']);
 			$address = mysql_real_escape_string($_POST['address']);
 		
-			if($u == "" || $p == "" || $r == "")
+			if($u == "" || $p == "" || $r == "" || $fullName == "")
 			{
 				$this->set('missing',true);
 			}
