@@ -9,8 +9,11 @@ endif ?>
 <h2><?php 
 echo $course[0]["Course"]["name"];
 ?></h2>
-<span><h2 style="line-height:0">Announcements</h2>
-<a href="<?php echo BASEPATH; ?>instructor/add/announcement/<?php echo $course[0]["Course"]["CourseID"];?>">Add Announcement</a></span>
+<span>
+	<h2 style="line-height:0">Announcements</h2>
+		<a href="<?php echo BASEPATH; ?>instructor/add/announcement/<?php echo $course[0]["Course"]["CourseID"];?>">Add Announcement</a>
+		<a href="<?php echo BASEPATH; ?>instructor/add/assignment/<?php echo $course[0]["Course"]["CourseID"];?>">Add Assignment</a>
+</span>
 
 <div id="headlinesList">
 <?php

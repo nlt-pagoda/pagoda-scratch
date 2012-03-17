@@ -35,15 +35,15 @@ set window=57
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
-cd G:\CSCI_413\pagoda-scratch\view\upload
+cd H:\CSCI_413\pagoda-scratch\view\upload
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +14 error.php
 badd +2 index.php
-badd +68 \CSCI_413\pagoda-scratch\controller\UploadController.php
-badd +52 \CSCI_413\pagoda-scratch\model\Upload.php
+badd +14 error.php
+badd +41 \CSCI_413\pagoda-scratch\controller\UploadController.php
+badd +116 \CSCI_413\pagoda-scratch\model\Upload.php
 badd +1 uploadSuccess.php
 badd +1 uploadError.php
 badd +1 ..\admin\index.php
@@ -55,7 +55,7 @@ badd +1 ..\..\include\ajax\getprofile.php
 badd +1 ..\..\view\upload\uploadProcess.php
 badd +1 ..\..\model\Admin.php
 badd +1 rough.php
-badd +0 success.php
+badd +13 success.php
 args index.php
 edit index.php
 set splitbelow splitright
@@ -161,7 +161,7 @@ set nowrap
 setlocal nowrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 2 - ((0 * winheight(0) + 12) / 24)
+let s:l = 2 - ((1 * winheight(0) + 28) / 57)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -271,12 +271,12 @@ set nowrap
 setlocal nowrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 41 - ((5 * winheight(0) + 28) / 57)
+let s:l = 21 - ((14 * winheight(0) + 28) / 57)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-41
-normal! 01l
+21
+normal! 032l
 tabedit rough.php
 set splitbelow splitright
 set nosplitbelow
@@ -381,7 +381,7 @@ set nowrap
 setlocal nowrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 28) / 57)
+let s:l = 1 - ((0 * winheight(0) + 12) / 24)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -491,7 +491,7 @@ set nowrap
 setlocal nowrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 116 - ((5 * winheight(0) + 28) / 57)
+let s:l = 116 - ((2 * winheight(0) + 12) / 24)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -601,7 +601,7 @@ set nowrap
 setlocal nowrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 13 - ((12 * winheight(0) + 28) / 57)
+let s:l = 13 - ((5 * winheight(0) + 12) / 24)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -711,7 +711,7 @@ set nowrap
 setlocal nowrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 12) / 24)
+let s:l = 1 - ((0 * winheight(0) + 28) / 57)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -821,7 +821,7 @@ set nowrap
 setlocal nowrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 102 - ((15 * winheight(0) + 12) / 24)
+let s:l = 102 - ((51 * winheight(0) + 28) / 57)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -931,7 +931,7 @@ set nowrap
 setlocal nowrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 12) / 24)
+let s:l = 1 - ((0 * winheight(0) + 28) / 57)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -1041,7 +1041,7 @@ set nowrap
 setlocal nowrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 12) / 24)
+let s:l = 1 - ((0 * winheight(0) + 28) / 57)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt

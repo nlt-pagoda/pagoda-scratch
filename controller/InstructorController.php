@@ -38,7 +38,14 @@ class InstructorController extends Controller
 		}
 		
 	}
-	
+	function add_assignment()
+	{
+		global $session;
+		if(isset($_POST['submit'])){
+			//WILL UPDATE ONCE THE DATABASE IS CHANGED.
+			//STATUS:- DISCUSSION WITH TEAM.
+		}
+	}	
 	function add_announcement($num)
 	{
 		global $session;
