@@ -19,7 +19,7 @@ echo $course[0]["Course"]["name"];
 	echo "<td><strong>Class Size:  </strong></td><td>".$studentCount[0][""]["COUNT(StudentID)"]."</td><br/>";
 	echo "</tr>";
 	echo "<tr>";
-	echo "<td><strong>Instructor:  </strong></td><td>".$instructorName[0]["Profile"]["fullname"]."</td><br/>";
+	echo "<td><strong>Instructor:  </strong></td><td>".$instructorName[0]["Profile"]["firstname"]." ".$instructorName[0]["Profile"]["lastname"]."</td><br/>";
 	echo "</tr>";
 	echo "</table>";
 ?>

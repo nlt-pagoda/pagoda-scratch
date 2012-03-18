@@ -20,7 +20,7 @@ echo $course[0]["Course"]["name"];
 	echo "<td><strong>CRN:  </strong></td><td>".$course[0]["Course"]["CRN"]."</td><br/>";
 	echo "</tr>";
 	echo "<tr>";
-	echo "<td><strong>Instructor:  </strong></td><td>".$instructor[0]["Profile"]["fullName"]."</td><br/>";
+	echo "<td><strong>Instructor:  </strong></td><td>".$instructor[0]["Profile"]["firstname"]." ".$instructor[0]["Profile"]["lastname"]."</td><br/>";
 	echo "</tr>";
 	echo "</table>";
 ?>

@@ -23,7 +23,7 @@ class StudentController extends Controller
 		if (!empty($num))
 		{	
 			$this->set("studentCount",$this->Student->query("SELECT COUNT(StudentID) FROM Course_has_Students WHERE CourseID = $num"));
-			$this->set('instructorName',$this->Student->query("SELECT fullname FROM Profile INNER JOIN Course ON Profile.UserID = Course.InstructorID WHERE Course.CourseID = $num")); 
+			$this->set('instructorName',$this->Student->query("SELECT firstname, lastname FROM Profile INNER JOIN Course ON Profile.UserID = Course.InstructorID WHERE Course.CourseID = $num")); 
 			$this->set("course",$this->Student->query("SELECT CRN,name,section,number FROM Course WHERE CourseID = $num"));
 		}
 }
