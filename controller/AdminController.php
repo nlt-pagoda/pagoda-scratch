@@ -50,11 +50,12 @@ class AdminController extends Controller
 			$u = mysql_real_escape_string($_POST['username']);
 			$p = mysql_real_escape_string($_POST['password']);
 			$r = mysql_real_escape_string($_POST['role']);
-			$fullName = mysql_real_escape_string($_POST['fullname']);
+			$firstName = mysql_real_escape_string($_POST['firstname']);
+			$lastName = mysql_real_escape_string($_POST['lastname']);
 			$email = mysql_real_escape_string($_POST['email']);
 			$address = mysql_real_escape_string($_POST['address']);
 		
-			if($u == "" || $p == "" || $r == "" || $fullName == "")
+			if($u == "" || $p == "" || $r == "" || $firstName == "" || $lastName == "")
 			{
 				$this->set('missing',true);
 			}
@@ -63,7 +64,7 @@ class AdminController extends Controller
 				$this->Admin->query("INSERT INTO User (username,password) VALUES (\"$u\",\"$p\")");
 				$userID = $this->Admin->getInsertId();
 				$this->Admin->query("INSERT INTO User_has_Roles (UserID,RolesID) VALUES ($userID,$r)");
-				$this->Admin->query("INSERT INTO Profile (fullName,emailAddress,address,UserID) VALUES (\"$fullName\",\"$email\",\"$address\",$userID)");
+				$this->Admin->query("INSERT INTO Profile (firstname,lastname,emailAddress,address,UserID) VALUES (\"$firstName\",\"$lastName\",\"$email\",\"$address\",$userID)");
 				$this->set('added',true);
 			}
 		
@@ -118,11 +119,12 @@ class AdminController extends Controller
 			}
 			else
 			{
-				$fullName = mysql_real_escape_string($_POST['fullname']);
+				$firstName = mysql_real_escape_string($_POST['firstname']);
+				$lastName = mysql_real_escape_string($_POST['lastname']);
 				$email = mysql_real_escape_string($_POST['email']);
 				$address = mysql_real_escape_string($_POST['address']);
 				$uID = mysql_real_escape_string($_POST['userID']);
-				$this->Admin->query("UPDATE Profile SET fullName = \"$fullName\", emailAddress = \"$email\", address = \"$address\" WHERE userID = $uID");
+				$this->Admin->query("UPDATE Profile SET firstname = \"$firstName\", firstname = \"$lastName\", emailAddress = \"$email\", address = \"$address\" WHERE userID = $uID");
 
 				$this->set('edited',true);
 			}
@@ -134,7 +136,7 @@ class AdminController extends Controller
 	function add_course()
 	{
 		//Need to add error checking for fields. eg: check Number field contains only numbers		
-		$this->set("instructors",$this->Admin->query("SELECT fullName, User_has_Roles.UserID FROM Profile INNER JOIN User_has_Roles ON Profile.UserID = User_has_Roles.UserID WHERE User_has_Roles.RolesID = 3"));
+		$this->set("instructors",$this->Admin->query("SELECT firstname, lastname, User_has_Roles.UserID FROM Profile INNER JOIN User_has_Roles ON Profile.UserID = User_has_Roles.UserID WHERE User_has_Roles.RolesID = 3"));
 	
 		if(isset($_POST['submit']))
 		{
@@ -163,7 +165,7 @@ class AdminController extends Controller
 	{
 		if (!empty($num))
 		{		
-			$this->set("instructor",$this->Admin->query("SELECT fullName FROM Profile INNER JOIN Course ON Profile.UserID = Course.InstructorID WHERE Course.CourseID = $num"));
+			$this->set("instructor",$this->Admin->query("SELECT firstname, lastname FROM Profile INNER JOIN Course ON Profile.UserID = Course.InstructorID WHERE Course.CourseID = $num"));
 			$this->set("course",$this->Admin->query("SELECT CRN,name,section,number FROM Course WHERE CourseID = $num"));
 			$this->set("singleton",true);
 		}
