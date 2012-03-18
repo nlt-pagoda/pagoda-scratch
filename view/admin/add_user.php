@@ -23,7 +23,8 @@ endif ?>
 	<td><label for="username">Password:  </label></td><td><input type="password" name="password" value=""/></td>
 	</tr>
 	<tr>
-	<td><label for="fullname">Full Name:  </label></td><td><input type="text" name="fullname" /></td>
+	<td><label for="firstname">First Name:  </label></td><td><input type="text" name="firstname" /></td>
+	<td><label for="lastname">Last Name:  </label></td><td><input type="text" name="lastname" /></td>
 	</tr>
 	<tr>
 	<td>

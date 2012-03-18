@@ -7,7 +7,8 @@ $(document).ready(function(){
 		$.getJSON("<?php echo BASEPATH; ?>/include/ajax/getprofile.php?id=" + user ,
 			function(data) {
 			//Should be renamed in future
-			$('input[name=fullname]').val(data.fullName); 
+			$('input[name=firstname]').val(data.firstname); 
+			$('input[name=lastname]').val(data.lastname); 
 			$('input[name=email]').val(data.emailAddress);
 			$('input[name=address]').val(data.address);
 			});
@@ -52,7 +53,8 @@ endif ?>
 		<h3>Profile:</h3>
 		<table>
 		<tr>		
-		<td><label for="fullname">Full Name:  </label></td><td><input type="text" name="fullname" /></td>
+		<td><label for="firstname">First Name:  </label></td><td><input type="text" name="firstname" /></td>
+		<td><label for="lastname">Last Name:  </label></td><td><input type="text" name="lastname" /></td>
 		</tr>
 		<tr>
 		<td><label for="email">Email:  </label></td><td><input type="text" name="email" /></td>
