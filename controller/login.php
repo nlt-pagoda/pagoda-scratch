@@ -15,7 +15,7 @@
 	if (isset($_POST['logout']))
 	{
 		$session->logOut();
-		header("Location: $_SERVER[REQUEST_URI]");
+		header("Location:".BASEPATH);
 		ob_end_flush();	//ending ob_start();	
 	}
 	
