@@ -20,6 +20,17 @@ endif ?>
 			<td>
 				<input type="text" name="title">
 			</td>
+			</tr>
+			<tr>
+			<td>
+				<label for"files">Attachment: </label>
+			</td>
+			<td>
+				<form method='POST' enctype='multipart/form-data' action="">
+					<ul id='parentFilelist'></ul>
+					<a href='#' id='attacher'>Attach Files</a>
+				</form>	
+			</td>
 		</tr>
 		
 		<tr>
@@ -40,6 +51,7 @@ endif ?>
 	</table>
 	
 </form>
+<script type="text/javascript" src="<?php echo BASEPATH; ?>include/js/upload.js"></script>
 	
 	
 	
