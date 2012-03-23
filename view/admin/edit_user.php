@@ -10,7 +10,7 @@ $(document).ready(function(){
 			$('input[name=firstname]').val(data.firstname); 
 			$('input[name=lastname]').val(data.lastname); 
 			$('input[name=email]').val(data.emailAddress);
-			$('input[name=address]').val(data.address);
+			$('input[name=bannerID]').val(data.bannerID);
 			});
 	
 	});
@@ -57,10 +57,10 @@ endif ?>
 		<td><label for="lastname">Last Name:  </label></td><td><input type="text" name="lastname" /></td>
 		</tr>
 		<tr>
-		<td><label for="email">Email:  </label></td><td><input type="text" name="email" /></td>
+		<td><label for="bannerID">Banner ID:  </label></td><td><input type="text" name="bannerID" /></td>
 		</tr>
 		<tr>
-		<td><label for="address">Address:  </label></td><td><input type="text" name="address" size="60"/></td>
+		<td><label for="email">Email:  </label></td><td><input type="text" name="email" /></td>
 		</tr>
 		<tr><td></td>
 		<td><input type="submit" name="submit" value="submit"/></td>

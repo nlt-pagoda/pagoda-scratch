@@ -52,6 +52,9 @@ $announcementsLength = count($announcements);
 <?php
 	echo "<table>";
 	echo "<tr>";
+	echo "<td><strong>Department:  </strong></td><td>".$course[0]["Department"]["name"]."(".$course[0]["Department"]["abbreviation"].")</td><br/>";
+	echo "</tr>";
+	echo "<tr>";
 	echo "<td><strong>Number:  </strong></td><td>".$course[0]["Course"]["number"]."</td><br/>";
 	echo "</tr>";
 	echo "<tr>";

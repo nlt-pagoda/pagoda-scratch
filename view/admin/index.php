@@ -25,6 +25,11 @@
 
 <h2>Headlines/Announcements</h2>
 <ul>
+<li><a href="<?php echo BASEPATH; ?>admin/add/department/">Add Department</a></li>
+</ul>
+
+<h2>Headlines/Announcements</h2>
+<ul>
 <li><a href="<?php echo BASEPATH; ?>main/view/headlines/">View Headlines</a></li>
 <li><a href="<?php echo BASEPATH; ?>admin/add/announcement/">Add Headline To Main Page</a></li>
 </ul>

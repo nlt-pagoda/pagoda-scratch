@@ -38,7 +38,7 @@ endif ?>
 		<option value="" selected="selected" disabled="disabled">Select</option>
 		<?php
 		foreach($courses as $course)
-		echo "<option value=\"".$course["Course"]["CourseID"]."\">".$course["Course"]["name"]."-".$course["Course"]["number"]."-".$course["Course"]["section"]."</option>";
+		echo "<option value=\"".$course["Course"]["CourseID"]."\">".$course["Department"]["abbreviation"]."-".$course["Course"]["number"]."-".$course["Course"]["section"]."-".$course["Course"]["name"]."</option>";
 		?>
 		</select>
 		
