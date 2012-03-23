@@ -5,7 +5,7 @@
 
 <?php 
 foreach ($courses as $course)
-	echo("<a href=\"../course/".$course["Course"]["CourseID"]."\">".$course["Course"]["name"]."-".$course["Course"]["number"]."-".$course["Course"]["section"]."</a><br/>");
+	echo("<a href=\"../course/".$course["Course"]["CourseID"]."\">".$course["Department"]["abbreviation"]."-".$course["Course"]["number"]."-".$course["Course"]["section"]."-".$course["Course"]["name"]."</a><br/>");
 ?>
 
 

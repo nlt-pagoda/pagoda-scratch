@@ -24,7 +24,7 @@ echo $user[0]["User"]["username"];
 	echo "<td><strong>Email:  </strong></td><td>".$profile[0]["Profile"]["emailAddress"]."</td><br/>";
 	echo "</tr>";
 	echo "<tr>";
-	echo "<td><strong>Address:  </strong></td><td>".$profile[0]["Profile"]["address"]."</td><br/>";
+	echo "<td><strong>Banner ID:  </strong></td><td>".$profile[0]["Profile"]["bannerID"]."</td><br/>";
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td><strong>Role:  </strong></td><td>".$role[0]["Role"]["role"]."</td><br/>";

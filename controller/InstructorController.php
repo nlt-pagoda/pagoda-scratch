@@ -15,7 +15,7 @@ class InstructorController extends Controller
 	{
 		global $session;
 		$userID = $session->getID();
-		$this->set('courses',$this->Instructor->query("SELECT CourseID,CRN,name,section,number,InstructorID FROM `Course` INNER JOIN User ON Course.InstructorID = User.UserID WHERE User.UserID = $userID"));
+		$this->set('courses',$this->Instructor->query("SELECT * FROM `Course` INNER JOIN User ON Course.InstructorID = User.UserID INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID WHERE User.UserID = $userID"));
 	}
 	
 	function view_course($num)
@@ -33,7 +33,7 @@ class InstructorController extends Controller
 		{	
 			$this->set("announcements",$this->Instructor->query("SELECT AnnouncementID,title,text,date FROM Announcement WHERE AnnouncementTypeID = 2 AND CourseID = \"$num\" ORDER BY date DESC LIMIT 2"));
 			$this->set("studentCount",$this->Instructor->query("SELECT COUNT(StudentID) FROM Course_has_Students WHERE CourseID = $num"));	
-			$this->set("course",$this->Instructor->query("SELECT CourseID,CRN,name,section,number FROM Course WHERE CourseID = $num"));
+			$this->set("course",$this->Instructor->query("SELECT * FROM Course INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID WHERE CourseID = $num"));
 			
 		}
 		

@@ -52,10 +52,10 @@ class AdminController extends Controller
 			$r = mysql_real_escape_string($_POST['role']);
 			$firstName = mysql_real_escape_string($_POST['firstname']);
 			$lastName = mysql_real_escape_string($_POST['lastname']);
+			$bannerID = mysql_real_escape_string($_POST['bannerID']);
 			$email = mysql_real_escape_string($_POST['email']);
-			$address = mysql_real_escape_string($_POST['address']);
 		
-			if($u == "" || $p == "" || $r == "" || $firstName == "" || $lastName == "")
+			if($u == "" || $p == "" || $r == "" || $firstName == "" || $lastName == "" || $bannerID =="" || $email == "")
 			{
 				$this->set('missing',true);
 			}
@@ -64,7 +64,7 @@ class AdminController extends Controller
 				$this->Admin->query("INSERT INTO User (username,password) VALUES (\"$u\",\"$p\")");
 				$userID = $this->Admin->getInsertId();
 				$this->Admin->query("INSERT INTO User_has_Roles (UserID,RolesID) VALUES ($userID,$r)");
-				$this->Admin->query("INSERT INTO Profile (firstname,lastname,emailAddress,address,UserID) VALUES (\"$firstName\",\"$lastName\",\"$email\",\"$address\",$userID)");
+				$this->Admin->query("INSERT INTO Profile (firstname,lastname,bannerID,emailAddress,UserID) VALUES (\"$firstName\",\"$lastName\",\"$bannerID\",\"$email\",$userID)");
 				$this->set('added',true);
 			}
 		
@@ -76,7 +76,7 @@ class AdminController extends Controller
 	function add_student()
 	{
 		$this->set('students',$this->Admin->query("SELECT * FROM User INNER JOIN User_has_Roles ON User.UserID = User_has_Roles.UserID WHERE User_has_Roles.RolesID = 2"));
-		$this->set('courses',$this->Admin->query("SELECT * FROM Course"));
+		$this->set('courses',$this->Admin->query("SELECT * FROM Course INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID"));
 
 		if(isset($_POST['submit']))
 		{
@@ -122,9 +122,9 @@ class AdminController extends Controller
 				$firstName = mysql_real_escape_string($_POST['firstname']);
 				$lastName = mysql_real_escape_string($_POST['lastname']);
 				$email = mysql_real_escape_string($_POST['email']);
-				$address = mysql_real_escape_string($_POST['address']);
 				$uID = mysql_real_escape_string($_POST['userID']);
-				$this->Admin->query("UPDATE Profile SET firstname = \"$firstName\", firstname = \"$lastName\", emailAddress = \"$email\", address = \"$address\" WHERE userID = $uID");
+				$bannerID = mysql_real_escape_string($_POST['bannerID']);
+				$this->Admin->query("UPDATE Profile SET firstname = \"$firstName\", lastname = \"$lastName\", emailAddress = \"$email\", bannerID = \"$bannerID\" WHERE userID = $uID");
 
 				$this->set('edited',true);
 			}
@@ -137,9 +137,11 @@ class AdminController extends Controller
 	{
 		//Need to add error checking for fields. eg: check Number field contains only numbers		
 		$this->set("instructors",$this->Admin->query("SELECT firstname, lastname, User_has_Roles.UserID FROM Profile INNER JOIN User_has_Roles ON Profile.UserID = User_has_Roles.UserID WHERE User_has_Roles.RolesID = 3"));
-	
-		if(isset($_POST['submit']))
+	    $this->set("departments",$this->Admin->query("SELECT * FROM Department"));
+		
+	    if(isset($_POST['submit']))
 		{
+			$deptID = mysql_real_escape_string($_POST['departmentID']);
 			$crn = mysql_real_escape_string($_POST['CRN']);
 			$name = mysql_real_escape_string($_POST['name']);
 			$number = mysql_real_escape_string($_POST['number']);
@@ -153,7 +155,7 @@ class AdminController extends Controller
 			}
 			else
 			{
-				$this->Admin->query("INSERT INTO Course (CRN,name,section,number,InstructorID) VALUES (\"$crn\",\"$name\",\"$section\",\"$number\",$instructorID)");
+				$this->Admin->query("INSERT INTO Course (DepartmentID,CRN,name,section,number,InstructorID) VALUES (\"$deptID\", \"$crn\",\"$name\",\"$section\",\"$number\",$instructorID)");
 				$this->set('added',true);
 			}
 
@@ -161,16 +163,38 @@ class AdminController extends Controller
 	
 	}
 	
+	function add_department()
+	{
+		if(isset($_POST['submit']))
+		{
+			$name = mysql_real_escape_string($_POST['name']);
+			$name = ucwords($name);
+			$abbrev = mysql_real_escape_string($_POST['abbrev']);
+			$abbrev = strtoUpper($abbrev);
+			
+			if($abbrev == "" || $name == "")
+			{
+				$this->set('missing',true);
+			}
+			else
+			{
+				$this->Admin->query("INSERT INTO Department (abbreviation,name) VALUES (\"$abbrev\",\"$name\")");
+				$this->set('added',true);
+			}
+
+		}
+	}
+	
 	function view_courses($num)
 	{
 		if (!empty($num))
 		{		
 			$this->set("instructor",$this->Admin->query("SELECT firstname, lastname FROM Profile INNER JOIN Course ON Profile.UserID = Course.InstructorID WHERE Course.CourseID = $num"));
-			$this->set("course",$this->Admin->query("SELECT CRN,name,section,number FROM Course WHERE CourseID = $num"));
+			$this->set('course',$this->Admin->query("SELECT * FROM Course INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID WHERE CourseID = $num"));
 			$this->set("singleton",true);
 		}
 		else
-			$this->set("courses",$this->Admin->query("SELECT name,section,number,CourseID FROM Course ORDER BY name"));
+			$this->set("courses",$this->Admin->query("SELECT * FROM Course INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID ORDER BY Department.abbreviation"));
 	}
 	
 	function remove_course()
@@ -184,6 +208,9 @@ class AdminController extends Controller
 			else
 			{
 				$courseID = mysql_real_escape_string($_POST['courseID']);
+				$this->Admin->query("DELETE u.* FROM User_has_Announcement u INNER JOIN Announcement uu ON u.AnnouncementID = uu.AnnouncementID WHERE uu.CourseID = $courseID");
+				$this->Admin->query("DELETE FROM Announcement WHERE CourseID = $courseID" );
+				$this->Admin->query("DELETE FROM Course_has_Students WHERE CourseID = $courseID" );
 				$this->Admin->query("DELETE FROM Course WHERE CourseID = $courseID" );
 				$this->set('removed',true);
 			}
@@ -213,7 +240,7 @@ class AdminController extends Controller
 			}
 		}
 		
-		$this->set("courses",$this->Admin->query("SELECT CourseID,name,number,section FROM Course ORDER BY name"));
+		$this->set('courses',$this->Admin->query("SELECT * FROM Course INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID ORDER BY abbreviation"));
 	}
 	
 	function add_announcement()
