@@ -15,7 +15,7 @@ class StudentController extends Controller
 	{
 		global $session;
 		$userID = $session->getID();
-		$this->set('courses',$this->Student->query("SELECT Course.CourseID,CRN,name,section,number,InstructorID FROM Course INNER JOIN Course_has_Students ON Course.CourseID = Course_has_Students.CourseID WHERE Course_has_Students.StudentID = $userID"));
+		$this->set('courses',$this->Student->query("SELECT * FROM Course INNER JOIN Course_has_Students ON Course.CourseID = Course_has_Students.CourseID INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID WHERE Course_has_Students.StudentID = $userID"));
 	}
 	
 	function view_course($num)
@@ -24,7 +24,7 @@ class StudentController extends Controller
 		{	
 			$this->set("studentCount",$this->Student->query("SELECT COUNT(StudentID) FROM Course_has_Students WHERE CourseID = $num"));
 			$this->set('instructorName',$this->Student->query("SELECT firstname, lastname FROM Profile INNER JOIN Course ON Profile.UserID = Course.InstructorID WHERE Course.CourseID = $num")); 
-			$this->set("course",$this->Student->query("SELECT CRN,name,section,number FROM Course WHERE CourseID = $num"));
+			$this->set("course",$this->Student->query("SELECT * FROM Course INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID WHERE CourseID = $num"));
 		}
 }
 	

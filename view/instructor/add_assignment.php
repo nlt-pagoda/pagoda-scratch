@@ -32,7 +32,14 @@ endif ?>
 				</form>	
 			</td>
 		</tr>
-		
+				<tr>
+			<td>
+				<label for="duedate">Due date:  </label>
+			</td>
+			<td>
+				<input type="datetime" name="duedate" value="will have date picker and drop down menus to set time later">
+			</td>
+			</tr>
 		<tr>
 			<td>
 				<label for="assignment">Description:  </label>

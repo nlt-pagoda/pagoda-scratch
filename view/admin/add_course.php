@@ -29,6 +29,18 @@ endif ?>
 	</select>
 	</td>
 	</tr>
+	<tr>
+	<td>
+	<label for="department">Department:  </label>
+	<td>
+	<select name="departmentID">
+	<?php
+	foreach($departments as $department)
+		echo "<option value=\"".$department["Department"]["DepartmentID"]."\">".$department["Department"]["name"]." (".$department["Department"]["abbreviation"].")</option>";
+		?>
+	</select>
+	</td>
+	</tr>
 	</table>
 	
 	<br />

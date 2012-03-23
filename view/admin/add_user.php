@@ -27,6 +27,9 @@ endif ?>
 	<td><label for="lastname">Last Name:  </label></td><td><input type="text" name="lastname" /></td>
 	</tr>
 	<tr>
+	<td><label for="bannerID">Banner ID:  </label></td><td><input type="text" name="bannerID" /></td>
+	</tr>
+	<tr>
 	<td>
 	<label for="role">Role:  </label>
 	<td>
@@ -40,9 +43,6 @@ endif ?>
 	</tr>
 	<tr>
 	<td><label for="email">Email:  </label></td><td><input type="text" name="email" /></td>
-	</tr>
-	<tr>
-	<td><label for="address">Address:  </label></td><td><input type="text" name="address" size="60"/></td>
 	</tr>
 	<tr>
 	<td></td>

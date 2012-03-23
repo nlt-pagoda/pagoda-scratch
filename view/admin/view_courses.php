@@ -11,6 +11,9 @@ echo $course[0]["Course"]["name"];
 <?php
 	echo "<table>";
 	echo "<tr>";
+	echo "<td><strong>Department:  </strong></td><td>".$course[0]["Department"]["name"]."(".$course[0]["Department"]["abbreviation"].")</td><br/>";
+	echo "</tr>";
+	echo "<tr>";
 	echo "<td><strong>Number:  </strong></td><td>".$course[0]["Course"]["number"]."</td><br/>";
 	echo "</tr>";
 	echo "<tr>";
@@ -29,7 +32,7 @@ echo $course[0]["Course"]["name"];
 <h2>Listing all courses:</h2>
 <?php
 foreach ($courses as $course)
-	echo("<a href=\"".$course["Course"]["CourseID"]."\">".$course["Course"]["name"]."-".$course["Course"]["number"]."-".$course["Course"]["section"]."</a><br/>");
+	echo("<a href=\"".$course["Course"]["CourseID"]."\">".$course["Department"]["abbreviation"]."-".$course["Course"]["number"]."-".$course["Course"]["section"]."-".$course["Course"]["name"]."</a><br/>");
 ?>
 	
 <?php endif; ?>
