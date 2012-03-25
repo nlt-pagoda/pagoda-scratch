@@ -4,6 +4,14 @@
 header('Location:'.$courseID);
 endif ?>
 
+<div id=sidepanel>
+<h2>Controls</h2>
+<ul>
+<li><a href="<?php echo BASEPATH; ?>instructor/add/announcement/<?php echo $course[0]["Course"]["CourseID"];?>">Add Announcement</a></li>
+<li><a href="<?php echo BASEPATH; ?>instructor/add/assignment/<?php echo $course[0]["Course"]["CourseID"];?>">Add Assignment</a></li>
+</ul>
+</div>
+
 <h1>Instructor Control Panel</h1>
 
 <h2><?php 
@@ -11,8 +19,8 @@ echo $course[0]["Course"]["name"];
 ?></h2>
 <span>
 	<h2 style="line-height:0">Announcements</h2>
-		<a href="<?php echo BASEPATH; ?>instructor/add/announcement/<?php echo $course[0]["Course"]["CourseID"];?>">Add Announcement</a>
-		<a href="<?php echo BASEPATH; ?>instructor/add/assignment/<?php echo $course[0]["Course"]["CourseID"];?>">Add Assignment</a>
+		
+		
 </span>
 
 <div id="headlinesList">
@@ -67,7 +75,18 @@ $announcementsLength = count($announcements);
 	echo "<td><strong>Class Size:  </strong></td><td>".$studentCount[0][""]["COUNT(StudentID)"]."</td><br/>";
 	echo "</tr>";
 	echo "<tr>";
-	echo "<td><strong>Students:  </strong></td><td>PLACEHOLDER</td><br/>";
+	echo "<td><strong>Students:  </strong></td><td>";
+
+	
+	echo "</tr>";
+	echo "<tr>";
+	echo "<td></td><td>";
+		foreach($students as $student)
+	{
+		echo ("<a href=\"".BASEPATH."instructor/view/student/".$student["Profile"]["UserID"]."\">".$student["Profile"]["lastname"].", ".$student["Profile"]["firstname"]."</a><br>");
+	}
+	
+	echo "</td><br/>";
 	echo "</tr>";
 	echo "</table>";
 ?>
