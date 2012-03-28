@@ -13,17 +13,6 @@ class AdminController extends Controller
 	
 	function view_user($num)
 	{
-		if (!empty($num))
-		{
-			$this->set("users", $this->Admin->query("SELECT username,User.UserID FROM User INNER JOIN User_has_Roles ON User.UserID= User_has_Roles.UserID WHERE RolesID = $num"));
-			$this->set("roleSet",true);
-		}
-		else
-			$this->set("roles",$this->Admin->query("SELECT * FROM Roles"));
-	}
-	
-	function view_usersingle($num)
-	{
 			
 		if(isset($_POST['remove']))
 		{
@@ -38,6 +27,18 @@ class AdminController extends Controller
 			$this->set("role",$this->Admin->query("SELECT * FROM User_has_Roles INNER JOIN Roles ON Roles.RolesID = User_has_Roles.RolesID WHERE User_has_Roles.UserID = $num"));
 			$this->set("user",$this->Admin->query("SELECT * FROM User WHERE UserID = $num"));
 			$this->set("singleton",true);
+	}
+	
+	
+	function view_users($num)
+	{
+		if (!empty($num))
+		{
+			$this->set("users", $this->Admin->query("SELECT username,User.UserID FROM User INNER JOIN User_has_Roles ON User.UserID= User_has_Roles.UserID WHERE RolesID = $num"));
+			$this->set("roleSet",true);
+		}
+		else
+			$this->set("roles",$this->Admin->query("SELECT * FROM Roles"));
 	}
 	
 	function add_user()
