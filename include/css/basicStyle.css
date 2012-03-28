@@ -4,6 +4,8 @@ body
 	margin: 0px;
 	font-family: Consolas, Arial;
 	font-size: 16.5px;
+	min-width: 1244px;
+	overflow: scroll;
 }
 
 h1 
@@ -125,10 +127,18 @@ h1
 #sidepanel
 {
 	position: absolute;
+	float:left;
+	clear:both;
+	font-size: 15px;
 	left: 5px;
-	width: 12%;
-	padding: 5px;
+	border-top: 1px #eee solid;
+	border-right: 1px #eee solid;
+	height: 100%; 
+	background: #fff;
+		width: 9.3%;
+	min-width:115px;
 }
+
 
 #sidepanel h2
 {
@@ -175,8 +185,10 @@ h1
 	padding-left: 10px;
 	padding-top: 20px;
 	width: 80%;
+	float: center;
 	border: 1px #eee solid;
 	margin: 0 auto;
+	overflow: inherit;
 }
 
 #messages
@@ -204,6 +216,12 @@ h1
     padding-right: 20px;
     padding-top: 5px;
 }
+
+.floatright
+{
+
+}
+
 
 input
 {
