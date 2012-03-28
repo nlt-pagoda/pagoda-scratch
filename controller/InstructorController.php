@@ -32,7 +32,8 @@ class InstructorController extends Controller
 		else if (!empty($num))
 		{	
 			$this->set("announcements",$this->Instructor->query("SELECT AnnouncementID,title,text,date FROM Announcement WHERE AnnouncementTypeID = 2 AND CourseID = \"$num\" ORDER BY date DESC LIMIT 2"));
-			$this->set("studentCount",$this->Instructor->query("SELECT COUNT(StudentID) FROM Course_has_Students WHERE CourseID = $num"));	
+			$this->set("studentCount",$this->Instructor->query("SELECT COUNT(StudentID) FROM Course_has_Students WHERE CourseID = $num"));
+			$this->set("students",$this->Instructor->query("SELECT firstname, lastname,UserID FROM Profile INNER JOIN Course_has_Students ON Profile.UserID = Course_has_Students.StudentID WHERE Course_has_Students.CourseID =  $num ORDER BY Profile.lastname"));	
 			$this->set("course",$this->Instructor->query("SELECT * FROM Course INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID WHERE CourseID = $num"));
 			
 		}
@@ -69,5 +70,11 @@ class InstructorController extends Controller
 				$this->set('added',true);
 			}
 		}	
+	}
+	
+	function view_student($num)
+	{
+			$this->set("profile",$this->Instructor->query("SELECT * FROM Profile WHERE UserID = $num"));
+			$this->set("user",$this->Instructor->query("SELECT * FROM User WHERE UserID = $num"));
 	}
 }

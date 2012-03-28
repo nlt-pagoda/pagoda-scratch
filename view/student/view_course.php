@@ -4,6 +4,30 @@
 echo $course[0]["Course"]["name"];
 ?></h2>
 
+<span>
+	<h2 style="line-height:0">Announcements</h2>
+</span>
+
+<div id="headlinesList">
+<?php
+$announcementsLength = count($announcements);
+
+	for($i=0;$i<$announcementsLength;$i++)
+	{
+		if($i==0)
+		{
+			echo("<div id=\"latestHeadline\">&bull; <span id=\"latestHeadlineTitle\">".$announcements[$i]["Announcement"]["title"]."</span>"."<span id=\"latestHeadlineDate\"> ".$announcements[$i]["Announcement"]["date"]."</span>");
+			echo("<div id=\"latestHeadlineText\">".$announcements[$i]["Announcement"]["text"]."</div></div>");
+		}
+		else 
+		{
+			echo("<div id=\"headline\">&bull; <span id=\"headlineTitle\">".$announcements[$i]["Announcement"]["title"]."</span>"."<span id=\"headlineDate\"> ".$announcements[$i]["Announcement"]["date"]."</span>");
+			echo("<div id=\"headlineText\">".$announcements[$i]["Announcement"]["text"]."</div></div>");
+		}
+	}
+?>
+</div>
+
 <?php
 	echo "<table>";
 	echo "<tr>";

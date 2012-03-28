@@ -4,6 +4,8 @@ body
 	margin: 0px;
 	font-family: Consolas, Arial;
 	font-size: 16.5px;
+	min-width: 1244px;
+	overflow: scroll;
 }
 
 h1 
@@ -122,6 +124,50 @@ h1
 	border-radius: 3px;
 }
 
+#sidepanel
+{
+	position: absolute;
+	float:left;
+	clear:both;
+	font-size: 15px;
+	left: 5px;
+	border-top: 1px #eee solid;
+	border-right: 1px #eee solid;
+	height: 100%; 
+	background: #fff;
+		width: 9.3%;
+	min-width:115px;
+}
+
+
+#sidepanel h2
+{
+	border-bottom: 1px #eee solid;
+	width: 50%;
+} 
+
+#sidepanel ul 
+{
+	padding: 15px;
+	padding-top: 0px;
+}
+
+#sidepanel li 
+{
+
+}
+
+#sidepanel li a
+{
+	text-decoration: none;
+}
+
+#sidepanel li a:hover
+{
+	text-shadow: none;
+	border-radius: 3px;
+}
+
 #footer
 {
 	clear: both;
@@ -139,8 +185,10 @@ h1
 	padding-left: 10px;
 	padding-top: 20px;
 	width: 80%;
+	float: center;
 	border: 1px #eee solid;
 	margin: 0 auto;
+	overflow: inherit;
 }
 
 #messages
@@ -168,6 +216,12 @@ h1
     padding-right: 20px;
     padding-top: 5px;
 }
+
+.floatright
+{
+
+}
+
 
 input
 {
