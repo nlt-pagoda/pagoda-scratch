@@ -247,6 +247,7 @@ class AdminController extends Controller
 	function add_announcement()
 	{
 		global $session;
+		
 		if(isset($_POST['submit']))
 		{
 			$title = mysql_real_escape_string($_POST['title']);
@@ -265,6 +266,36 @@ class AdminController extends Controller
 				$this->Admin->query("INSERT INTO User_has_Announcement (UserID,AnnouncementID) VALUES (\"$userID\",\"$AnnouncementID\")");
 				$this->set('added',true);
 			}
-		}	
+		}
+	}	
+
+	function edit_announcement($num)
+	{		
+		if(isset($_POST['submit']))
+		{
+			global $session;
+			$title = mysql_real_escape_string($_POST['title']);
+			$text = mysql_real_escape_string($_POST['text']);
+			$userID = $session->getID();
+			
+			if($title == "" || $text == "")
+			{
+				$this->set("headlineData",$this->Admin->query("SELECT AnnouncementID,title,text FROM Announcement WHERE AnnouncementID = $num"));
+				$this->set('missing',true);
+			}
+			else
+			{
+				$this->Admin->query("UPDATE Announcement SET title =\"$title\", text =\"$text\" WHERE AnnouncementID = $num");
+				$this->Admin->query("UPDATE User_has_Announcement SET UserID =\"$userID\" WHERE AnnouncementID = $num");
+				header('Location:../../../main/view/headlines/');
+			}
+		}
+		else
+		{
+			$this->set("headlineData",$this->Admin->query("SELECT AnnouncementID,title,text FROM Announcement WHERE AnnouncementID = $num"));
+		}
 	}
+		
+	
+	
 }

@@ -90,6 +90,14 @@ h1
 	padding-left:20px;
 }
 
+#announcementButtons
+{
+  text-align: left;
+  display: table-cell;
+  padding-left: 20px;
+  padding-right: 15px;
+}
+
 #navigationBar
 {
 	border: solid 1px #EEEEEE;
