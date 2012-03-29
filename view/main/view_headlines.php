@@ -19,10 +19,16 @@ $headlinesLength = count($headlines);
 			echo("<div id=\"latestHeadlineText\">".$headlines[$i]["Announcement"]["text"]."</div></div>");
 			if ($accessible)
 			{
-				echo("<form action=\"\" method=\"POST\">");
+				
+				echo("<div id=\"announcementButtons\"><form action=\"\" method=\"POST\">");
 				echo("<input type=\"hidden\" name=\"AnnouncementID\" value=\"".$headlines[$i]["Announcement"]["AnnouncementID"]."\" />");
 				echo("<input type=\"submit\" name=\"remove\" value=\"Remove\"/>");	
-				echo("</form>");
+				echo("</form></div>");
+				
+				echo("<div id=\"announcementButtons\"><form action=\"\" method=\"POST\">");
+				echo("<input type=\"hidden\" name=\"AnnouncementID\" value=\"".$headlines[$i]["Announcement"]["AnnouncementID"]."\" />");
+				echo("<input type=\"submit\" name=\"edit\" value=\"Edit\"/>");	
+				echo("</form></div>");
 			}
 			echo("<h1></h1>");
 		}
@@ -32,10 +38,15 @@ $headlinesLength = count($headlines);
 			echo("<div id=\"headlineText\">".$headlines[$i]["Announcement"]["text"]."</div></div>");
 			if ($accessible)
 			{
-				echo("<form action=\"\" method=\"POST\">");
+				echo("<div id=\"announcementButtons\"><form action=\"\" method=\"POST\">");
 				echo("<input type=\"hidden\" name=\"AnnouncementID\" value=\"".$headlines[$i]["Announcement"]["AnnouncementID"]."\" />");
 				echo("<input type=\"submit\" name=\"remove\" value=\"Remove\"/>");
-				echo("</form>");	
+				echo("</form></div>");
+				
+				echo("<div id=\"announcementButtons\"><form action=\"\" method=\"POST\">");
+				echo("<input type=\"hidden\" name=\"AnnouncementID\" value=\"".$headlines[$i]["Announcement"]["AnnouncementID"]."\" />");
+				echo("<input type=\"submit\" name=\"edit\" value=\"Edit\"/>");	
+				echo("</form></div>");
 			}
 			echo("<h1></h1>");
 		}

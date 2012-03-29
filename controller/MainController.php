@@ -21,12 +21,20 @@ class MainController extends Controller
 		//Limit 20
 		$this->set("headlines",$this->Main->query("SELECT AnnouncementID,title,text,date FROM Announcement WHERE AnnouncementTypeID = 1 ORDER BY date DESC LIMIT 20"));
 		
+		//remove headline
 		if(isset($_POST['remove']))
 		{
 			$id = $_POST['AnnouncementID'];
 			$this->Main->query("DELETE FROM User_has_Announcement WHERE AnnouncementID = $id" );
 			$this->Main->query("DELETE FROM Announcement WHERE AnnouncementID = $id" );
 			$this->set('removed',true);
+		}
+		
+		//edit headline
+		if(isset($_POST['edit']))
+		{
+			$id = $_POST['AnnouncementID'];
+			header("Location:../../../admin/edit/announcement/$id");
 		}
 	}
 }
