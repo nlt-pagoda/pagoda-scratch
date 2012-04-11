@@ -6,10 +6,6 @@ class Session
 	function __construct($model)
 	{	
 		$this->_model = $model;
-		
-		//disable on local
-		//enable on web server
-		//session_save_path('/tmp');
 		session_start();	
 	}
 	

@@ -39,6 +39,11 @@ h1
 	overflow: auto;
 }
 
+#header a:hover
+{
+	background: none;
+}
+
 #headerLogo
 {
 	height: 65px;
