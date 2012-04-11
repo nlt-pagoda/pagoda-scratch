@@ -4,7 +4,7 @@
 
 <h2>Courses</h2>
 <ul>
-<li><a href="<?php echo BASEPATH; ?>student/view/courses/">My Courses</a></li>
+<li><a href="<?php echo BASEPATH; ?>student/view/courses/">Courses</a></li>
 </ul>
 
 <?php else: 

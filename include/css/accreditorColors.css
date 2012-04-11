@@ -3,6 +3,12 @@ body
 	color: black;
 }
 
+a:hover
+{
+	color: white;
+	background: #FFAA00;
+}
+
 h1 
 {
 	border-bottom: 1px solid #FFDD9E;

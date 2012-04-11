@@ -34,7 +34,7 @@ class AdminController extends Controller
 	{
 		if (!empty($num))
 		{
-			$this->set("users", $this->Admin->query("SELECT username,User.UserID FROM User INNER JOIN User_has_Roles ON User.UserID= User_has_Roles.UserID WHERE RolesID = $num"));
+			$this->set("users", $this->Admin->query("SELECT Profile.UserID, firstname, lastname FROM Profile INNER JOIN User_has_Roles ON Profile.UserID= User_has_Roles.UserID WHERE RolesID = $num ORDER BY Profile.lastname"));
 			$this->set("roleSet",true);
 		}
 		else
