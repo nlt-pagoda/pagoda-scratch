@@ -8,6 +8,18 @@ body
 	overflow: scroll;
 }
 
+a:hover
+{
+	text-shadow: none;
+	border-radius: 3px;
+}
+
+a
+{
+	color: black;
+	text-decoration: none;
+}
+
 h1 
 {
 	width: inherit;

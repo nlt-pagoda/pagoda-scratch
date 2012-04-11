@@ -3,6 +3,12 @@ body
 	color: black;
 }
 
+a:hover
+{
+	color: white;
+	background: 0013E0;
+}
+
 h1 
 {
 	border-bottom: 1px solid #EBEBFF;
@@ -14,6 +20,11 @@ h1
 	background: -webkit-gradient(linear, left top, left bottom, from(#F0F0FA), to(#EBEBFF));
 	/* firefox */
 	background: -moz-linear-gradient(19% 75% 90deg,#EBEBFF, #F0F0FA);
+}
+
+#header a:hover
+{
+	background: none;
 }
 
 #navigationBar
