@@ -4,7 +4,7 @@
 
 <?php if(isset($roleSet)):
 	foreach ($users as $user)
-	echo("<a href=\"../user/".$user["User"]["UserID"]."\">".$user["User"]["username"]."</a><br/>");
+	echo("<a href=\"../user/".$user["Profile"]["UserID"]."\">".$user["Profile"]["lastname"].", ".$user["Profile"]["firstname"]."</a><br/>");
 	
 ?>
 
