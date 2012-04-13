@@ -46,7 +46,27 @@ class InstructorController extends Controller
 			//WILL UPDATE ONCE THE DATABASE IS CHANGED.
 			//STATUS:- DISCUSSION WITH TEAM.
 		}
-	}	
+	}
+
+	function create_assessment()
+	{
+		global $session;
+		if(isset($_POST['submit']))
+		{
+			$instructorID = $session->getID();
+			$name = mysql_real_escape_string($_POST['name']);
+			$this->Instructor->query("INSERT INTO Assessment (InstructorID,name) VALUES (\"$instructorID\",\"$name\")");
+			$this->set('added',true);
+		}
+	}
+	
+	function view_assessments()
+	{
+		global $session;
+		$userID = $session->getID();
+		$this->set('assessments',$this->Instructor->query("SELECT Assessment.name FROM `Assessment` INNER JOIN User ON Assessment.InstructorID = User.UserID WHERE Assessment.InstructorID = $userID"));
+	}
+		
 	function add_announcement($num)
 	{
 		global $session;
