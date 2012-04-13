@@ -1,5 +1,15 @@
 <?php if ($accessible): ?>
 
+
+<!-- This is in development/testing phase, will be removed if it does not qualify -->
+<script type="text/javascript" src="<?php echo BASEPATH.'include/js/validate.js'?>"></script>
+<script type="text/javascript">
+Validate.id(new Array("title"));
+</script>
+<!-- ============================================= -->
+
+
+
 <?php if (isset($missing)):
 $this->RenderMsg("You did not complete the required credentials.");
 endif ?>
@@ -18,7 +28,7 @@ endif ?>
 	<label for="title">Title:  </label>
 	</td>
 	<td>
-	<input type="text" name="title">
+	<input type="text" name="title" id="title">
 	</td>
 	</tr>
 	
@@ -31,7 +41,7 @@ endif ?>
 	<tr>
 	<td>
 	<td>
-	<input type="submit" name="submit" value="Submit"/>
+	<input type="submit" name="submit" value="Submit" id="submit"/>
 	</td>
 	</td>
 	</tr>

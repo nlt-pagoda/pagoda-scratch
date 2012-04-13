@@ -59,7 +59,8 @@ endif ?>
 	
 </form>
 <script type="text/javascript" src="<?php echo BASEPATH; ?>include/js/upload.js"></script>
-	
+<div id="tmpInfo">
+</div>
 	
 	
 <?php else: 

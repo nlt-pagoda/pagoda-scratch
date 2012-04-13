@@ -39,12 +39,13 @@ class InstructorController extends Controller
 		}
 		
 	}
-	function add_assignment()
+	function add_assignment($id)
 	{
 		global $session;
 		if(isset($_POST['submit'])){
-			//WILL UPDATE ONCE THE DATABASE IS CHANGED.
-			//STATUS:- DISCUSSION WITH TEAM.
+			$title = mysql_escape_string($_POST['title']);
+			if(isset($POST['description']))
+					$description = $_POST['description'];
 		}
 	}	
 	function add_announcement($num)
