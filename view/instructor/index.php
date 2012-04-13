@@ -2,9 +2,9 @@
 
 <h1>Instructor Control Panel</h1>
 
-<h2>Courses</h2>
 <ul>
 <li><a href="<?php echo BASEPATH; ?>instructor/view/courses/">Courses</a></li>
+<li><a href="<?php echo BASEPATH; ?>instructor/view/assessments/">Assessments</a></li>
 </ul>
 
 <?php else: 
