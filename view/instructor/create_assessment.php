@@ -14,7 +14,6 @@ endif ?>
 
 <h1>Assessments</h1>
 
-
 <form action="" method="POST">
 	<table>
 	<tr>
@@ -25,8 +24,43 @@ endif ?>
 	<td><input type="submit" name="submit" value="submit"/></td>
 	</tr>
 	</table>
+	
+	<br><br>
+	<h2>Rubric:</h2>
+	<input type="button" value="Add Score (Column)" onclick="addColumn()">
+	<input type="button" value="Add Criteria (Row)" onclick="addTableRow($('#rubricTable'))">
+	<table id="rubricTable" border="1">
+	<tr><td></td><td>Score</td></tr>
+	<tr><td>Criteria</td><td><textarea>Criteria description to achieve Score</textarea></td></tr>
+	</table>
 </form>
 	
+	<script>
+	function addTableRow(jQtable){
+	    jQtable.each(function(){
+	        var $table = $(this);
+	        // Number of td's in the last table row
+	        var n = $('tr:last td', this).length;
+	        var tds = '<tr><td>Criteria</td>';
+	        for(var i = 0; i < n-1; i++){
+	            tds += '<td><textarea>Criteria description to achieve Score</textarea></td>';
+	        }
+	        tds += '</tr>';
+	        if($('tbody', this).length > 0){
+	            $('tbody', this).append(tds);
+	        }else {
+	            $(this).append(tds);
+	        }
+	    });
+	}
+
+	function addColumn()
+	{
+		$("#rubricTable tr:first").append("<td>Score</td>");
+		$("#rubricTable tr:gt(0)").append("<td><textarea>Criteria description to achieve Score</textarea></td>");
+
+	}
+	</script>
 
 
 
