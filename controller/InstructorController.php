@@ -64,7 +64,7 @@ class InstructorController extends Controller
 	{
 		global $session;
 		$userID = $session->getID();
-		$this->set('assessments',$this->Instructor->query("SELECT Assessment.name FROM `Assessment` INNER JOIN User ON Assessment.InstructorID = User.UserID WHERE Assessment.InstructorID = $userID"));
+		$this->set('assessments',$this->Instructor->query("SELECT Assessment.* FROM `Assessment` INNER JOIN User ON Assessment.InstructorID = User.UserID WHERE Assessment.InstructorID = $userID"));
 	}
 		
 	function add_announcement($num)
