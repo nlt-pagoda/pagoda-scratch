@@ -12,7 +12,7 @@
 <ul>
 <?php 
 foreach ($assessments as $assessment)
-	echo("<li><a href=\"\">".$assessment["Assessment"]["name"]."</a><br/></li>");
+	echo("<li><a href=\"".BASEPATH."instructor/view/assessments/".$assessment["Assessment"]["AssessmentID"]."\">".$assessment["Assessment"]["name"]."</a><br/></li>");
 ?>
 </ul>
 
