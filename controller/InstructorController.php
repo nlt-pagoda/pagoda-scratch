@@ -54,8 +54,15 @@ class InstructorController extends Controller
 		if(isset($_POST['submit']))
 		{
 			$instructorID = $session->getID();
-			$name = mysql_real_escape_string($_POST['name']);
-			$this->Instructor->query("INSERT INTO Assessment (InstructorID,name) VALUES (\"$instructorID\",\"$name\")");
+			$assessmentName = mysql_real_escape_string($_POST['assessmentName']);
+			$rubricName = mysql_real_escape_string($_POST['rubricName']);
+		    $html = mysql_real_escape_string($_POST['tableHTML']);
+
+			$this->Instructor->query("INSERT INTO Assessment (InstructorID,name) VALUES (\"$instructorID\",\"$assessmentName\")");
+			$assessmentID = mysql_insert_id();
+			$this->Instructor->query("INSERT INTO Rubric (name,html) VALUES (\"$rubricName\", \"$html\")");
+			$rubricID = mysql_insert_id();
+			$this->Instructor->query("UPDATE Assessment SET RubricID = \"$rubricID\" WHERE Assessment.AssessmentID = $assessmentID");
 			$this->set('added',true);
 		}
 	}
@@ -65,6 +72,16 @@ class InstructorController extends Controller
 		global $session;
 		$userID = $session->getID();
 		$this->set('assessments',$this->Instructor->query("SELECT Assessment.* FROM `Assessment` INNER JOIN User ON Assessment.InstructorID = User.UserID WHERE Assessment.InstructorID = $userID"));
+	}
+	
+	function view_assessment($num)
+	{
+		if (!empty($num))
+		{	
+			$this->set("assessment",$this->Instructor->query("SELECT name FROM Assessment WHERE AssessmentID = $num"));
+			$rubricID = mysql_result(mysql_query("SELECT RubricID FROM Assessment WHERE AssessmentID = $num"),0);
+			$this->set("rubricHTML",$this->Instructor->query("SELECT html FROM Rubric WHERE RubricID = $rubricID"));
+		}
 	}
 		
 	function add_announcement($num)
