@@ -8,6 +8,8 @@
 	//BASEPATH must be used to reference css, js, and images.
 	//This allows for dynamic path finding
 	define('BASEPATH', dirname($_SERVER['PHP_SELF']).'/');
+	 
+
 	
 	//to prevent can not modify header error, use this to write html to buffer
 	ob_start();
@@ -33,4 +35,4 @@
 	//The default page to render if there are no parameters in the url
 	$default['controller'] = "main";
 	$default['action'] = '';
-	
+?>

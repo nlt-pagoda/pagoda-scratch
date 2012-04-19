@@ -51,20 +51,31 @@ class InstructorController extends Controller
 	function create_assessment()
 	{
 		global $session;
+		
 		if(isset($_POST['submit']))
-		{
+		{	
 			$instructorID = $session->getID();
 			$assessmentName = mysql_real_escape_string($_POST['assessmentName']);
 			$rubricName = mysql_real_escape_string($_POST['rubricName']);
-		    $html = mysql_real_escape_string($_POST['tableHTML']);
+			$html = mysql_real_escape_string($_POST['tableHTML']);
+			
+			if($_POST['assessmentName'] == "" || $_POST['rubricName'] == "")
+			{
+				$this->set('missing',true);
+			}
 
-			$this->Instructor->query("INSERT INTO Assessment (InstructorID,name) VALUES (\"$instructorID\",\"$assessmentName\")");
-			$assessmentID = mysql_insert_id();
-			$this->Instructor->query("INSERT INTO Rubric (name,html) VALUES (\"$rubricName\", \"$html\")");
-			$rubricID = mysql_insert_id();
-			$this->Instructor->query("UPDATE Assessment SET RubricID = \"$rubricID\" WHERE Assessment.AssessmentID = $assessmentID");
-			$this->set('added',true);
+			else
+			{
+				$this->Instructor->query("INSERT INTO Assessment (InstructorID,name) VALUES (\"$instructorID\",\"$assessmentName\")");
+				$assessmentID = mysql_insert_id();
+				$this->Instructor->query("INSERT INTO Rubric (name,html) VALUES (\"$rubricName\", \"$html\")");
+				$rubricID = mysql_insert_id();
+				$this->Instructor->query("UPDATE Assessment SET RubricID = \"$rubricID\" WHERE Assessment.AssessmentID = $assessmentID");
+				$this->set('added',true);
+			}
 		}
+		
+
 	}
 	
 	function view_assessments()
@@ -76,6 +87,15 @@ class InstructorController extends Controller
 	
 	function view_assessment($num)
 	{
+		if(isset($_POST['remove']))
+		{
+			$id = $num;
+			$this->Instructor->query("DELETE Rubric FROM Rubric INNER JOIN Assessment ON Rubric.RubricID = Assessment.RubricID WHERE Assessment.AssessmentID = $id" );
+			$this->Instructor->query("DELETE FROM Assessment_has_Standard WHERE AssessmentID = $id" );
+			$this->Instructor->query("DELETE FROM Assessment WHERE AssessmentID = $id" );
+			$this->set('removed',true);
+		}
+		
 		if (!empty($num))
 		{	
 			$this->set("assessment",$this->Instructor->query("SELECT name FROM Assessment WHERE AssessmentID = $num"));
