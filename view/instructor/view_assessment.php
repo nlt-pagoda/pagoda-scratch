@@ -1,13 +1,11 @@
 <?php if ($accessible): ?>
-
+<?php if (isset($removed)):
+header('Location:'.BASEPATH.'/instructor/view/assessments/');
+endif ?>
 
 
 <div id=sidepanel>
-	<h2>Controls</h2>
-	<ul>
-	<li><a href="<?php echo BASEPATH; ?>instructor/view/assessments/">View Assessments</a></li>
-	<li><a href="<?php echo BASEPATH; ?>instructor/create/assessment/">Create Assessment</a></li>
-	</ul>
+<?php $this->assessmentSidePanel(); ?>
 </div>
 
 <h1>View Assessment</h1>
@@ -18,6 +16,13 @@ echo $assessment[0]["Assessment"]["name"];
 
 <?php 
 echo $rubricHTML[0]["Rubric"]["html"];
+
+			if ($accessible)
+			{
+				echo("<div id=\"announcementButtons\"><form action=\"\" method=\"POST\">");
+				echo("<input type=\"submit\" name=\"remove\" value=\"Remove\"/>");
+				echo("</form></div>");
+			}
 ?>
 
 

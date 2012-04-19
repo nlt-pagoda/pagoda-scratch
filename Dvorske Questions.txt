@@ -2,15 +2,6 @@ How many times should a student be able to submit an assignment?
 
 Should it be configuarable by the instructor? eg: Instructor allows many submission unti a certain date or instructor can declare only one submission
 
-
-
-2.Rubrics? How do they work? Guide for grading?  Requirements for grading? Who should be allowed to create rubrics? Admin? Instructors? Accreditors?
-
-
-
-
-
-
 4-11-12 research
 =================
 When adding standards to a rubric. Where do the standards come from? Are they dictated by the university?
