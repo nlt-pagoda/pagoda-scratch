@@ -1,15 +1,15 @@
 <?php if ($accessible): ?>
 
+<?php if (isset($missing)):
+$this->RenderMsg("You did not complete the required credentials.");
+endif ?>
+
 <?php if (isset($added)):
 $this->RenderMsg("Assessment created!");
 endif ?>
 
 <div id=sidepanel>
-	<h2>Controls</h2>
-	<ul>
-	<li><a href="<?php echo BASEPATH; ?>instructor/view/assessments/">View Assessments</a></li>
-	<li><a href="<?php echo BASEPATH; ?>instructor/create/assessment/">Create Assessment</a></li>
-	</ul>
+<?php $this->assessmentSidePanel(); ?>
 </div>
 
 <h1>Assessments</h1>
