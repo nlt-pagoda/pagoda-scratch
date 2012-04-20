@@ -18,7 +18,7 @@ echo $user[0]["User"]["username"];
 <?php
 	echo "<table>";
 	echo "<tr>";
-	echo "<td><strong>Full Name:  </strong></td><td>".$profile[0]["Profile"]["firstname"]." ".$profile[0]["Profile"]["lastname"]."</td><br/>";
+	echo "<td><strong>Full Name:  </strong></td><td>".$profile[0]["Profile"]["firstName"]." ".$profile[0]["Profile"]["lastName"]."</td><br/>";
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td><strong>Email:  </strong></td><td>".$profile[0]["Profile"]["emailAddress"]."</td><br/>";
