@@ -3,13 +3,13 @@
 <h1>Admin Control Panel</h1>
 
 <?php 
-echo $profile[0]["Profile"]["firstname"]." ".$profile[0]["Profile"]["lastname"];
+echo $profile[0]["Profile"]["firstName"]." ".$profile[0]["Profile"]["lastName"];
 ?></h2>
 
 <?php
 	echo "<table>";
 	echo "<tr>";
-	echo "<td><strong>Full Name:  </strong></td><td>".$profile[0]["Profile"]["firstname"]." ".$profile[0]["Profile"]["lastname"]."</td><br/>";
+	echo "<td><strong>Full Name:  </strong></td><td>".$profile[0]["Profile"]["firstName"]." ".$profile[0]["Profile"]["lastName"]."</td><br/>";
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td><strong>Email:  </strong></td><td>".$profile[0]["Profile"]["emailAddress"]."</td><br/>";
