@@ -9,12 +9,12 @@ class UploadController extends Controller
 					// Stored when a user uploads some file because we're basically refreshing the page causing us to lose this data
 					// So, a workaround would be assigning it in a hidden value along with the uploaded file
 					// or passing it as a parameter.
+		$cId='';
 		if($session->isLoggedIn())
 		{
 			$this->set("display",true);
 			if(isset($_POST['upload']) || isset($_POST['replace']))
 			{
-				print_r($_FILES["docs"]["name"]);
 				$test = new Upload();
 				$test->defineDir($session->getName()); //Make directory based on the username
 				$test->pushUpload(); //Call function pushupload inside Upload Model
@@ -74,31 +74,109 @@ class UploadController extends Controller
 	}
 
 
-	public function index()
+	public function index($course="null")
 	{
 		global $session;
-		$output = '';
-		foreach(func_get_args() as $value)
-			$output.=$value;
-		if(!empty($courseId))
-			$cId = $output;
+		global $cId;
+		//$output = '';
+		//foreach(func_get_args() as $value)
+		//	$output.=$value;
+		if(isset($_POST['attachFiles']))
+		{
+			if(isset($_POST['tmpCourseTitle']))
+			{
+				if(!empty($_POST['tmpCourseTitle']))
+				{
+					$_SESSION['tmpCourseTitle'] = $_POST['tmpCourseTitle'];
+					echo "OH hai there";
+				}
+				?>
+					<script>
+					alert("fucker");
+					</script>
+					
+					<?php
+			}
+			if(isset($_POST['tmpCourseDesc']))
+				if(!empty($_POST['tmpCourseDesc']))
+				{
+					$_SESSION['tmpCourseDesc'] = $_POST['tmpCourseDesc'];
+					echo "yes this is a mother fucking dog";
+				}
+		}
+		//Store the courseID....THIS IS IMPORTANT!!! COURSEID MUST STAY BE PASSED AMONG ALL THE PAGES 
+		if($course!="null")
+		{
+			$cId = $course;
+		}
+		else
+		{
+			$cId = '';
+		}
+		//---------------------------------------------------------------------------------------------
+
+		//Checks the users document and display them
 		if(is_dir("uploads/".$session->getName()))
 		{
 			chdir("uploads/".$session->getName());
-			$list = exec('dir/B/A:-D',$result);
-		}
+			$list = exec('dir/B/A:-D',$result); //executes the command and stores it in the second parameter $result
 			$this->set("files",$result);
+			$this->set("cId",$cId);
+		}
+		//-----------------------------------------------------------------------------------------------------------
+		else
+		{
+			$this->set("cId",$cId);
+			$this->set("files",null);
+		}
 	}
 
 	public function error(){
 		$this->set("errors",Upload::$errors);
 	}
 
-	public function select_courses()
+	public function courses($courseId = "null")
 	{
+
 		global $session;
+		echo $_SESSION['tmpCourseTitle'];
 		$userID = $session->getID();
-		$this->set('courses',$this->Instructor->query("SELECT * FROM `Course` INNER JOIN User ON Course.InstructorID = User.UserID INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID WHERE User.UserID = $userID"));
+		//Trying to find the role of the user to perform the query accordingly//
+		$roleIDQuery = mysql_query("SELECT `User_has_Roles`.`RolesID` FROM `User_has_Roles` where `User_has_Roles`.`UserID` = $userID ");
+		$roleID = mysql_fetch_array($roleIDQuery,MYSQL_ASSOC); 
+		$roleID = intval($roleID['RolesID']);
+		$roleQuery = mysql_query("SELECT `Roles`.`role` FROM `Roles` where `Roles`.`RolesID` = $roleID");
+		//===================================================================================//
+		$role = mysql_fetch_array($roleQuery,MYSQL_ASSOC);
+		if(isset($_POST['course']))
+			$courseId = $_POST['course'];
+		if($courseId == "null")
+		{
+			if($role['role'] == "Instructor")
+
+				$query = mysql_query("SELECT `Course`.`CourseID`,`Course`.`CRN`, `Course`.`name`, `Course`.`section`, `Course`.`number` FROM `Course` INNER JOIN User ON Course.InstructorID = User.UserID INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID WHERE User.UserID = $userID");
+			else if($role['role'] == "Student")
+				$query = mysql_query("SELECT `Course`.`CourseID`, `Course`.`CRN`, `Course`.`name`, `Course`.`section`, `Course`.`number` FROM Course INNER JOIN Course_has_Students ON Course.CourseID = Course_has_Students.CourseID INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID WHERE Course_has_Students.StudentID = $userID");
+
+			$i = 0;
+			while($row[$i++] = mysql_fetch_array($query,MYSQL_ASSOC)) //looping through query and putting it in an array
+			$this->set('courses',$row);
+			//$this->set('cIds',mysql_query("SELECT CourseID From `Course` INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID WHERE User.UserID = $userID"));
+			$this->set('files',$_POST['ls']);
+			$this->set('role',$role);
+
+		}
+		else
+		{
+			$this->set('tmpUser',$userID);
+			$this->set('cID',$courseId);
+			if(isset($_POST['ls']))
+				$this->set('files',$_POST['ls']);
+			else
+				$this->set('files',null);
+			$this->set('role',$role);
+			$this->set('auto_assign',true);
+		}
 	}
 
 

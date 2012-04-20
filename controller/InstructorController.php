@@ -11,11 +11,12 @@ class InstructorController extends Controller
 				$this->set('accessible',false);
 	}
 
-	function view_courses()
+	function view_courses($message='null')
 	{
 		global $session;
 		$userID = $session->getID();
 		$this->set('courses',$this->Instructor->query("SELECT * FROM `Course` INNER JOIN User ON Course.InstructorID = User.UserID INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID WHERE User.UserID = $userID"));
+		$this->set('message',$message);
 	}
 	
 	function view_course($num)
@@ -42,11 +43,42 @@ class InstructorController extends Controller
 	function add_assignment($id)
 	{
 		global $session;
-		if(isset($_POST['submit'])){
-			$title = mysql_escape_string($_POST['title']);
-			if(isset($POST['description']))
-					$description = $_POST['description'];
+		//Restore the previous texts in the textbox
+		if(isset($_SESSION['tmpCourseTitle']))
+			$this->set("title",$_SESSION['tmpCourseTitle']);
+		else
+			$this->set("title",'');
+		if(isset($_SESSION['tmpCourseDesc']))
+			$this->set("desc",$_SESSION['tmpCourseTitle']);
+		else
+			$this->set("desc",'');
+		//=========================================
+
+		if(isset($_POST['submitAttachFiles']))
+		{
+			$this->set("files",$_POST['UattachFiles']);
 		}
+		else
+			$this->set("files",null);
+		if(isset($_POST['assignHW']))
+		{
+			if(isset($_POST['title']))
+				$title = $_POST['title'];
+			if(isset($_POST['files2Buploaded']))
+			{
+				$fileArray = array();
+				foreach($_POST['files2Buploaded'] as $file)
+				{
+					array_push($fileArray,$file);
+				}
+			}
+			if(isset($_POST['desc']))
+				$desc = $_POST['desc'];
+			//INSERTING HOMEWORK TO THE DATABASE
+			$this->Instructor->query("INSERT INTO `pagodanlt`.`Assignment` (`AssignmentID`, `CourseID`, `title`, `description`, `dueDate`, `AssessmentID`) VALUES (NULL, '3', 'oh hai there', 'i am the description', '2012-04-20 21:33:09', '60'");
+		}
+		$this->set("id",$id);
+
 	}
 
 	function create_assessment()
@@ -58,6 +90,10 @@ class InstructorController extends Controller
 			$name = mysql_real_escape_string($_POST['name']);
 			$this->Instructor->query("INSERT INTO Assessment (InstructorID,name) VALUES (\"$instructorID\",\"$name\")");
 			$this->set('added',true);
+		}
+		else if(isset($_POST['attach']))
+		{
+			
 		}
 	}
 	

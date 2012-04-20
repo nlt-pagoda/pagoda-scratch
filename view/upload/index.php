@@ -3,23 +3,48 @@
 <?php if($display):?>
 <div id="files">
 <!-- Selectable files  -->
-<form name="selectFile" action='' method='post'> 
-	<?php
-	foreach($files as $file)
-	{
-	?>
-		<div id="files"> <?php echo $file ?>
-		<input type="checkbox" name="<?php echo $file ?>"/> </div> 
-	<?php
-	}
+<?php
+if($cId=='')
+	$redirect = BASEPATH."upload/courses";
+else
+	$redirect = BASEPATH."upload/courses/".$cId;
 ?>
+
+<?php
+	if(count($files))
+	{
+?>
+<form name="selectFile" action='<?php echo $redirect; ?>' method='post'> 
+	<div id="fileTable">
+			<ul id="ls">
+			<?php
+			foreach($files as $file)
+			{
+			?>
+				<li>
+					<div id="files"> 
+						<?php echo $file ?> <input type="checkbox" name="ls[]" value="<?php echo BASEPATH."uploads/".$file ?>"/>
+					</div> 
+				</li>
+			<?php
+			}
+			?>
+			</ul>
+
+	</div>
+<input type="submit" name="add" value ="Assign"/>
+</form>
+<?php
+}
+else
+	$this->RenderMsg("No files uploaded yet!!!");
+?>
+<form name "attachFiles" method='POST' enctype='multipart/form-data' action="">
+	<a href='#' id='attacher'>Upload Files</a>
+	<ul id='parentFilelist'></ul>
+	<input type='submit' name='upload' id='upload' value='Upload'/>
 </form>
 </div>
-<form method='POST' enctype='multipart/form-data' action="">
-		<ul id='parentFilelist'></ul>
-		<a href='#' id='attacher'>Attach Files</a>
-		<input type='submit' name='upload' id='upload' value='Upload'/>
-	</form>
 </div>
 <div id="formBox">
 <?php else:
