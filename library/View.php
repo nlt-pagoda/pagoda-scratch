@@ -82,6 +82,17 @@
 			echo("</div>");
 		}
 		
+		public function assessmentSidePanel()
+		{
+			 $html = 	'<h2>Controls</h2>'.
+						'<ul>'.
+						'<li><a href="' .BASEPATH. 'instructor/view/assessments/">View Assessments</a></li>'.
+						'<li><a href="'.BASEPATH.'instructor/create/assessment/">Create Assessments</a></li>'.
+						'<li><a href="'.BASEPATH.'instructor/view/assessments/">Remove Assessments</a></li>'.
+						'</ul>';
+			
+			echo $html;
+		}
 		
 		
 		public function SetCSS()
