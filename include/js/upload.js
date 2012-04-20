@@ -18,7 +18,7 @@ function removeFileList(fileId)
 $(document).ready(function(){
 	var attacher= new Array();
 	var fileCounter = 0;
-	//The following function generates codes for input type file to be automatically added after Attach files link is clicked.
+	//Generates codes for input type file to be automatically added after Attach files link is clicked.
 	$("#attacher").click(function(){
 		var li = document.createElement('li');
 		li.setAttribute('id','file'+fileCounter);
