@@ -90,22 +90,50 @@ class InstructorController extends Controller
 			$instructorID = $session->getID();
 			$assessmentName = mysql_real_escape_string($_POST['assessmentName']);
 			$rubricName = mysql_real_escape_string($_POST['rubricName']);
-			$html = mysql_real_escape_string($_POST['tableHTML']);
+			$criteria = array();
+			$score = array();
+			$numOfCriteria = $_POST['criteriaLength'];
+			$numOfScores = $_POST['scoreLength'];
+			$i = 0;
 			
 			if($_POST['assessmentName'] == "" || $_POST['rubricName'] == "")
 			{
 				$this->set('missing',true);
 			}
-
+			
 			else
 			{
+				for($i = 1;$i <= $numOfCriteria;$i++)
+				{
+					$criteria[$i] = mysql_real_escape_string($_POST['criteriaPosition'.$i]);
+				}
+				
+				for($i = 1;$i <= $numOfScores;$i++)
+				{
+					$score[$i] = mysql_real_escape_string($_POST['scorePosition'.$i]);
+				}
+
+				
 				$this->Instructor->query("INSERT INTO Assessment (InstructorID,name) VALUES (\"$instructorID\",\"$assessmentName\")");
 				$assessmentID = mysql_insert_id();
-				$this->Instructor->query("INSERT INTO Rubric (name,html) VALUES (\"$rubricName\", \"$html\")");
+				$this->Instructor->query("INSERT INTO Rubric (name,rowSize,columnSize) VALUES (\"$rubricName\", \"$numOfCriteria\", \"$numOfScores\")");
 				$rubricID = mysql_insert_id();
 				$this->Instructor->query("UPDATE Assessment SET RubricID = \"$rubricID\" WHERE Assessment.AssessmentID = $assessmentID");
+				
+				for($i = 1;$i <= $numOfCriteria;$i++)
+				{
+					$this->Instructor->query("INSERT INTO Criteria (title,position,RubricID) VALUES (\"$criteria[$i]\",\"$i\", \"$rubricID\")");
+				}
+				
+				for($i = 1;$i <= $numOfScores;$i++)
+				{
+					$this->Instructor->query("INSERT INTO Score (title,position,RubricID) VALUES (\"$score[$i]\",\"$i\", \"$rubricID\")");
+				}
+				
 				$this->set('added',true);
+				
 			}
+			
 		}
 		else if(isset($_POST['attach']))
 		{
@@ -134,8 +162,13 @@ class InstructorController extends Controller
 		if (!empty($num))
 		{	
 			$this->set("assessment",$this->Instructor->query("SELECT name FROM Assessment WHERE AssessmentID = $num"));
+			
 			$rubricID = mysql_result(mysql_query("SELECT RubricID FROM Assessment WHERE AssessmentID = $num"),0);
-			$this->set("rubricHTML",$this->Instructor->query("SELECT html FROM Rubric WHERE RubricID = $rubricID"));
+			//$rubricRowSize = mysql_result(mysql_query("SELECT rowSize FROM Rubric WHERE RubricID = $rubricID"),0);
+			//$rubricColumnSize = mysql_result(mysql_query("SELECT columnSize FROM Rubric WHERE RubricID = $rubricColumnSize"),0);
+		
+			$this->set("assessment",$this->Instructor->query("SELECT name FROM Assessment WHERE AssessmentID = $num"));
+			
 		}
 	}
 		
