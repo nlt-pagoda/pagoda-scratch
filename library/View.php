@@ -82,13 +82,14 @@
 			echo("</div>");
 		}
 		
-		public function assessmentSidePanel()
+		public function rubricSidePanel()
 		{
 			 $html = 	'<h2>Controls</h2>'.
 						'<ul>'.
-						'<li><a href="' .BASEPATH. 'instructor/view/assessments/">View Assessments</a></li>'.
-						'<li><a href="'.BASEPATH.'instructor/create/assessment/">Create Assessments</a></li>'.
-						'<li><a href="'.BASEPATH.'instructor/view/assessments/">Remove Assessments</a></li>'.
+						'<li><a href="' .BASEPATH. 'instructor/view/rubrics/">View Rubrics</a></li>'.
+						'<li><a href="'.BASEPATH.'instructor/create/rubric/">Create Rubrics</a></li>'.
+						'<li><a href="'.BASEPATH.'instructor/edit/rubrics/">Edit Rubrics</a></li>'.
+						'<li><a href="'.BASEPATH.'instructor/view/rubrics/">Remove Rubrics</a></li>'.
 						'</ul>';
 			
 			echo $html;

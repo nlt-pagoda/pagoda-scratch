@@ -148,6 +148,11 @@ h1
 	border-radius: 3px;
 }
 
+#rubricTable td
+{
+	max-width:230px;
+}
+
 #sidepanel
 {
 	position: absolute;
