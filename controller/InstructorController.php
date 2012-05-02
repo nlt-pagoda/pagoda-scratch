@@ -81,31 +81,70 @@ class InstructorController extends Controller
 
 	}
 
-	function create_assessment()
-	{
-		global $session;
-		
+	function create_rubric()
+	{		
 		if(isset($_POST['submit']))
 		{	
-			$instructorID = $session->getID();
-			$assessmentName = mysql_real_escape_string($_POST['assessmentName']);
 			$rubricName = mysql_real_escape_string($_POST['rubricName']);
-			$html = mysql_real_escape_string($_POST['tableHTML']);
+			$criteria = array();
+			$score = array();
+			$description = array();
+			$numOfCriteria = $_POST['criteriaLength'];
+			$numOfScores = $_POST['scoreLength'];
+			$i = 0;
 			
-			if($_POST['assessmentName'] == "" || $_POST['rubricName'] == "")
+			if($_POST['rubricName'] == "")
 			{
 				$this->set('missing',true);
 			}
-
+			
 			else
 			{
-				$this->Instructor->query("INSERT INTO Assessment (InstructorID,name) VALUES (\"$instructorID\",\"$assessmentName\")");
-				$assessmentID = mysql_insert_id();
-				$this->Instructor->query("INSERT INTO Rubric (name,html) VALUES (\"$rubricName\", \"$html\")");
+				for($i = 1;$i <= $numOfCriteria;$i++)
+				{
+					$criteria[$i] = mysql_real_escape_string($_POST['criteriaPosition'.$i]);
+				}
+				
+				for($i = 1;$i <= $numOfScores;$i++)
+				{
+					$score[$i] = mysql_real_escape_string($_POST['scorePosition'.$i]);
+				}
+				
+				for($i = 1;$i <= $numOfCriteria;$i++)
+				{
+					for($j = 1;$j <= $numOfScores;$j++)
+					{
+						$description[$i][$j] = mysql_real_escape_string($_POST['descriptionPosition'.$i.$j]);
+					}
+				}
+				
+				$this->Instructor->query("INSERT INTO Rubric (name,rowSize,columnSize) VALUES (\"$rubricName\", \"$numOfCriteria\", \"$numOfScores\")");
 				$rubricID = mysql_insert_id();
-				$this->Instructor->query("UPDATE Assessment SET RubricID = \"$rubricID\" WHERE Assessment.AssessmentID = $assessmentID");
+				
+				for($i = 1;$i <= $numOfCriteria;$i++)
+				{
+					$this->Instructor->query("INSERT INTO Criteria (title,position,RubricID) VALUES (\"$criteria[$i]\",\"$i\", \"$rubricID\")");
+					$criteriaID[$i] = mysql_insert_id();
+				}
+				
+				for($i = 1;$i <= $numOfScores;$i++)
+				{
+					$this->Instructor->query("INSERT INTO Score (title,position,RubricID) VALUES (\"$score[$i]\",\"$i\", \"$rubricID\")");
+					$scoreID[$i] = mysql_insert_id();
+				}
+								
+				for($i = 1;$i <= $numOfCriteria;$i++)
+				{
+					for($j = 1;$j <= $numOfScores;$j++)
+					{
+						$this->Instructor->query("INSERT INTO Criteria_Description (description,CriteriaID,ScoreID) VALUES (\"{$description[$i][$j]}\",\"$criteriaID[$i]\", \"$scoreID[$j]\")");
+					}
+				}
+				
 				$this->set('added',true);
+				
 			}
+			
 		}
 		else if(isset($_POST['attach']))
 		{
@@ -113,29 +152,113 @@ class InstructorController extends Controller
 		}
 	}
 	
-	function view_assessments()
+	function view_rubrics()
 	{
 		global $session;
 		$userID = $session->getID();
-		$this->set('assessments',$this->Instructor->query("SELECT Assessment.* FROM `Assessment` INNER JOIN User ON Assessment.InstructorID = User.UserID WHERE Assessment.InstructorID = $userID"));
+		$this->set('rubrics',$this->Instructor->query("SELECT RubricID,name FROM `Rubric`"));
 	}
 	
-	function view_assessment($num)
+	function edit_rubrics()
+	{
+		global $session;
+		$userID = $session->getID();
+		$this->set('rubrics',$this->Instructor->query("SELECT RubricID,name FROM `Rubric`"));
+	}
+	
+	function edit_rubric($num)
+	{
+		if(isset($_POST['submit']))
+		{	
+			$rubricName = mysql_real_escape_string($_POST['rubricName']);
+			$criteria = array();
+			$score = array();
+			$description = array();
+			$numOfCriteria = $_POST['criteriaLength'];
+			$numOfScores = $_POST['scoreLength'];
+			$i = 0;
+			
+			if($_POST['rubricName'] == "")
+			{
+				$this->set('missing',true);
+			}
+			
+			else
+			{
+				for($i = 1;$i <= $numOfCriteria;$i++)
+				{
+					$criteria[$i] = mysql_real_escape_string($_POST['criteriaPosition'.$i]);
+				}
+				
+				for($i = 1;$i <= $numOfScores;$i++)
+				{
+					$score[$i] = mysql_real_escape_string($_POST['scorePosition'.$i]);
+				}
+				
+				for($i = 1;$i <= $numOfCriteria;$i++)
+				{
+					for($j = 1;$j <= $numOfScores;$j++)
+					{
+						$description[$i][$j] = mysql_real_escape_string($_POST['descriptionPosition'.$i.$j]);
+					}
+				}
+				
+				$this->Instructor->query("UPDATE Rubric SET name = \"$rubricName\", rowSize = \"$numOfCriteria\", columnSize = \"$numOfScores\" WHERE RubricID = $num))");
+				
+				for($i = 1;$i <= $numOfCriteria;$i++)
+				{
+					$this->Instructor->query("UPDATE Criteria SET title = \"$criteria[$i]\", position = \"$i\" WHERE RubricID = $num");
+					$criteriaID[$i] = mysql_insert_id();
+				}
+				
+				for($i = 1;$i <= $numOfScores;$i++)
+				{
+					$this->Instructor->query("UPDATE Score SET title = \"$score[$i]\", position = \"$i\" WHERE RubricID = $num");
+					$scoreID[$i] = mysql_insert_id();
+				}
+								
+				//for($i = 1;$i <= $numOfCriteria;$i++)
+				//{
+				//	for($j = 1;$j <= $numOfScores;$j++)
+				//	{
+				//		$this->Instructor->query("INSERT INTO Criteria_Description (description,CriteriaID,ScoreID) VALUES (\"{$description[$i][$j]}\",\"$criteriaID[$i]\", \"$scoreID[$j]\")");
+				//	}
+				//}
+				
+				$this->set('edited',true);
+			}
+			
+		}
+				
+				
+		
+		$this->set("rubric",$this->Instructor->query("SELECT name FROM Rubric WHERE RubricID = $num"));
+		$this->set("tablesize",$this->Instructor->query("SELECT columnSize,rowSize FROM Rubric WHERE RubricID = $num"));
+		$this->set("scores",$this->Instructor->query("SELECT score,title FROM Score WHERE RubricID = $num"));
+		$this->set("criterias",$this->Instructor->query("SELECT title FROM Criteria WHERE RubricID = $num"));
+		$this->set("descriptions",$this->Instructor->query("SELECT Criteria_Description.* FROM Criteria_Description INNER JOIN Criteria ON Criteria_Description.CriteriaID = Criteria.CriteriaID INNER JOIN Score ON Criteria_Description.ScoreID = Score.ScoreID WHERE Criteria.RubricID = $num"));
+		
+	}
+	
+	function view_rubric($num)
 	{
 		if(isset($_POST['remove']))
-		{
-			$id = $num;
-			$this->Instructor->query("DELETE Rubric FROM Rubric INNER JOIN Assessment ON Rubric.RubricID = Assessment.RubricID WHERE Assessment.AssessmentID = $id" );
-			$this->Instructor->query("DELETE FROM Assessment_has_Standard WHERE AssessmentID = $id" );
-			$this->Instructor->query("DELETE FROM Assessment WHERE AssessmentID = $id" );
+		{			
+			$this->Instructor->query("DELETE FROM Rubric WHERE RubricID = $num" );
+			$this->Instructor->query("DELETE FROM Criteria WHERE RubricID = $num" );
+			$this->Instructor->query("DELETE FROM Score WHERE RubricID = $num" );
+			$this->Instructor->query("DELETE FROM Criteria_Description INNER JOIN Criteria ON Criteria_Description.CriteriaID = Criteria.CriteriaID INNER JOIN Score ON Criteria_Description.ScoreID = Score.ScoreID WHERE Criteria.RubricID = $num");
+			
 			$this->set('removed',true);
 		}
 		
 		if (!empty($num))
 		{	
-			$this->set("assessment",$this->Instructor->query("SELECT name FROM Assessment WHERE AssessmentID = $num"));
-			$rubricID = mysql_result(mysql_query("SELECT RubricID FROM Assessment WHERE AssessmentID = $num"),0);
-			$this->set("rubricHTML",$this->Instructor->query("SELECT html FROM Rubric WHERE RubricID = $rubricID"));
+			$this->set("rubric",$this->Instructor->query("SELECT name FROM Rubric WHERE RubricID = $num"));
+			$this->set("tablesize",$this->Instructor->query("SELECT columnSize,rowSize FROM Rubric WHERE RubricID = $num"));
+			$this->set("scores",$this->Instructor->query("SELECT score,title FROM Score WHERE RubricID = $num"));
+			$this->set("criterias",$this->Instructor->query("SELECT title FROM Criteria WHERE RubricID = $num"));
+			$this->set("descriptions",$this->Instructor->query("SELECT Criteria_Description.* FROM Criteria_Description INNER JOIN Criteria ON Criteria_Description.CriteriaID = Criteria.CriteriaID INNER JOIN Score ON Criteria_Description.ScoreID = Score.ScoreID WHERE Criteria.RubricID = $num"));
 		}
 	}
 		
