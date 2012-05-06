@@ -18,7 +18,7 @@ endif ?>
 	<table>
 	<tr>
 	<td></td>
-	<td><input type="submit" name="submit" value="submit" onclick = "setHTML()" /><input type="button" value="html" onclick = "showHTML()" /></td>
+	<td><input type="submit" name="submit" value="submit" onclick = "setHTML()" /><input type="button" name="html" value="html" onclick = "showHTML()" /></td>
 	</tr>
 	<tr>
 	<td><label for="name">Rubric Name:  </label></td><td><input type="text" name="rubricName" /></td>
@@ -39,7 +39,7 @@ endif ?>
 	<br>
 	<table id="rubricTable" border="1">
 	<tbody>
-	<tr><td></td><td><span class="editablecol1">Score</span></td><td><span class="editablecol2">Score</span></td></tr>
+	<tr><td></td><td><span class="editablecol1">Score</span><span class="editablescore1">(Points)</span></td><td><span class="editablecol2">Score</span><span class="editablescore2">(Points)</span></td></tr>
 	<tr><td><span class="editablerow1">Criteria</span></td><td><span class="editable11">Click to edit</span></td><td><span class="editable12">Click to edit</span></td></tr>
 	</tbody>
 	</table>

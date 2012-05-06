@@ -88,6 +88,7 @@ class InstructorController extends Controller
 			$rubricName = mysql_real_escape_string($_POST['rubricName']);
 			$criteria = array();
 			$score = array();
+			$points = array();
 			$description = array();
 			$numOfCriteria = $_POST['criteriaLength'];
 			$numOfScores = $_POST['scoreLength'];
@@ -108,6 +109,7 @@ class InstructorController extends Controller
 				for($i = 1;$i <= $numOfScores;$i++)
 				{
 					$score[$i] = mysql_real_escape_string($_POST['scorePosition'.$i]);
+					$points[$i] = mysql_real_escape_string($_POST['pointsPosition'.$i]);
 				}
 				
 				for($i = 1;$i <= $numOfCriteria;$i++)
@@ -129,7 +131,7 @@ class InstructorController extends Controller
 				
 				for($i = 1;$i <= $numOfScores;$i++)
 				{
-					$this->Instructor->query("INSERT INTO Score (title,position,RubricID) VALUES (\"$score[$i]\",\"$i\", \"$rubricID\")");
+					$this->Instructor->query("INSERT INTO Score (title,score,position,RubricID) VALUES (\"$score[$i]\",\"$points[$i]\",\"$i\", \"$rubricID\")");
 					$scoreID[$i] = mysql_insert_id();
 				}
 								
@@ -168,24 +170,40 @@ class InstructorController extends Controller
 	
 	function edit_rubric($num)
 	{
+		if(isset($_POST['remove']))
+		{			
+			$this->Instructor->query("DELETE FROM Rubric WHERE RubricID = $num" );
+			$this->Instructor->query("DELETE FROM Criteria WHERE RubricID = $num" );
+			$this->Instructor->query("DELETE FROM Score WHERE RubricID = $num" );
+			$this->Instructor->query("DELETE FROM Criteria_Description INNER JOIN Criteria ON Criteria_Description.CriteriaID = Criteria.CriteriaID INNER JOIN Score ON Criteria_Description.ScoreID = Score.ScoreID WHERE Criteria.RubricID = $num");
+			
+			$this->set('removed',true);
+		}
+		
 		if(isset($_POST['submit']))
 		{	
 			$rubricName = mysql_real_escape_string($_POST['rubricName']);
 			$criteria = array();
 			$score = array();
+			$points = array();
 			$description = array();
 			$numOfCriteria = $_POST['criteriaLength'];
 			$numOfScores = $_POST['scoreLength'];
 			$i = 0;
-			
-			if($_POST['rubricName'] == "")
-			{
-				$this->set('missing',true);
-			}
-			
-			else
-			{
-				for($i = 1;$i <= $numOfCriteria;$i++)
+		
+		if($_POST['rubricName'] == "")
+		{
+			$this->set('missing',true);
+		}
+		
+		else
+		{
+			$this->Instructor->query("DELETE FROM Rubric WHERE RubricID = $num" );
+			$this->Instructor->query("DELETE FROM Criteria WHERE RubricID = $num" );
+			$this->Instructor->query("DELETE FROM Score WHERE RubricID = $num" );
+			$this->Instructor->query("DELETE FROM Criteria_Description INNER JOIN Criteria ON Criteria_Description.CriteriaID = Criteria.CriteriaID INNER JOIN Score ON Criteria_Description.ScoreID = Score.ScoreID WHERE Criteria.RubricID = $num");
+
+			for($i = 1;$i <= $numOfCriteria;$i++)
 				{
 					$criteria[$i] = mysql_real_escape_string($_POST['criteriaPosition'.$i]);
 				}
@@ -193,6 +211,7 @@ class InstructorController extends Controller
 				for($i = 1;$i <= $numOfScores;$i++)
 				{
 					$score[$i] = mysql_real_escape_string($_POST['scorePosition'.$i]);
+					$points[$i] = mysql_real_escape_string($_POST['pointsPosition'.$i]);
 				}
 				
 				for($i = 1;$i <= $numOfCriteria;$i++)
@@ -203,27 +222,27 @@ class InstructorController extends Controller
 					}
 				}
 				
-				$this->Instructor->query("UPDATE Rubric SET name = \"$rubricName\", rowSize = \"$numOfCriteria\", columnSize = \"$numOfScores\" WHERE RubricID = $num))");
+				$this->Instructor->query("INSERT INTO Rubric (RubricID,name,rowSize,columnSize) VALUES (\"$num\", \"$rubricName\", \"$numOfCriteria\", \"$numOfScores\")");
 				
 				for($i = 1;$i <= $numOfCriteria;$i++)
 				{
-					$this->Instructor->query("UPDATE Criteria SET title = \"$criteria[$i]\", position = \"$i\" WHERE RubricID = $num");
+					$this->Instructor->query("INSERT INTO Criteria (title,position,RubricID) VALUES (\"$criteria[$i]\",\"$i\", \"$num\")");
 					$criteriaID[$i] = mysql_insert_id();
 				}
 				
 				for($i = 1;$i <= $numOfScores;$i++)
 				{
-					$this->Instructor->query("UPDATE Score SET title = \"$score[$i]\", position = \"$i\" WHERE RubricID = $num");
+					$this->Instructor->query("INSERT INTO Score (title,score,position,RubricID) VALUES (\"$score[$i]\",\"$points[$i]\",\"$i\", \"$num\")");
 					$scoreID[$i] = mysql_insert_id();
 				}
 								
-				//for($i = 1;$i <= $numOfCriteria;$i++)
-				//{
-				//	for($j = 1;$j <= $numOfScores;$j++)
-				//	{
-				//		$this->Instructor->query("INSERT INTO Criteria_Description (description,CriteriaID,ScoreID) VALUES (\"{$description[$i][$j]}\",\"$criteriaID[$i]\", \"$scoreID[$j]\")");
-				//	}
-				//}
+				for($i = 1;$i <= $numOfCriteria;$i++)
+				{
+					for($j = 1;$j <= $numOfScores;$j++)
+					{
+						$this->Instructor->query("INSERT INTO Criteria_Description (description,CriteriaID,ScoreID) VALUES (\"{$description[$i][$j]}\",\"$criteriaID[$i]\", \"$scoreID[$j]\")");
+					}
+				}
 				
 				$this->set('edited',true);
 			}
@@ -241,17 +260,7 @@ class InstructorController extends Controller
 	}
 	
 	function view_rubric($num)
-	{
-		if(isset($_POST['remove']))
-		{			
-			$this->Instructor->query("DELETE FROM Rubric WHERE RubricID = $num" );
-			$this->Instructor->query("DELETE FROM Criteria WHERE RubricID = $num" );
-			$this->Instructor->query("DELETE FROM Score WHERE RubricID = $num" );
-			$this->Instructor->query("DELETE FROM Criteria_Description INNER JOIN Criteria ON Criteria_Description.CriteriaID = Criteria.CriteriaID INNER JOIN Score ON Criteria_Description.ScoreID = Score.ScoreID WHERE Criteria.RubricID = $num");
-			
-			$this->set('removed',true);
-		}
-		
+	{		
 		if (!empty($num))
 		{	
 			$this->set("rubric",$this->Instructor->query("SELECT name FROM Rubric WHERE RubricID = $num"));
