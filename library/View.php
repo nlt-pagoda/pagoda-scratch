@@ -89,7 +89,7 @@
 						'<li><a href="' .BASEPATH. 'instructor/view/rubrics/">View Rubrics</a></li>'.
 						'<li><a href="'.BASEPATH.'instructor/create/rubric/">Create Rubrics</a></li>'.
 						'<li><a href="'.BASEPATH.'instructor/edit/rubrics/">Edit Rubrics</a></li>'.
-						'<li><a href="'.BASEPATH.'instructor/view/rubrics/">Remove Rubrics</a></li>'.
+						'<li><a href="'.BASEPATH.'instructor/edit/rubrics/">Remove Rubrics</a></li>'.
 						'</ul>';
 			
 			echo $html;

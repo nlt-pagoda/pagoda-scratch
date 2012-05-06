@@ -8,6 +8,7 @@
 	var numOfColumns = document.getElementById('colNum').innerHTML; // number of columns in table - this variable is not static
 	var columnArray = new Array(); 
 	var rowArray = new Array();
+	var scoreArray = new Array();
 	
 	var descriptionArray = new Array(numOfRows+1);
 	for(x=0;x<=1;x++)
@@ -37,23 +38,15 @@
 			  }
 			  else
 			  {
-				  if(numOfColumns == 2)
-				  {
-					  alert("Must have at least 2 Scores");
-					  deleteColumnActive = false;
-					  clearDeleteMessage();
-				  }
-				  else
-				  {
-					 removeColumn();
-				 	 clearDeleteMessage();
-				  } 
+				 removeColumn();
+			 	 clearDeleteMessage();
 			  }
 		  }		  
 		});
 
 	//sets rowNum to what row was just clicked
-	$('#rubricTable tbody').delegate("tr","click",function(e){
+	$('#rubricTable tbody').delegate("tr","click",function(e)
+	{
 		  rowNum =  this.rowIndex ;
 
 		  //Deletes row when user clicks if user has clicked Remove Criteria button
@@ -68,11 +61,10 @@
 			  else
 			  {
 				  removeRow();
-				  clearDeleteMessage();  
-			  }
-		  }	
-		  
-		});
+				  clearDeleteMessage(); 
+			  }			  
+		  }		  	 
+	});
 
 	$(document).ready(function() {
 		setEditable();
@@ -88,6 +80,18 @@
 	function clearDeleteMessage()
 	{
 		document.getElementById('deleteMessage').innerHTML = "";
+	}
+	
+	function printRowTotal(num)
+	{
+		numOfRows = num;
+		document.getElementById('rowNum').innerHTML = num;
+	}
+
+	function printColumnTotal(num)
+	{
+		numOfColumns = num;
+		document.getElementById('colNum').innerHTML = num;
 	}
 
 /////////////////////////////////////////////////////////
@@ -107,6 +111,7 @@
 		for(j=1;j<=numOfColumns;j++)
 		{
 			setEditableCols(j);
+			setEditableScore(j);
 		}
 
 		for(i=1;i<=numOfRows;i++)
@@ -146,6 +151,15 @@
 			$('.editablecol' + num).editable({onSubmit:addToColumnArray});
 			});
 	}
+	
+	function setEditableScore(num)
+	{
+		initializeScoreInArray(num);
+
+		$(function(){
+			$('.editablescore' + num).editable({onSubmit:addToScoreArray});
+			});
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 	
@@ -154,10 +168,69 @@
 	function setHTML()
 	{
 		setColumnValues();
+		setScoreValues();
 		setRowValues();
 		setDescriptionValues();
 	}
-
+/////////////////////////////////////////////////
+	
+//SCORE FUNTIONS
+	
+	function initializeScoreInArray(num)
+	{
+		scoreArray[num] = $('.editablescore' + num)[0].innerText;
+	}
+	
+	function addToScoreArray(content)
+	{	
+		resetPointsIfBlank(content);
+		checkIfPointsInt(content);
+		scoreArray[columnNum] = content.current;
+	}
+	
+	function resetPointsIfBlank(content)
+	{
+		var string = ".editablescore" + columnNum;
+		if ($(string)[0].innerText == '')
+		{
+			content.current = content.previous;
+			$(string)[0].innerText = content.previous;
+		}
+	}
+	
+	function checkIfPointsInt(content)
+	{
+		if(isNaN(content.current))
+		{
+			var element = ".editablescore" + columnNum;
+			var string = $(element)[0].innerText;
+			content.current = content.previous;
+			$(element)[0].innerText = content.previous;
+		}
+		else
+		{
+			addParenthesesAroundPoints(content);
+		}
+	}
+	
+	function addParenthesesAroundPoints(content)
+	{
+		var element = ".editablescore" + columnNum;
+		$(element)[0].innerText = "(" + content.current + ")";
+	}
+	
+	function setScoreValues()
+	{
+		for(var i=1;i<scoreArray.length;i++)
+		{
+			$("#rubricTable").append('<input type="hidden" name="pointsPosition' + i + '" value="' + scoreArray[i] + '" />');
+		}
+	}
+	
+	function removeFromScoreArray(index)
+	{
+		scoreArray.splice(index,1);
+	}
 
 /////////////////////////////////////////////////
 
@@ -169,7 +242,7 @@
 		var numCols = $("#rubricTable").find('tr')[0].cells.length;
 		printColumnTotal(numCols);
 
-		var scoreHeader = '<td><span class="editablecol' + numCols + '">Score</span></td>';
+		var scoreHeader = '<td><span class="editablecol' + numCols + '">Score</span><span class="editablescore' + numCols + '">(Points)</span></td>';
 		$("#rubricTable tr:first").append(scoreHeader);
 		for(i = 1;i <=numOfRows; i++)
 		{
@@ -178,7 +251,7 @@
 		}
 		var html = $('#rubricTable')[0].outerHTML;
 
-		
+		setEditableScore(numCols);
 		setEditableCols(numCols);
 			
 	}
@@ -199,8 +272,8 @@
 		var string = ".editablecol" + columnNum;
 		if ($(string)[0].innerText == '')
 		{
-			content.current = "Score";
-			$(string)[0].innerText = 'Score';
+			content.current = content.previous;
+			$(string)[0].innerText = content.previous;
 		}
 	}
 
@@ -208,10 +281,10 @@
 	{
 		for(var i=1;i<columnArray.length;i++)
 		{
-			$("#rubricTable").append('<input type="hidden" name="scorePosition' + i + '" value="' + columnArray[i] + '" />')
+			$("#rubricTable").append('<input type="hidden" name="scorePosition' + i + '" value="' + columnArray[i] + '" />');
 		}
 
-		$("#rubricTable").append('<input type="hidden" name="scoreLength" value="' + numOfColumns + '" />')	
+		$("#rubricTable").append('<input type="hidden" name="scoreLength" value="' + numOfColumns + '" />');
 	}
 
 	function removeColumn()
@@ -219,8 +292,12 @@
 		for(var i = 0;i <= numOfRows;i++)
 		{
 		  var row = document.getElementById("rubricTable").rows[i];
-		  row.deleteCell(columnNum)
-		  if(i == 0) removeFromColumnArray(columnNum);
+		  row.deleteCell(columnNum);
+		  if(i == 0)
+			  {
+			  	removeFromColumnArray(columnNum);
+			  	removeFromScoreArray(columnNum);
+			  }
 		  deleteColumnActive = false;
 		}
 
@@ -235,8 +312,16 @@
 
 	function activateRemoveColumn()
 	{
-		renderDeleteMsg("Column");
-		deleteColumnActive = true;
+		  if(numOfColumns == 2)
+		  {
+			  alert("Must have at least 2 Scores");
+			  clearDeleteMessage();
+		  }
+		  else
+		  {
+			  renderDeleteMsg("Column");
+			  deleteColumnActive = true;
+		  }
 	}
 
 
@@ -250,7 +335,7 @@
 	{
 	    jQtable.each(function(){
 			var numRows = $("#rubricTable").find('tr').length;
-			printRowTotal(numRows);
+	    	printRowTotal(numRows);
 	        var $table = $(this);
 	        // Number of td's in the last table row
 	        var n = $('tr:last td', this).length;
@@ -276,7 +361,7 @@
 
 	function removeRow()
 	{
-		  var table = document.getElementById('rubricTable')
+		  var table = document.getElementById('rubricTable');
 		  table.deleteRow(rowNum);
 		  removeFromRowArray(rowNum);
 		  removeFromDescriptionArray("row");
@@ -300,8 +385,8 @@
 		var string = ".editablerow" + rowNum;
 		if ($(string)[0].innerText == '')
 		{
-			content.current = "Criteria";
-			$(string)[0].innerText = 'Criteria';
+			content.current = content.previous;
+			$(string)[0].innerText = content.previous;
 		}
 	}
 	
@@ -314,16 +399,24 @@
 	{
 		for(var i=1;i<rowArray.length;i++)
 		{
-			$("#rubricTable").append('<input type="hidden" name="criteriaPosition' + i + '" value="' + rowArray[i] + '" />')
+			$("#rubricTable").append('<input type="hidden" name="criteriaPosition' + i + '" value="' + rowArray[i] + '" />');
 		}
 
-		$("#rubricTable").append('<input type="hidden" name="criteriaLength" value="' + numOfRows + '" />')
+		$("#rubricTable").append('<input type="hidden" name="criteriaLength" value="' + numOfRows + '" />');
 	}
 
 	function activateRemoveRow()
 	{
-		renderDeleteMsg("Row");
-		deleteRowActive = true;
+		if(numOfRows == 1)
+		  {
+			  alert("Must have at least 1 Criteria");
+			  clearDeleteMessage();
+		  }
+		else
+			{
+			renderDeleteMsg("Row");
+			deleteRowActive = true;
+			}
 	}
 
 //////////////////////////////////////////////////////////////////////
@@ -356,8 +449,8 @@
 		var string = ".editable" + rowNum + columnNum;
 		if ($(string)[0].innerText == '')
 		{
-			content.current = "Click to edit";
-			$(string)[0].innerText = 'Click to edit';
+			content.current = content.previous;
+			$(string)[0].innerText = content.previous;
 		}
 	}
 
@@ -383,7 +476,7 @@
 		{
 			for(var j=1;j<=numOfColumns;j++)
 			{
-				$("#rubricTable").append('<input type="hidden" name="descriptionPosition' + i + j +'" value="' + descriptionArray[i][j] + '" />')
+				$("#rubricTable").append('<input type="hidden" name="descriptionPosition' + i + j +'" value="' + descriptionArray[i][j] + '" />');
 			}
 		}
 	}
@@ -395,6 +488,7 @@
 	function showHTML()
 	{		
 		setColumnValues();
+		setScoreValues();
 		setRowValues();
 		setDescriptionValues();
 		
@@ -402,16 +496,4 @@
 		document.getElementById('tableHTML').innerHTML ='<textarea name="tableHTML">' + html + '</textarea>';
 
 		alert(html);
-	}
-
-	function printRowTotal(num)
-	{
-		numOfRows = num;
-		document.getElementById('rowNum').innerHTML = num;
-	}
-
-	function printColumnTotal(num)
-	{
-		numOfColumns = num;
-		document.getElementById('colNum').innerHTML = num;
 	}
