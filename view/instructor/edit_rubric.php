@@ -9,7 +9,7 @@ $this->RenderMsg("Rubric edited!");
 endif ?>
 
 <?php if (isset($removed)):
-header('Location:'.BASEPATH.'/instructor/view/rubrics/');
+header("Location: ".BASEPATH."/instructor/edit/rubrics/");
 endif ?>
 
 
@@ -31,7 +31,7 @@ $columnSize = $tablesize[0]["Rubric"]["columnSize"];
 	<table>
 	<tr>
 	<td></td>
-	<td><input type="submit" name="submit" value="submit" onclick = "setHTML()" /><input type="button" value="html" onclick = "showHTML()" /></td>
+	<td><input type="submit" name="submit" value="Submit" onclick = "setHTML()" /><input type="button" name="html" value="html" onclick="showHTML()" /></td>
 	</tr>
 	<tr>
 	<td><label for="name">Rubric Name:  </label></td><td><input type="text" name="rubricName" value="<?php echo $rubric[0]["Rubric"]["name"];?>" /></td>
@@ -62,7 +62,7 @@ echo ("<table id=\"rubricTable\" border=\"1\">");
 echo ("<tr><td></td>");
 foreach($scores as $score)
 {
-	echo ("<td><span class=\"editablecol".$scoreIterate."\">".$score["Score"]["title"]."</span></td>");
+	echo ("<td><span class=\"editablecol".$scoreIterate."\">".$score["Score"]["title"]."</span><span class=\"editablescore".$scoreIterate."\">(".$score["Score"]["score"].")</td>");
 	$scoreIterate++;
 }
 echo ("</tr><tr>");
@@ -72,6 +72,7 @@ echo ("</tr><tr>");
 foreach ($criterias as $criteria )
 {
 	echo ("<td><span class=\"editablerow".$rowIterate."\">".$criteria["Criteria"]["title"]."</span></td>");
+	//last column
 	if(($currentCol%$columnSize) == $columnSize-1)
 	{
 		for($i = ($currentCol + 1); $j < ($columnSize); $i++)
@@ -85,6 +86,7 @@ foreach ($criterias as $criteria )
 		echo ("</tr>");
 		
 	}
+	//all columns but the last
 	else
 	{
 		for($i = 0; $i < $columnSize;$i++)
@@ -93,7 +95,7 @@ foreach ($criterias as $criteria )
 			$currentCol = $i;
 		}
 		$rowIterate++;
-		echo ("</tr><tr>");
+		echo ("</tr>");
 	}
 }
 
