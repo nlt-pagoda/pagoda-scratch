@@ -6,3 +6,4 @@ uploads/
 .settings/
 *.vim
 env.vim
+.buildpath

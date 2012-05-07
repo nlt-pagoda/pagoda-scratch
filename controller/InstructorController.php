@@ -42,6 +42,15 @@ class InstructorController extends Controller
 	}
 	function add_assignment($id)
 	{
+		if(isset($_POST['assignHW']))
+		{
+			$this->Instructor->query("INSERT INTO `pagodanlt`.`Assignment` (`CourseID`, `title`, `description`, `dueDate`, `AssessmentID`) VALUES ('$id', '$_POST[title]', '$_POST[text]', '$_POST[duedate]', ''$_POST[rubrics]'");
+			
+			$this->set("assigned",true);
+			
+			//this needs some work
+		}
+		
 		global $session;
 		//Restore the previous texts in the textbox
 		if(isset($_SESSION['tmpCourseTitle']))
@@ -54,6 +63,8 @@ class InstructorController extends Controller
 			$this->set("desc",'');
 		//=========================================
 
+		$this->set("rubrics",$this->Instructor->query("SELECT * FROM Rubric"));
+			
 		if(isset($_POST['submitAttachFiles']))
 		{
 			$this->set("files",$_POST['UattachFiles']);
