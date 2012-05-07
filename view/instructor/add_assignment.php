@@ -18,7 +18,7 @@ endif ?>
 				<label for="title">Title:  </label>
 			</td>
 			<td>
-				<input type="text" name="title" value='<?php echo $title; ?>'/>
+				<input type="text" name="title" value='<?php if(isset($_SESSION['tmpCourseTitle'])) echo $_SESSION['tmpCourseTitle']; ?>'/>
 			</td>
 			</tr>
 			<tr>
@@ -32,25 +32,27 @@ endif ?>
 					foreach($files as $file)
 					{
 						echo basename($file)."</br>";
-						echo "<input type='hidden' name='files2Buploaded[]' value='".$file."'/></br>";
+						echo "<input type='hidden' name='files2Buploaded[]' value='".$file."'/>";
 					}
 				}
 			?>
+			<a href="#" id="attachLink">Attach</a>
 			</td>
 		</tr>
-				<tr>
+
+		<tr>
 			<td>
 				<label for="duedate">Due date:  </label>
 			</td>
 			<td>
-				<input id="duedate" type="datetime" name="duedate" value="">
+				<input id="duedate" type="datetime" name="duedate" value="<?php if(isset($_SESSION['tmpDueDate'])) echo $_SESSION['tmpDueDate'];?>">
 			</td>
 		<tr>
 			<td>
 				<label for="assignment">Description:  </label>
 			</td>
 			<td>
-				<textarea id="nicEdittextarea" rows="10" cols="90" name="text" value='<?php echo $desc; ?>'></textarea>
+				<textarea id="nicEdittextarea" rows="10" cols="90" name="text"> </textarea>
 			</td>
 			<tr>
 			<td>
@@ -65,11 +67,13 @@ endif ?>
 </form>
 
 			<td>
-				<form method='POST' action="<?php echo BASEPATH.'upload/index/'.$id;?>">
-					<input type='hidden' name='title' value=""/>
-					<input type='submit' name='attachFiles' value="Attach"/>
+				<form name="hidden_infos" method='POST' action="<?php echo BASEPATH.'upload/index/'.$id;?>">
+					<input type='hidden' name='hidden_title'/>
+					<input type='hidden' name='hidden_date'/>
+					<input type='hidden' name='hidden_desc'/>
 				</form>	
 			</td>
+<!-- start datetimePicker Plugin -->
 <script type="text/javascript" src="<?php echo BASEPATH; ?>include/js/upload.js"></script>
 <link type="text/css" href="<?php echo BASEPATH; ?>include/js/jui/css/ui-lightness/jquery-ui-1.8.19.custom.css" rel="stylesheet" />
 <link type="text/css" href="<?php echo BASEPATH; ?>include/css/timePicker.css" rel="stylesheet" />
@@ -89,7 +93,27 @@ endif ?>
 					stepSecond:1 
 			});
 	});
+	$(document).ready(function(){
+			var myInstance3 = new nicEditors.findEditor('nicEdittextarea');
+			myInstance3.setContent("<?php if(isset($_SESSION['tmpCourseDesc'])) echo $_SESSION['tmpCourseDesc'];?>");
+			$("#attachLink").click(function(){
+				//Start populate all the data to the hidden text field
+					$("[name=hidden_title]").val($("[name=title]").val());
+					$("[name=hidden_date]").val($("[name=duedate]").val());
+					//Initializing for getting the value of textarea
+					var myInstance2 = new nicEditors.findEditor('nicEdittextarea');
+					//-----------------------------------------------
+					$("[name=hidden_desc]").val(myInstance2.getContent());
+					console.log($("[name=hidden_desc]").val());
+					$("[name=hidden_infos]").submit();
+				//End populating the data
+				//alert($("[name=hidden_title]").val());
+				//alert($("[name=hidden_date]").val());
+				//alert($("[name=hidden_desc]").val());
+				});
+			});
 </script>
+<!-- end datetimePicker Plugin -->
 	<div id="tmpInfo">
 </div>
 	
