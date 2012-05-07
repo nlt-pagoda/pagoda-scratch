@@ -21,7 +21,7 @@ class UploadController extends Controller
 				if(count(Upload::$errors)>0)
 				{
 					//Need to add error redirection
-					print_r(self::uploadError());
+					print_r(Upload::uploadError());
 				}
 				else
 				{
@@ -55,8 +55,8 @@ class UploadController extends Controller
 					?>
 					<form id='spy' action='<?php echo $url; ?>' method="post">
 						<input type="hidden" name="spyId" value="<?php echo $cId;?>"/>
-						<input type="hidden" name="spySuccess" value="<?php echo htmlentities($pendingSuccessFiles,ENT_QUOTES);?>"/>
-						<input type="hidden" name="spyReplace" value="<?php echo htmlentities($pendingReplaceFiles,ENT_QUOTES);
+						<input type="hidden" name="spySuccess" value="<?php if(isset($pendingSuccessFiles)) echo htmlentities($pendingSuccessFiles,ENT_QUOTES);?>"/>
+						<input type="hidden" name="spyReplace" value="<?php if(isset($pendingReplaceFiles)) echo htmlentities($pendingReplaceFiles,ENT_QUOTES);
 																		//htmlentities($var, ENT_QUOTES) strips off quotes making it possible to store in a variable
 																		?>" /> 
 					</form>
@@ -81,29 +81,13 @@ class UploadController extends Controller
 		//$output = '';
 		//foreach(func_get_args() as $value)
 		//	$output.=$value;
-		if(isset($_POST['attachFiles']))
-		{
-			if(isset($_POST['tmpCourseTitle']))
-			{
-				if(!empty($_POST['tmpCourseTitle']))
-				{
-					$_SESSION['tmpCourseTitle'] = $_POST['tmpCourseTitle'];
-					echo "OH hai there";
-				}
-				?>
-					<script>
-					alert("fucker");
-					</script>
-					
-					<?php
-			}
-			if(isset($_POST['tmpCourseDesc']))
-				if(!empty($_POST['tmpCourseDesc']))
-				{
-					$_SESSION['tmpCourseDesc'] = $_POST['tmpCourseDesc'];
-					echo "yes this is a mother fucking dog";
-				}
-		}
+		if(isset($_POST['hidden_title']))
+			$_SESSION['tmpCourseTitle'] = $_POST['hidden_title'];
+		if(isset($_POST['hidden_date']))
+			$_SESSION['tmpDueDate'] = $_POST['hidden_date'];
+		if(isset($_POST['hidden_desc']))
+			$_SESSION['tmpCourseDesc'] = $_POST['hidden_desc'];
+
 		//Store the courseID....THIS IS IMPORTANT!!! COURSEID MUST STAY BE PASSED AMONG ALL THE PAGES 
 		if($course!="null")
 		{
@@ -139,7 +123,6 @@ class UploadController extends Controller
 	{
 
 		global $session;
-		echo $_SESSION['tmpCourseTitle'];
 		$userID = $session->getID();
 		//Trying to find the role of the user to perform the query accordingly//
 		$roleIDQuery = mysql_query("SELECT `User_has_Roles`.`RolesID` FROM `User_has_Roles` where `User_has_Roles`.`UserID` = $userID ");
@@ -162,8 +145,10 @@ class UploadController extends Controller
 			while($row[$i++] = mysql_fetch_array($query,MYSQL_ASSOC)) //looping through query and putting it in an array
 			$this->set('courses',$row);
 			//$this->set('cIds',mysql_query("SELECT CourseID From `Course` INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID WHERE User.UserID = $userID"));
-			$this->set('files',$_POST['ls']);
-			$this->set('role',$role);
+			if(isset($_POST['ls']))
+				$this->set('files',$_POST['ls']);
+			if(isset($role))
+				$this->set('role',$role);
 
 		}
 		else
@@ -187,7 +172,8 @@ class UploadController extends Controller
 		//$totalDuplicate = '';
 		//$totalSuccess = $x;
 		$pendingFilesCombined = '';
-		$courseId = $_POST['spyId'];
+		if(isset($_POST['spyId']))
+			$courseId = $_POST['spyId'];
 		//$test = preg_match("/;replace;/",$_POST['replaceSpy']);
 		?>
 		<?php 
@@ -234,7 +220,8 @@ class UploadController extends Controller
 			//$this->set("uploadedFiles",$holderSuccess);
 			}
 			$this->set("existingFiles",$holderReplace);
-			$this->set("cId",$courseId);
+			if(isset($courseId))
+				$this->set("cId",$courseId);
 		}
 	}
 }
