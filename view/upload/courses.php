@@ -1,10 +1,11 @@
 <div id="content">
 <?php if($display):
-	//var_dump($courses);
-	//var_dump($files);
-//	var_dump($role);
+if(!isset($files)):
+	$this->RenderMsg("No files selected to perform attachment. Please go back to the upload page and select file(s)");
+else:
 	if(isset($auto_assign))
 	{
+		echo "<p> Are you sure you want to add the following file(s)? </p>";
 		$path='';
 		if(count($files)<1)
 		{
@@ -13,10 +14,10 @@
 			?>
 			<form name="attach_files" action="<?php echo $path; ?>" method = "post">
 			<?php
-			echo $path;
+			echo basename($path)."</br>";
 			$this->RenderMsg("Add some files first");
 			?>
-			<input type="submit" value="Attach" name="attach"/>
+			<input type="submit" value="Yes" name="attach"/>
 			</form>
 			<?php
 		}
@@ -29,10 +30,11 @@
 			foreach($files as $file)
 			{
 				echo "<input type='hidden' name='UattachFiles[]' value ='$file'/>";
-				echo $file."</br>";
+				echo basename($file)."</br>";
 			}
 			?>
-			<input type="submit" value="Attach" name="submitAttachFiles"/>
+			<input type="submit" value="Yes" name="submitAttachFiles"/>
+			<input type="button" value="No" name="redirect2Upload" id="redirect2Upload"/>
 			</form>
 			<?php
 		}
@@ -59,8 +61,17 @@
 		<?php
 	}
 	?>
-<?php else:
+<?php
+endif;
+else:
 $this->RenderMsg("Please login to continue");
 endif ?>
+<script>
+$(document).ready(function(){
+			$("#redirect2Upload").click(function(){
+				$(window.location).attr('href',"<?php echo BASEPATH.'upload' ?>");
+		});
+	});
+</script>
 </div>
 

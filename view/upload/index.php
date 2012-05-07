@@ -10,40 +10,52 @@ else
 	$redirect = BASEPATH."upload/courses/".$cId;
 ?>
 
+<form name "attachFiles" method='POST' enctype='multipart/form-data' action="">
+<table width="440" border="0">
+	<tr>
+		<td><a href='#' id='attacher'>Upload Files</a></td>
+		<ul id='parentFilelist'></ul>
+		<td align="center"><input type='submit' name='upload' id='upload' value='Upload'/></td>
+	</tr>
+</table>
+</form>
+<hr align="left" width="50%">
 <?php
 	if(count($files))
 	{
 ?>
+
 <form name="selectFile" action='<?php echo $redirect; ?>' method='post'> 
 	<div id="fileTable">
+		<table border="0">
 			<ul id="ls">
 			<?php
 			foreach($files as $file)
 			{
 			?>
-				<li>
+				<tr>
 					<div id="files"> 
-						<?php echo $file ?> <input type="checkbox" name="ls[]" value="<?php echo BASEPATH."uploads/".$file ?>"/>
+						<td><li><?php echo $file ?></li></td> <td><input type="checkbox" name="ls[]" value="<?php echo BASEPATH."uploads/".$file ?>"/></td>
 					</div> 
-				</li>
+				</tr>
 			<?php
 			}
 			?>
 			</ul>
 
+		<tr>
+		<td></td>
+		<td align="center"><input type="submit" name="add" value ="Assign"/></td>
+		</tr>
+		</table>
+
 	</div>
-<input type="submit" name="add" value ="Assign"/>
 </form>
 <?php
 }
 else
 	$this->RenderMsg("No files uploaded yet!!!");
 ?>
-<form name "attachFiles" method='POST' enctype='multipart/form-data' action="">
-	<a href='#' id='attacher'>Upload Files</a>
-	<ul id='parentFilelist'></ul>
-	<input type='submit' name='upload' id='upload' value='Upload'/>
-</form>
 </div>
 </div>
 <div id="formBox">

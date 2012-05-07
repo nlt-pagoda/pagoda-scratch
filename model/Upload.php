@@ -128,27 +128,30 @@ class Upload extends Model
 
 //Semi main function that uploads the physical file
 	public function pushUpload(){
-		if (Upload::setDirs()){ //Check the necessary directories needed to be created
-			//Do not create tmp directory if setReplace variable is not set
-			if(!isset($_POST['replace'])){
-				if(is_dir(self::$tmpSubDir))
-					Upload::destroyAll(self::$tmpSubDir); //Remove the previously created temporary directory if exists 
+		if(!empty($_FILES["docs"]["name"]))
+		{
+			if (Upload::setDirs()){ //Check the necessary directories needed to be created
+				//Do not create tmp directory if setReplace variable is not set
+				if(!isset($_POST['replace'])){
+					if(is_dir(self::$tmpSubDir))
+						Upload::destroyAll(self::$tmpSubDir); //Remove the previously created temporary directory if exists 
 
-				Upload::checkFiles($_FILES["docs"]["name"]); //Stores the already existing filename.
-				Upload::setDirs();
-				Upload::uploadConfirm();
-			}
-			else{
-				$lsTmp = scandir(self::$tmpSubDir);
-				foreach($_POST['setReplace'] as $tmpReplace){
-					if(in_array($tmpReplace,$lsTmp)) //checks the array $tmpReplace with the array that has duplicate filesname stored in it
-						copy(self::$tmpSubDir.$tmpReplace,self::$subDir.$tmpReplace); //Replace the original one with the new file		
+					Upload::checkFiles($_FILES["docs"]["name"]); //Stores the already existing filename.
+					Upload::setDirs();
+					Upload::uploadConfirm();
 				}
-				Upload::destroyAll(self::$tmpSubDir);
+				else{
+					$lsTmp = scandir(self::$tmpSubDir);
+					foreach($_POST['setReplace'] as $tmpReplace){
+						if(in_array($tmpReplace,$lsTmp)) //checks the array $tmpReplace with the array that has duplicate filesname stored in it
+							copy(self::$tmpSubDir.$tmpReplace,self::$subDir.$tmpReplace); //Replace the original one with the new file		
+					}
+					Upload::destroyAll(self::$tmpSubDir);
+				}
 			}
+			else
+				return false;
 		}
-		else
-			return false;
 	}
 
 

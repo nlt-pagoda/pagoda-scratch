@@ -7,7 +7,7 @@
 <!-- <script>bkLib.onDomLoaded(nicEditors.allTextAreas)</script> -->
 <script>
 bkLib.onDomLoaded(function(){
-  var myInstance = new nicEditor({fullPanel : true}).panelInstance('nicEdittextarea');
+ var myInstance = new nicEditor({fullPanel : true}).panelInstance('nicEdittextarea');
 });
 </script>
 <?php
