@@ -38,8 +38,22 @@ endif ?>
 			?>
 			<a href="#" id="attachLink">Attach</a>
 			</td>
+			
 		</tr>
-
+	<!--  ADDED BY TRAVIS-->
+			<tr>
+			<td> <label for="rubrics"> Rubrics: </td><td></label>
+				<select name="rubrics">
+				<?php foreach($rubrics as $rubric)
+				{
+					echo "<option value='";
+					echo $rubric["Rubric"]["RubricID"]."'>";
+					echo $rubric["Rubric"]["name"]."</option>";
+				}
+				?>
+				</select>
+		</tr>
+		<!--  ========================= -->
 		<tr>
 			<td>
 				<label for="duedate">Due date:  </label>
@@ -121,5 +135,3 @@ endif ?>
 <?php else: 
 $this->RenderMsg("You do not have sufficient privileges to view this page!"); ?>
 <?php endif ?>
-
-
