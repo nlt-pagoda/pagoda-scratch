@@ -18,7 +18,7 @@ endif ?>
 	<table>
 	<tr>
 	<td></td>
-	<td><input type="submit" name="submit" value="submit" onclick = "setHTML()" /><input type="button" name="html" value="html" onclick = "showHTML()" /></td>
+	<td><input type="submit" name="submit" value="submit" onclick = "setHTML()" /></td>
 	</tr>
 	<tr>
 	<td><label for="name">Rubric Name:  </label></td><td><input type="text" name="rubricName" /></td>
