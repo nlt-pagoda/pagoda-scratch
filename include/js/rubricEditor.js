@@ -128,6 +128,7 @@
 		$(function(){
 			$('.editable' + r + c).editable({
 											type:'textarea',
+											editBy:'dblclick',
 											onSubmit:addToDescriptionArray
 											});
 			});
@@ -138,7 +139,7 @@
 		initializeRowInArray(num);
 		
 		$(function(){
-			$('.editablerow' + num).editable({onSubmit:addToRowArray});
+			$('.editablerow' + num).editable({editBy:'dblclick',onSubmit:addToRowArray});
 			});
 	}
 
@@ -148,7 +149,7 @@
 		initializeColumnInArray(num);
 
 		$(function(){
-			$('.editablecol' + num).editable({onSubmit:addToColumnArray});
+			$('.editablecol' + num).editable({editBy:'dblclick',onSubmit:addToColumnArray});
 			});
 	}
 	
@@ -157,7 +158,7 @@
 		initializeScoreInArray(num);
 
 		$(function(){
-			$('.editablescore' + num).editable({onSubmit:addToScoreArray});
+			$('.editablescore' + num).editable({editBy:'dblclick',onSubmit:addToScoreArray});
 			});
 	}
 
@@ -223,6 +224,7 @@
 	{
 		for(var i=1;i<scoreArray.length;i++)
 		{
+			scoreArray[i]=scoreArray[i].replace(/[\(\)-]/g, "");
 			$("#rubricTable").append('<input type="hidden" name="pointsPosition' + i + '" value="' + scoreArray[i] + '" />');
 		}
 	}
@@ -447,7 +449,7 @@
 	function resetDescriptionIfBlank(content)
 	{
 		var string = ".editable" + rowNum + columnNum;
-		if ($(string)[0].innerText == '')
+		if ($(string).innerText == '')
 		{
 			content.current = content.previous;
 			$(string)[0].innerText = content.previous;
