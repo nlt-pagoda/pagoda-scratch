@@ -31,7 +31,15 @@ $columnSize = $tablesize[0]["Rubric"]["columnSize"];
 	<table>
 	<tr>
 	<td></td>
-	<td><input type="submit" name="submit" value="Submit" onclick = "setHTML()" /></td>
+	<td><input style="float:left;" type="submit" name="submit" value="Submit" onclick = "setHTML()" />
+	
+			<?php if ($accessible)
+			{
+				echo("<form action=\"\" method=\"POST\">");
+				echo("<input id=\"removeButton\" onclick=\"if(confirm('Are you sure you want to delete this rubric? There is no undo.')) return true; return false;\" style=\"margin-left:15px;\" type=\"submit\" name=\"remove\" value=\"Delete Rubric\"/>");
+				echo("</form>");
+			}?>
+			</td>
 	</tr>
 	<tr>
 	<td><label for="name">Rubric Name:  </label></td><td><input type="text" name="rubricName" value="<?php echo $rubric[0]["Rubric"]["name"];?>" /></td>
@@ -42,8 +50,8 @@ $columnSize = $tablesize[0]["Rubric"]["columnSize"];
 	<input type="button" value="Add Score (Column)" onclick="addColumn()" />
 	<input type="button" value="Add Criteria (Row)" onclick="addTableRow($('#rubricTable'))" />
 	<br>
-	<input type="button" style="background:red;color:white;" value="Remove Score (Column)" onclick="activateRemoveColumn()" />
-	<input type="button" style="background:red;color:white;" value="Remove Criteria (Row)" onclick="activateRemoveRow()" />
+	<input id="removeButton" type="button" value="Remove Score (Column)" onclick="activateRemoveColumn()" />
+	<input id="removeButton" type="button" value="Remove Criteria (Row)" onclick="activateRemoveRow()" />
 	<span id="rvalues">Rows: <span id="rowNum"><?php echo $rowSize;?></span></span>
 	<span id="cvalues">Columns: <span id="colNum"><?php echo $columnSize;?></span></span>
 	<br>
@@ -55,7 +63,9 @@ $currentCol = 0;
 $j=0;
 $scoreIterate = 1;
 $rowIterate = 1;
-
+?>
+Double click to edit.
+<?php 
 echo ("<table id=\"rubricTable\" border=\"1\">");
 
 //first row. Score headers
@@ -101,12 +111,7 @@ foreach ($criterias as $criteria )
 
 echo ("</table>");
 
-			if ($accessible)
-			{
-				echo("<div id=\"announcementButtons\"><form action=\"\" method=\"POST\">");
-				echo("<input type=\"submit\" name=\"remove\" value=\"Remove\"/>");
-				echo("</form></div>");
-			}
+			
 ?>	
 	
 	<div id="tableHTML" style="display:none"></div>

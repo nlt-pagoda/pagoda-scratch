@@ -7,8 +7,8 @@ $(document).ready(function(){
 		$.getJSON("<?php echo BASEPATH; ?>/include/ajax/getprofile.php?id=" + user ,
 			function(data) {
 			//Should be renamed in future
-			$('input[name=firstname]').val(data.firstname); 
-			$('input[name=lastname]').val(data.lastname); 
+			$('input[name=firstname]').val(data.firstName); 
+			$('input[name=lastname]').val(data.lastName); 
 			$('input[name=email]').val(data.emailAddress);
 			$('input[name=bannerID]').val(data.bannerID);
 			});
@@ -42,10 +42,9 @@ endif ?>
 		/*foreach($roles as $role)
 		echo "<option value=\"".$role["Role"]["RolesID"]."\">".$role["Role"]["role"]."</option>";
 	*/
-		
-			foreach($users as $user)
+		foreach($users as $user)
 			{
-				echo "<option value=\"".$user["User"]["UserID"]."\">".$user["User"]["username"]."</option>";
+				echo "<option value=\"".$user["User"]["UserID"]."\">".$user["Profile"]["lastName"].", ".$user["Profile"]["firstName"]."</option>";
 			}
 		?>
 		</select>
