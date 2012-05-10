@@ -17,7 +17,7 @@
 	<?php
 		foreach($students as $student)
 		{
-			echo "<option value=\"".$student["User"]["UserID"]."\">".$student["User"]["username"]."</option>";
+			echo "<option value=\"".$student["User"]["UserID"]."\">".$student["Profile"]["lastName"].", ".$student["Profile"]["firstName"]."</option>";
 		}
 	?>
 	</select>

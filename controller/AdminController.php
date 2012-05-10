@@ -76,7 +76,7 @@ class AdminController extends Controller
 	
 	function add_student()
 	{
-		$this->set('students',$this->Admin->query("SELECT * FROM User INNER JOIN User_has_Roles ON User.UserID = User_has_Roles.UserID WHERE User_has_Roles.RolesID = 2"));
+		$this->set('students',$this->Admin->query("SELECT lastName,firstName, User.UserID FROM Profile INNER JOIN User ON Profile.UserID = User.UserID INNER JOIN User_has_Roles ON User.UserID = User_has_Roles.UserID WHERE User_has_Roles.RolesID = 2 ORDER BY Profile.lastName"));
 		$this->set('courses',$this->Admin->query("SELECT * FROM Course INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID"));
 
 		if(isset($_POST['submit']))
@@ -107,7 +107,7 @@ class AdminController extends Controller
 			}
 		}
 		
-		$this->set("users",$this->Admin->query("SELECT * FROM User"));
+		$this->set("users",$this->Admin->query("SELECT lastName,firstName, User.UserID FROM Profile INNER JOIN User ON Profile.UserID = User.UserID ORDER BY Profile.lastName"));
 	}
 	
 	function edit_user()
@@ -131,13 +131,13 @@ class AdminController extends Controller
 			}
 		}
 		
-		$this->set("users",$this->Admin->query("SELECT * FROM User ORDER BY username"));
+		$this->set("users",$this->Admin->query("SELECT lastName,firstName, User.UserID FROM Profile INNER JOIN User ON Profile.UserID = User.UserID ORDER BY Profile.lastName"));
 	}
 	
 	function add_course()
 	{
 		//Need to add error checking for fields. eg: check Number field contains only numbers		
-		$this->set("instructors",$this->Admin->query("SELECT firstname, lastname, User_has_Roles.UserID FROM Profile INNER JOIN User_has_Roles ON Profile.UserID = User_has_Roles.UserID WHERE User_has_Roles.RolesID = 3"));
+		$this->set("instructors",$this->Admin->query("SELECT firstname, lastname, User_has_Roles.UserID FROM Profile INNER JOIN User_has_Roles ON Profile.UserID = User_has_Roles.UserID WHERE User_has_Roles.RolesID = 3 ORDER BY Profile.lastName"));
 	    $this->set("departments",$this->Admin->query("SELECT * FROM Department"));
 		
 	    if(isset($_POST['submit']))

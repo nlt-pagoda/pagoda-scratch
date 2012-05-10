@@ -114,6 +114,18 @@ h1
   padding-right: 15px;
 }
 
+#removeButton
+{
+	background:red;
+	color:white;
+	text-shadow: 0 0 0;
+}
+
+#removeButton:hover
+{
+	-webkit-box-shadow: 0px 0px 4px black;
+}
+
 #navigationBar
 {
 	border: solid 1px #EEEEEE;

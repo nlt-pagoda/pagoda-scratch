@@ -17,7 +17,7 @@ endif ?>
 		<?php
 			foreach($users as $user)
 			{
-				echo "<option value=\"".$user["User"]["UserID"]."\">".$user["User"]["username"]."</option>";
+				echo "<option value=\"".$user["User"]["UserID"]."\">".$user["Profile"]["lastName"].", ".$user["Profile"]["firstName"]."</option>";
 			}
 		?>
 		</select>
