@@ -23,7 +23,7 @@ endif ?>
 	<select name="instructor">
 	<?php
 	foreach($instructors as $instructor)
-		echo "<option value=\"".$instructor["User_has_Role"]["UserID"]."\">".$instructor["Profile"]["firstname"]." ".$instructor["Profile"]["lastname"]."</option>";
+		echo "<option value=\"".$instructor["User_has_Role"]["UserID"]."\">".$instructor["Profile"]["lastname"].", ".$instructor["Profile"]["firstname"]."</option>";
 		echo $instructor;
 		?>
 	</select>
