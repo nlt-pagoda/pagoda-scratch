@@ -36,7 +36,7 @@ global $session;
 			?>
 				<tr>
 					<div id="files"> 
-						<td><li><?php echo $file ?></li></td> <td><input type="checkbox" name="ls[]" value="<?php echo BASEPATH."uploads/".$session->getName()."/".$file; ?>"/></td>
+						<td><li><?php echo $file ?></li></td> <td><input type="checkbox" name="ls[]" value="<?php echo "uploads/".$session->getName()."/".$file; //echo BASEPATH."uploads/".$session->getName()."/".$file; ?>"/></td>
 					</div> 
 				</tr>
 			<?php

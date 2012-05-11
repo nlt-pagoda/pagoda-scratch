@@ -25,7 +25,7 @@ endif ?>
 <?php 
 foreach($documents as $document)
 {
-	echo("<a href=\"". $document["Document"]["URL"]."\">".basename($document["Document"]["URL"])."</a></br>");
+	echo("<a href=\"".BASEPATH.$document["Document"]["URL"]."\">".basename($document["Document"]["URL"])."</a></br>");
 }
 	?>	
 </td></tr>

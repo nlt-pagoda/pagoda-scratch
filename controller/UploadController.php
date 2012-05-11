@@ -103,7 +103,20 @@ class UploadController extends Controller
 		if(is_dir("uploads/".$session->getName()))
 		{
 			chdir("uploads/".$session->getName());
-			$list = exec('dir/B/A:-D',$result); //executes the command and stores it in the second parameter $result
+			try{
+				$list = exec('dir/B/A:-D',$result);
+			}
+			catch(MyException $e)
+			{
+				echo $e;
+			}
+			try{
+				$list = exec("ls /uploads/".$session->getName()." | -n1 basename");
+			}catch(MyException $e)
+			{
+				echo $e;
+			}
+			
 			$this->set("files",$result);
 			$this->set("cId",$cId);
 		}
