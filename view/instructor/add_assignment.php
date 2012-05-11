@@ -3,9 +3,18 @@
 <?php if (isset($missing)):
 $this->RenderMsg("You did not complete the required credentials.");
 endif ?>
-<?php if (isset($assigned)):
+<?php if (isset($added)):
 $this->RenderMsg("Assignment added!");
 endif ?>
+
+<div id=sidepanel>
+	<h2>Controls</h2>
+	<ul>
+	<li><a href="<?php echo BASEPATH; ?>instructor/add/announcement/<?php echo $courseID;?>">Add Announcement</a></li>
+	<li><a href="<?php echo BASEPATH; ?>instructor/add/assignment/<?php echo $courseID;?>">Add Assignment</a></li>
+	<li><a href="<?php echo BASEPATH; ?>instructor/view/assignments/<?php echo $courseID;?>">View Assignments</a></li>
+	</ul>
+</div>
 
 <h1>Instructor Control Panel</h1>
 

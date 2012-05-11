@@ -9,6 +9,7 @@ endif ?>
 	<ul>
 	<li><a href="<?php echo BASEPATH; ?>instructor/add/announcement/<?php echo $course[0]["Course"]["CourseID"];?>">Add Announcement</a></li>
 	<li><a href="<?php echo BASEPATH; ?>instructor/add/assignment/<?php echo $course[0]["Course"]["CourseID"];?>">Add Assignment</a></li>
+	<li><a href="<?php echo BASEPATH; ?>instructor/view/assignments/<?php echo $course[0]["Course"]["CourseID"];?>">View Assignments</a></li>
 	</ul>
 </div>
 
