@@ -21,6 +21,7 @@ else
 </form>
 <hr align="left" width="50%">
 <?php
+global $session;
 	if(count($files))
 	{
 ?>
@@ -35,7 +36,7 @@ else
 			?>
 				<tr>
 					<div id="files"> 
-						<td><li><?php echo $file ?></li></td> <td><input type="checkbox" name="ls[]" value="<?php echo BASEPATH."uploads/".$file ?>"/></td>
+						<td><li><?php echo $file ?></li></td> <td><input type="checkbox" name="ls[]" value="<?php echo BASEPATH."uploads/".$session->getName()."/".$file; ?>"/></td>
 					</div> 
 				</tr>
 			<?php
