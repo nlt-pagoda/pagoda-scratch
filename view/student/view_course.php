@@ -1,5 +1,12 @@
 <?php if ($accessible): ?>
 
+<div id=sidepanel>
+	<h2>Controls</h2>
+	<ul>
+	<li><a href="<?php echo BASEPATH; ?>student/view/assignments/<?php echo $course[0]["Course"]["CourseID"];?>">View Assignments</a></li>
+	</ul>
+</div>
+
 <h2><?php 
 echo $course[0]["Course"]["name"];
 ?></h2>

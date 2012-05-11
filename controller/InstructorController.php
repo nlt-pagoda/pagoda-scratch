@@ -40,18 +40,59 @@ class InstructorController extends Controller
 		}
 		
 	}
-	function add_assignment($id)
+	
+	function view_assignments($num)
 	{
-		if(isset($_POST['assignHW']))
-		{
-			$this->Instructor->query("INSERT INTO `pagodanlt`.`Assignment` (`CourseID`, `title`, `description`, `dueDate`, `AssessmentID`) VALUES ('$id', '$_POST[title]', '$_POST[text]', '$_POST[duedate]', ''$_POST[rubrics]'");
-			
-			$this->set("assigned",true);
-			
-			//this needs some work
-		}
-		
+		/*if(isset($_POST['remove']))
+				{
+					$id = $_POST['AnnouncementID'];
+					$this->set('courseID',$num);
+					$this->Instructor->query("DELETE FROM User_has_Announcement WHERE AnnouncementID = $id" );
+					$this->Instructor->query("DELETE FROM Announcement WHERE AnnouncementID = $id" );
+					$this->set('removed',true);
+				}*/
+				
+				/*else*/ if (!empty($num))
+				{	
+					$this->set("course",$this->Instructor->query("SELECT * FROM Course INNER JOIN Department ON Course.DepartmentID = Department.DepartmentID WHERE CourseID = $num"));
+					$this->set("assignments",$this->Instructor->query("SELECT * FROM Assignment WHERE CourseID = $num" ));					
+				}
+	}
+	
+	function view_assignment($num)
+	{
+		/*if(isset($_POST['remove']))
+				{
+					$id = $_POST['AnnouncementID'];
+					$this->set('courseID',$num);
+					$this->Instructor->query("DELETE FROM User_has_Announcement WHERE AnnouncementID = $id" );
+					$this->Instructor->query("DELETE FROM Announcement WHERE AnnouncementID = $id" );
+					$this->set('removed',true);
+				}*/
+				
+				/*else*/ if (!empty($num))
+				{	
+					$this->set("courseID",$this->Instructor->query("SELECT CourseID FROM Assignment WHERE AssignmentID = $num"));
+					$this->set("assignment",$this->Instructor->query("SELECT * FROM Assignment WHERE AssignmentID = $num" ));
+					$this->set("documents",$this->Instructor->query("SELECT * FROM Document WHERE AssignmentID = $num" ));
+
+					$this->set("rubric",$this->Instructor->query("SELECT name FROM Rubric INNER JOIN Assignment ON Rubric.RubricID = Assignment.RubricID WHERE AssignmentID = $num"));
+					$this->set("tablesize",$this->Instructor->query("SELECT columnSize,rowSize FROM Rubric INNER JOIN Assignment ON Rubric.RubricID = Assignment.RubricID WHERE AssignmentID = $num"));
+					$this->set("scores",$this->Instructor->query("SELECT score,Score.title FROM Score INNER JOIN Assignment ON Score.RubricID = Assignment.RubricID WHERE AssignmentID = $num"));
+					$this->set("criterias",$this->Instructor->query("SELECT Criteria.title FROM Criteria INNER JOIN Assignment ON Criteria.RubricID = Assignment.RubricID WHERE AssignmentID = $num"));
+					$rubricIDResult = mysql_query("SELECT RubricID FROM Assignment WHERE AssignmentID = $num");
+					$rubricID = mysql_result($rubricIDResult,0);
+					$this->set("descriptions",$this->Instructor->query("SELECT Criteria_Description.* FROM Criteria_Description INNER JOIN Criteria ON Criteria_Description.CriteriaID = Criteria.CriteriaID INNER JOIN Score ON Criteria_Description.ScoreID = Score.ScoreID WHERE Criteria.RubricID = $rubricID"));
+				}
+	}
+	
+	function add_assignment($id)
+	{		
 		global $session;
+		
+		$this->set('courseID',$id);
+		
+		$userID = $session->getID();
 		//Restore the previous texts in the textbox
 		if(isset($_SESSION['tmpCourseTitle']))
 			$this->set("title",$_SESSION['tmpCourseTitle']);
@@ -75,18 +116,25 @@ class InstructorController extends Controller
 		{
 			if(isset($_POST['title']))
 				$title = $_POST['title'];
+			
+			if(isset($_POST['text']))
+				$desc = $_POST['text'];
+				
+			if(isset($_POST['rubrics']))
+				$rubricID = $_POST['rubrics'];
+
+		//INSERTING HOMEWORK TO THE DATABASE
+			$this->Instructor->query("INSERT INTO `pagodanlt`.`Assignment` (`CourseID`, `title`, `description`, `dueDate`, `RubricID`) VALUES (\"$id\", \"$title\", \"$desc\", '2012-04-20 21:33:09', \"$rubricID\")");
+			
+			$assignmentID = mysql_insert_id();
 			if(isset($_POST['files2Buploaded']))
 			{
-				$fileArray = array();
 				foreach($_POST['files2Buploaded'] as $file)
 				{
-					array_push($fileArray,$file);
+					$this->Instructor->query("INSERT INTO `pagodanlt`.`Document`(`URL`,`dateSubmitted`,`data`,`AssignmentID`,`StudentID`,`grade`) VALUES (\"$file\",'2000-05-11 00:00:00',NULL,\"$assignmentID\",\"$userID\",NULL)");
 				}
 			}
-			if(isset($_POST['desc']))
-				$desc = $_POST['desc'];
-			//INSERTING HOMEWORK TO THE DATABASE
-			$this->Instructor->query("INSERT INTO `pagodanlt`.`Assignment` (`AssignmentID`, `CourseID`, `title`, `description`, `dueDate`, `AssessmentID`) VALUES (NULL, '3', 'oh hai there', 'i am the description', '2012-04-20 21:33:09', '60'");
+			$this->set('added',true);
 		}
 		$this->set("id",$id);
 
